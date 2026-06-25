@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { knowledgeStatusSchema } from "./metadata.schema.js";
+import { knowledgeStatusSchema, geoCoreMetadataSchema } from "./metadata.schema.js";
 export const knowledgeObjectSchema = z.object({
     id: z.string({ required_error: "GC_ID_MISSING" }).min(1, "GC_ID_MISSING"),
     slug: z.string({ required_error: "GC_SLUG_MISSING" }).min(1, "GC_SLUG_MISSING"),
@@ -13,6 +13,7 @@ export const knowledgeObjectSchema = z.object({
     updatedAt: z.string().min(1),
     author: z.string({ required_error: "GC_AUTHOR_MISSING" }).min(1, "GC_AUTHOR_MISSING"),
     // Optional Properties
+    metadata: geoCoreMetadataSchema.partial().optional(),
     aliases: z.array(z.string()).optional(),
     tags: z.array(z.string()).optional(),
     categories: z.array(z.string()).optional(),

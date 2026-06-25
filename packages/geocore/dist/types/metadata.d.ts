@@ -1,9 +1,9 @@
 export type KnowledgeStatus = "draft" | "review" | "published" | "archived";
 export type MetadataConfidence = "low" | "medium" | "high";
+export type FreshnessLevel = "stable" | "periodic" | "frequent" | "live";
 export type GeoCoreMetadata = {
     id: string;
     slug: string;
-    type: string;
     title: string;
     summary: string;
     language: string;
@@ -18,12 +18,14 @@ export type GeoCoreMetadata = {
     reviewedAt?: string;
     archivedAt?: string;
     canonicalUrl?: string;
-    entities: string[];
+    entities?: string[];
     topics?: string[];
     domains?: string[];
     audiences?: string[];
     collections?: string[];
     citations?: string[];
+    trustLevel?: string;
+    freshness?: FreshnessLevel;
     seo?: {
         title?: string;
         description?: string;
@@ -39,7 +41,7 @@ export type GeoCoreMetadata = {
         keyTakeaways?: string[];
         confidence?: MetadataConfidence;
         answerableQuestions?: string[];
-        freshness?: "stable" | "periodic" | "frequent";
+        freshness?: FreshnessLevel;
     };
     technical?: {
         sourceFormat?: string;
@@ -49,4 +51,16 @@ export type GeoCoreMetadata = {
         validationStatus?: string;
         indexingStatus?: string;
     };
+};
+export type ResolvedMetadata = GeoCoreMetadata & {
+    resolvedAt: string;
+    resolvedFrom: {
+        object: boolean;
+        defaults: boolean;
+        graph: boolean;
+        collections: boolean;
+        entities: boolean;
+        citations: boolean;
+    };
+    diagnostics?: string[];
 };

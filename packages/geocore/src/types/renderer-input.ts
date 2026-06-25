@@ -1,0 +1,28 @@
+import { ResolvedMetadata } from "./metadata.js";
+import { KnowledgeRelationship } from "./relationship.js";
+import { KnowledgeEntity } from "./entity.js";
+import { KnowledgeCitation } from "./citation.js";
+import { KnowledgeCollection } from "./collection.js";
+import { MediaAsset } from "./media.js";
+
+export type RendererInput = {
+  objectId: string;
+  objectVersion: string;
+
+  viewId?: string;
+  viewType?: string;
+
+  language: string;
+
+  content: string | Record<string, unknown>;
+
+  metadata: ResolvedMetadata;
+
+  relationships?: KnowledgeRelationship[];
+  entities?: KnowledgeEntity[];
+  citations?: KnowledgeCitation[];
+  collections?: KnowledgeCollection[];
+  media?: MediaAsset[];
+
+  options?: Record<string, unknown>;
+};

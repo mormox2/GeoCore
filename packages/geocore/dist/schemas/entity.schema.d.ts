@@ -46,9 +46,9 @@ export declare const knowledgeEntitySchema: z.ZodObject<{
     definition: string;
     domain?: string[] | undefined;
     audience?: string[] | undefined;
+    media?: string[] | undefined;
     citations?: string[] | undefined;
     aliases?: string[] | undefined;
-    media?: string[] | undefined;
     translations?: Record<string, {
         canonicalName: string;
         aliases?: string[] | undefined;
@@ -72,9 +72,9 @@ export declare const knowledgeEntitySchema: z.ZodObject<{
     definition: string;
     domain?: string[] | undefined;
     audience?: string[] | undefined;
+    media?: string[] | undefined;
     citations?: string[] | undefined;
     aliases?: string[] | undefined;
-    media?: string[] | undefined;
     translations?: Record<string, {
         canonicalName: string;
         aliases?: string[] | undefined;

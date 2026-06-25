@@ -15,6 +15,10 @@ export const knowledgeRelationshipTypeSchema = z.enum([
   "alternative_to",
   "contrasts_with",
   "example_of",
+  "classified_as",
+  "reviewed_by",
+  "supports",
+  "verifies",
 ]);
 
 export const knowledgeRelationshipStrengthSchema = z.enum([
@@ -24,14 +28,20 @@ export const knowledgeRelationshipStrengthSchema = z.enum([
   "canonical",
 ]);
 
+export const knowledgeRelationshipConfidenceSchema = z.enum([
+  "low",
+  "medium",
+  "high",
+]);
+
 export const knowledgeRelationshipSchema = z.object({
-  id: z.string(),
-  sourceId: z.string(),
-  targetId: z.string(),
+  id: z.string().min(1),
+  sourceId: z.string().min(1),
+  targetId: z.string().min(1),
   type: knowledgeRelationshipTypeSchema,
   strength: knowledgeRelationshipStrengthSchema,
   reason: z.string().optional(),
-  confidence: z.enum(["low", "medium", "high"]).optional(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  confidence: knowledgeRelationshipConfidenceSchema.optional(),
+  createdAt: z.string().min(1),
+  updatedAt: z.string().min(1),
 });

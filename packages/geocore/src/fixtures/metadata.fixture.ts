@@ -1,0 +1,117 @@
+import { KnowledgeCollection } from "../types/collection.js";
+import { KnowledgeEntity } from "../types/entity.js";
+import { KnowledgeCitation } from "../types/citation.js";
+import { GeoCoreMetadata } from "../types/metadata.js";
+
+export const globalDefaultsFixture: Partial<GeoCoreMetadata> = {
+  language: "fr",
+  version: "1.0.0",
+  freshness: "stable",
+  trustLevel: "expert",
+  seo: {
+    robots: "index, follow",
+    keywords: ["geocore", "knowledge"],
+  },
+};
+
+export const collectionsFixture: KnowledgeCollection[] = [
+  {
+    id: "col_rtimi_dental_faq",
+    slug: "rtimi-dental-faq",
+    title: "FAQ RTimi Dental",
+    summary: "Frequently asked questions regarding dental care.",
+    type: "faq-set",
+    language: "fr",
+    status: "published",
+    visibility: "public",
+    version: "1.0.0",
+    items: [
+      { objectId: "ko_detartrage_abime_dents" },
+    ],
+    domain: ["dentistry"],
+    audience: ["patient"],
+    owner: "Dr Mossaab Rtimi",
+    createdAt: "2026-06-25T10:00:00Z",
+    updatedAt: "2026-06-25T10:00:00Z",
+  },
+  {
+    id: "col_dawajin_academy_balances",
+    slug: "dawajin-academy-balances",
+    title: "Balances Management Guide",
+    summary: "Academy guide for client balances.",
+    type: "academy",
+    language: "fr",
+    status: "published",
+    visibility: "public",
+    version: "1.0.0",
+    items: [
+      { objectId: "ko_customer_balance_management" },
+    ],
+    domain: ["poultry-sme-finance"],
+    audience: ["accountant"],
+    owner: "Dawajin Team",
+    createdAt: "2026-06-25T10:00:00Z",
+    updatedAt: "2026-06-25T10:00:00Z",
+  },
+];
+
+export const entitiesFixture: KnowledgeEntity[] = [
+  {
+    id: "entity_scaling",
+    type: "procedure",
+    canonicalName: "Scaling (Détartrage)",
+    definition: "Dental cleaning procedure that removes tartar.",
+    language: "fr",
+    status: "published",
+    domain: ["dentistry"],
+    audience: ["patient"],
+    createdAt: "2026-06-25T10:00:00Z",
+    updatedAt: "2026-06-25T10:00:00Z",
+  },
+  {
+    id: "entity_tartar",
+    type: "material",
+    canonicalName: "Tartar (Tartre)",
+    definition: "Hardened plaque on teeth.",
+    language: "fr",
+    status: "published",
+    domain: ["dentistry"],
+    createdAt: "2026-06-25T10:00:00Z",
+    updatedAt: "2026-06-25T10:00:00Z",
+  },
+  {
+    id: "entity_customer_balance",
+    type: "business_concept",
+    canonicalName: "Customer Balance",
+    definition: "Owed customer money.",
+    language: "fr",
+    status: "published",
+    domain: ["accounting"],
+    createdAt: "2026-06-25T10:00:00Z",
+    updatedAt: "2026-06-25T10:00:00Z",
+  },
+  {
+    id: "entity_invoice",
+    type: "document_type",
+    canonicalName: "Invoice",
+    definition: "Commercial document issued by a seller.",
+    language: "fr",
+    status: "published",
+    domain: ["accounting"],
+    createdAt: "2026-06-25T10:00:00Z",
+    updatedAt: "2026-06-25T10:00:00Z",
+  },
+  {
+    id: "entity_payment",
+    type: "business_concept",
+    canonicalName: "Payment",
+    definition: "Trade of value for goods or services.",
+    language: "fr",
+    status: "published",
+    domain: ["accounting"],
+    createdAt: "2026-06-25T10:00:00Z",
+    updatedAt: "2026-06-25T10:00:00Z",
+  },
+];
+
+export const citationsFixture: KnowledgeCitation[] = [];

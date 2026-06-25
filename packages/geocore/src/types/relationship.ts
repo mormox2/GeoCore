@@ -12,7 +12,11 @@ export type KnowledgeRelationshipType =
   | "translation_of"
   | "alternative_to"
   | "contrasts_with"
-  | "example_of";
+  | "example_of"
+  | "classified_as"
+  | "reviewed_by"
+  | "supports"
+  | "verifies";
 
 export type KnowledgeRelationshipStrength =
   | "weak"
@@ -20,14 +24,19 @@ export type KnowledgeRelationshipStrength =
   | "strong"
   | "canonical";
 
+export type KnowledgeRelationshipConfidence =
+  | "low"
+  | "medium"
+  | "high";
+
 export type KnowledgeRelationship = {
   id: string;
   sourceId: string;
   targetId: string;
   type: KnowledgeRelationshipType;
   strength: KnowledgeRelationshipStrength;
+  confidence?: KnowledgeRelationshipConfidence;
   reason?: string;
-  confidence?: "low" | "medium" | "high";
   createdAt: string;
   updatedAt: string;
 };

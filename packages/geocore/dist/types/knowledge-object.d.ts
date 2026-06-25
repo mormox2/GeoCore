@@ -1,4 +1,4 @@
-import { KnowledgeStatus } from "./metadata.js";
+import { KnowledgeStatus, GeoCoreMetadata } from "./metadata.js";
 export type KnowledgeObject = {
     id: string;
     slug: string;
@@ -11,6 +11,7 @@ export type KnowledgeObject = {
     createdAt: string;
     updatedAt: string;
     author: string;
+    metadata?: Partial<GeoCoreMetadata>;
     aliases?: string[];
     tags?: string[];
     categories?: string[];
