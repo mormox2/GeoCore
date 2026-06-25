@@ -12,12 +12,12 @@ Authoritative foundation: [0001-geocore-foundation.md](0001-geocore-foundation.m
 | GC-SPEC-0002 | [0002-knowledge-object.md](0002-knowledge-object.md) | Accepted |
 | GC-SPEC-0003 | [0003-knowledge-graph.md](0003-knowledge-graph.md) | Accepted |
 | GC-SPEC-0004 | [0004-metadata-engine.md](0004-metadata-engine.md) | Accepted |
+| GC-SPEC-0005 | [0005-renderer-engine.md](0005-renderer-engine.md) | Accepted |
 
 ## Planned
 
 | ID | Title |
 |----|-------|
-| GC-SPEC-0005 | Renderer Engine |
 | GC-SPEC-0006 | Entity Engine |
 | GC-SPEC-0007 | Content Validation |
 | GC-SPEC-0008 | Search Engine |

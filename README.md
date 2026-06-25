@@ -43,14 +43,14 @@ The first goal is to define a stable foundation for:
 
 ## Current Status
 
-Planning and architecture phase. [GC-SPEC-0001](specs/0001-geocore-foundation.md) through [GC-SPEC-0004](specs/0004-metadata-engine.md) accepted.
+Planning and architecture phase. [GC-SPEC-0001](specs/0001-geocore-foundation.md) through [GC-SPEC-0005](specs/0005-renderer-engine.md) accepted.
 
 ## Immediate Next Step
 
 Draft the next normative specification:
 
 ```txt
-specs/0005-renderer-engine.md
+specs/0006-entity-engine.md
 ```
 
 ## Contributing

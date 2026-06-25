@@ -22,7 +22,7 @@ FAQ, guide, and article are **layout strategies**, not object types.
 
 ## Spec
 
-See [`specs/rendering/`](../../specs/rendering/).
+[GC-SPEC-0005](../../specs/0005-renderer-engine.md) · supporting detail in [`specs/rendering/`](../../specs/rendering/)
 
 ## Implementation
 

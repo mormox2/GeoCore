@@ -30,4 +30,4 @@ Objects never render directly; they produce one or more views first.
 
 ## Spec
 
-[GC-SPEC-0002](../../specs/0002-knowledge-object.md) · Renderer behavior in GC-SPEC-0005 (planned)
+[GC-SPEC-0002](../../specs/0002-knowledge-object.md) · [GC-SPEC-0005](../../specs/0005-renderer-engine.md)
