@@ -1,0 +1,52 @@
+export type KnowledgeStatus = "draft" | "review" | "published" | "archived";
+export type MetadataConfidence = "low" | "medium" | "high";
+export type GeoCoreMetadata = {
+    id: string;
+    slug: string;
+    type: string;
+    title: string;
+    summary: string;
+    language: string;
+    version: string;
+    status: KnowledgeStatus;
+    author: string;
+    reviewer?: string;
+    owner?: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt?: string;
+    reviewedAt?: string;
+    archivedAt?: string;
+    canonicalUrl?: string;
+    entities: string[];
+    topics?: string[];
+    domains?: string[];
+    audiences?: string[];
+    collections?: string[];
+    citations?: string[];
+    seo?: {
+        title?: string;
+        description?: string;
+        canonicalUrl?: string;
+        robots?: string;
+        keywords?: string[];
+    };
+    ai?: {
+        summaryShort?: string;
+        summaryMedium?: string;
+        summaryLong?: string;
+        canonicalAnswer?: string;
+        keyTakeaways?: string[];
+        confidence?: MetadataConfidence;
+        answerableQuestions?: string[];
+        freshness?: "stable" | "periodic" | "frequent";
+    };
+    technical?: {
+        sourceFormat?: string;
+        renderTargets?: string[];
+        contentHash?: string;
+        schemaVersion?: string;
+        validationStatus?: string;
+        indexingStatus?: string;
+    };
+};

@@ -1,0 +1,90 @@
+import { z } from "zod";
+export declare const entityStatusSchema: z.ZodEnum<["draft", "review", "published", "deprecated"]>;
+export declare const entityTypeSchema: z.ZodEnum<["concept", "person", "organization", "place", "product", "feature", "workflow", "medical_concept", "dental_concept", "business_concept", "technical_concept", "document_type", "unit", "metric", "condition", "treatment", "procedure", "tool", "material", "role"]>;
+export declare const knowledgeEntitySchema: z.ZodObject<{
+    id: z.ZodString;
+    type: z.ZodEnum<["concept", "person", "organization", "place", "product", "feature", "workflow", "medical_concept", "dental_concept", "business_concept", "technical_concept", "document_type", "unit", "metric", "condition", "treatment", "procedure", "tool", "material", "role"]>;
+    canonicalName: z.ZodString;
+    definition: z.ZodString;
+    language: z.ZodString;
+    status: z.ZodEnum<["draft", "review", "published", "deprecated"]>;
+    aliases: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    synonyms: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    translations: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+        canonicalName: z.ZodString;
+        aliases: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        definition: z.ZodOptional<z.ZodString>;
+    }, "strip", z.ZodTypeAny, {
+        canonicalName: string;
+        aliases?: string[] | undefined;
+        definition?: string | undefined;
+    }, {
+        canonicalName: string;
+        aliases?: string[] | undefined;
+        definition?: string | undefined;
+    }>>>;
+    domain: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    audience: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    parentId: z.ZodOptional<z.ZodString>;
+    childIds: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    relatedEntityIds: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    externalIds: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
+    citations: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    media: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    disambiguation: z.ZodOptional<z.ZodString>;
+    usageNotes: z.ZodOptional<z.ZodString>;
+    createdAt: z.ZodString;
+    updatedAt: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    language: string;
+    type: "concept" | "person" | "organization" | "place" | "product" | "feature" | "workflow" | "medical_concept" | "dental_concept" | "business_concept" | "technical_concept" | "document_type" | "unit" | "metric" | "condition" | "treatment" | "procedure" | "tool" | "material" | "role";
+    status: "draft" | "review" | "published" | "deprecated";
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    canonicalName: string;
+    definition: string;
+    domain?: string[] | undefined;
+    audience?: string[] | undefined;
+    citations?: string[] | undefined;
+    aliases?: string[] | undefined;
+    media?: string[] | undefined;
+    translations?: Record<string, {
+        canonicalName: string;
+        aliases?: string[] | undefined;
+        definition?: string | undefined;
+    }> | undefined;
+    synonyms?: string[] | undefined;
+    parentId?: string | undefined;
+    childIds?: string[] | undefined;
+    relatedEntityIds?: string[] | undefined;
+    externalIds?: Record<string, string> | undefined;
+    disambiguation?: string | undefined;
+    usageNotes?: string | undefined;
+}, {
+    language: string;
+    type: "concept" | "person" | "organization" | "place" | "product" | "feature" | "workflow" | "medical_concept" | "dental_concept" | "business_concept" | "technical_concept" | "document_type" | "unit" | "metric" | "condition" | "treatment" | "procedure" | "tool" | "material" | "role";
+    status: "draft" | "review" | "published" | "deprecated";
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    canonicalName: string;
+    definition: string;
+    domain?: string[] | undefined;
+    audience?: string[] | undefined;
+    citations?: string[] | undefined;
+    aliases?: string[] | undefined;
+    media?: string[] | undefined;
+    translations?: Record<string, {
+        canonicalName: string;
+        aliases?: string[] | undefined;
+        definition?: string | undefined;
+    }> | undefined;
+    synonyms?: string[] | undefined;
+    parentId?: string | undefined;
+    childIds?: string[] | undefined;
+    relatedEntityIds?: string[] | undefined;
+    externalIds?: Record<string, string> | undefined;
+    disambiguation?: string | undefined;
+    usageNotes?: string | undefined;
+}>;

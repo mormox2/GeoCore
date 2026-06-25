@@ -1,0 +1,10 @@
+export declare const GC_ID_MISSING = "GC_ID_MISSING";
+export declare const GC_SLUG_MISSING = "GC_SLUG_MISSING";
+export declare const GC_TITLE_MISSING = "GC_TITLE_MISSING";
+export declare const GC_SUMMARY_MISSING = "GC_SUMMARY_MISSING";
+export declare const GC_BODY_MISSING = "GC_BODY_MISSING";
+export declare const GC_LANGUAGE_MISSING = "GC_LANGUAGE_MISSING";
+export declare const GC_STATUS_INVALID = "GC_STATUS_INVALID";
+export declare const GC_VERSION_MISSING = "GC_VERSION_MISSING";
+export declare const GC_AUTHOR_MISSING = "GC_AUTHOR_MISSING";
+export declare const GC_METADATA_INVALID = "GC_METADATA_INVALID";

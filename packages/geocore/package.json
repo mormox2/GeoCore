@@ -1,0 +1,19 @@
+{
+  "name": "@mormox2/geocore",
+  "version": "1.0.0",
+  "description": "GeoCore core domain logic, types, validation, and schemas",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
+}
