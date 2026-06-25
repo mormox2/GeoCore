@@ -1,0 +1,37 @@
+flowchart TB
+    K[Knowledge]
+    KO[Knowledge Object]
+    R[Renderer]
+    O[Output]
+
+    K --> KO
+    KO --> R
+    R --> O
+
+    subgraph outputs [Output formats]
+        HTML[HTML]
+        MD[Markdown]
+        PDF[PDF]
+        API[API]
+        LLM[LLM]
+        MOB[Mobile]
+        VOX[Voice]
+    end
+
+    O --> HTML
+    O --> MD
+    O --> PDF
+    O --> API
+    O --> LLM
+    O --> MOB
+    O --> VOX
+
+    subgraph legacy [Legacy labels — implementations not types]
+        FAQ[FAQ layout]
+        GUIDE[Guide layout]
+        ART[Article layout]
+    end
+
+    HTML -.-> FAQ
+    HTML -.-> GUIDE
+    HTML -.-> ART
