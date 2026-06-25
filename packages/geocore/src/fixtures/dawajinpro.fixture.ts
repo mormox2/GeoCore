@@ -2,6 +2,24 @@ import { KnowledgeObject } from "../types/knowledge-object.js";
 import { GraphNode } from "../types/graph.js";
 import { KnowledgeRelationship } from "../types/relationship.js";
 
+/**
+ * Canonical site URL for the Dawajin Pro fixture. Used by the route resolver
+ * to build absolute canonical URLs. Never invent a domain in callers.
+ */
+export const dawajinProSiteUrl = "https://dawajinpro.tn";
+
+/**
+ * Expected route values for the Dawajin Pro knowledge object, asserted by the
+ * route fixture tests. Derived from slug + language via the default pattern.
+ */
+export const dawajinProExpectedRoute = {
+  path: "/fr/gestion-creances-clients",
+  canonicalUrl: "https://dawajinpro.tn/fr/gestion-creances-clients",
+  language: "fr",
+  status: "published",
+  visibility: "public",
+} as const;
+
 export const dawajinproFixture: KnowledgeObject = {
   id: "ko_customer_balance_management",
   slug: "gestion-creances-clients",

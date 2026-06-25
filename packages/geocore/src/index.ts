@@ -132,3 +132,22 @@ export * from "./sitemap/validate-sitemap-output.js";
 export * from "./sitemap/sitemap-generator.js";
 
 export * from "./fixtures/sitemap.fixture.js";
+
+// Export Route Resolver Types, Zod Schemas, and Resolver/Validator Logic
+export * from "./types/route.js";
+export * from "./types/route-entry.js";
+export * from "./types/route-diagnostic.js";
+
+export * from "./schemas/route-entry.schema.js";
+export * from "./schemas/route-registry.schema.js";
+
+export * from "./routing/route-utils.js";
+export * from "./routing/route-patterns.js";
+export * from "./routing/route-filter.js";
+export * from "./routing/route-conflicts.js";
+export * from "./routing/route-resolver.js";
+export * from "./routing/route-registry.js";
+export * from "./routing/validate-route-entry.js";
+export * from "./routing/validate-route-registry.js";
+
+export * from "./fixtures/route.fixture.js";

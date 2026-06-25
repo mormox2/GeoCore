@@ -2,6 +2,24 @@ import { KnowledgeObject } from "../types/knowledge-object.js";
 import { GraphNode } from "../types/graph.js";
 import { KnowledgeRelationship } from "../types/relationship.js";
 
+/**
+ * Canonical site URL for the RTimi Dental fixture. Used by the route resolver
+ * to build absolute canonical URLs. Never invent a domain in callers.
+ */
+export const rtimiDentalSiteUrl = "https://rtimidental.tn";
+
+/**
+ * Expected route values for the RTimi Dental knowledge object, asserted by the
+ * route fixture tests. Derived from slug + language via the default pattern.
+ */
+export const rtimiDentalExpectedRoute = {
+  path: "/fr/detartrage-abime-t-il-les-dents",
+  canonicalUrl: "https://rtimidental.tn/fr/detartrage-abime-t-il-les-dents",
+  language: "fr",
+  status: "published",
+  visibility: "public",
+} as const;
+
 export const rtimidentalFixture: KnowledgeObject = {
   id: "ko_detartrage_abime_dents",
   slug: "detartrage-abime-t-il-les-dents",
