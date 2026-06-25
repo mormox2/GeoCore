@@ -13,16 +13,20 @@ Authoritative foundation: [0001-geocore-foundation.md](0001-geocore-foundation.m
 | GC-SPEC-0003 | [0003-knowledge-graph.md](0003-knowledge-graph.md) | Accepted |
 | GC-SPEC-0004 | [0004-metadata-engine.md](0004-metadata-engine.md) | Accepted |
 | GC-SPEC-0005 | [0005-renderer-engine.md](0005-renderer-engine.md) | Accepted |
-
-## Planned
-
-| ID | Title |
-|----|-------|
-| GC-SPEC-0006 | Entity Engine |
-| GC-SPEC-0007 | Content Validation |
-| GC-SPEC-0008 | Search Engine |
-| GC-SPEC-0009 | AI Integration |
-| GC-SPEC-0010 | Documentation Engine |
+| GC-SPEC-0006 | [0006-entity-engine.md](0006-entity-engine.md) | Accepted |
+| GC-SPEC-0007 | [0007-content-validation.md](0007-content-validation.md) | Accepted |
+| GC-SPEC-0008 | [0008-search-engine.md](0008-search-engine.md) | Accepted |
+| GC-SPEC-0009 | [0009-ai-integration.md](0009-ai-integration.md) | Accepted |
+| GC-SPEC-0010 | [0010-documentation-engine.md](0010-documentation-engine.md) | Accepted |
+| GC-SPEC-0011 | [0011-schema-engine.md](0011-schema-engine.md) | Accepted |
+| GC-SPEC-0012 | [0012-llms-engine.md](0012-llms-engine.md) | Accepted |
+| GC-SPEC-0013 | [0013-sitemap-engine.md](0013-sitemap-engine.md) | Accepted |
+| GC-SPEC-0014 | [0014-collection-engine.md](0014-collection-engine.md) | Accepted |
+| GC-SPEC-0015 | [0015-taxonomy-engine.md](0015-taxonomy-engine.md) | Accepted |
+| GC-SPEC-0016 | [0016-glossary-engine.md](0016-glossary-engine.md) | Accepted |
+| GC-SPEC-0017 | [0017-citation-engine.md](0017-citation-engine.md) | Accepted |
+| GC-SPEC-0018 | [0018-media-engine.md](0018-media-engine.md) | Accepted |
+| GC-SPEC-0019 | [0019-api-engine.md](0019-api-engine.md) | Accepted |
 
 Filename format: `NNNN-kebab-case-title.md` (see spec 0001 §11).
 
@@ -59,7 +63,7 @@ Schemas, examples, and split detail MAY live under:
 | [entity-model/](entity-model/) | GC-SPEC-0003, GC-SPEC-0006 |
 | [rendering/](rendering/) | GC-SPEC-0005 |
 | [metadata/](metadata/) | GC-SPEC-0004 |
-| [api/](api/) | GC-SPEC-0009, GC-SPEC-0010 |
+| [api/](api/) | GC-SPEC-0019 |
 
 ## Change process
 
