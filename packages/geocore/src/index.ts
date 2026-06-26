@@ -151,3 +151,20 @@ export * from "./routing/validate-route-entry.js";
 export * from "./routing/validate-route-registry.js";
 
 export * from "./fixtures/route.fixture.js";
+
+// Export Static Exporter Types, Zod Schemas, and Exporter Logic
+export * from "./types/static-export.js";
+export * from "./types/static-export-asset.js";
+export * from "./types/static-export-diagnostic.js";
+
+export * from "./schemas/static-export-asset.schema.js";
+export * from "./schemas/static-export-bundle.schema.js";
+
+export * from "./export/export-utils.js";
+export * from "./export/export-paths.js";
+export * from "./export/export-manifest.js";
+export * from "./export/static-exporter.js";
+export * from "./export/validate-static-export-asset.js";
+export * from "./export/validate-static-export-bundle.js";
+
+export * from "./fixtures/static-export.fixture.js";
