@@ -158,3 +158,18 @@ export * from "./loader/load-media.js";
 export * from "./loader/validate-knowledge-dataset.js";
 export * from "./loader/knowledge-loader.js";
 export * from "./fixtures/loader.fixture.js";
+// Export Validation Pipeline Types, Zod Schemas, and Orchestrator Logic
+export * from "./types/validation-stage.js";
+export * from "./types/validation-report.js";
+export * from "./types/validation-pipeline.js";
+export * from "./schemas/validation-stage.schema.js";
+export * from "./schemas/validation-report.schema.js";
+export * from "./schemas/validation-pipeline.schema.js";
+export * from "./pipeline/pipeline-config.js";
+export * from "./pipeline/pipeline-utils.js";
+export * from "./pipeline/normalize-validation-issues.js";
+export * from "./pipeline/validate-pipeline-report.js";
+export * from "./pipeline/pipeline-stages.js";
+export * from "./pipeline/pipeline-report.js";
+export * from "./pipeline/validation-pipeline.js";
+export * from "./fixtures/validation-pipeline.fixture.js";
