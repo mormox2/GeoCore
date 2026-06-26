@@ -1,0 +1,1259 @@
+import { z } from "zod";
+export declare const rawKnowledgeInputTypeSchema: z.ZodEnum<["knowledge-object", "markdown", "entity", "collection", "taxonomy-term", "glossary-entry", "citation", "source", "media"]>;
+export declare const rawKnowledgeInputSchema: z.ZodObject<{
+    id: z.ZodOptional<z.ZodString>;
+    type: z.ZodEnum<["knowledge-object", "markdown", "entity", "collection", "taxonomy-term", "glossary-entry", "citation", "source", "media"]>;
+    sourcePath: z.ZodOptional<z.ZodString>;
+    content: z.ZodUnknown;
+}, "strip", z.ZodTypeAny, {
+    type: "knowledge-object" | "entity" | "source" | "citation" | "media" | "collection" | "taxonomy-term" | "glossary-entry" | "markdown";
+    id?: string | undefined;
+    content?: unknown;
+    sourcePath?: string | undefined;
+}, {
+    type: "knowledge-object" | "entity" | "source" | "citation" | "media" | "collection" | "taxonomy-term" | "glossary-entry" | "markdown";
+    id?: string | undefined;
+    content?: unknown;
+    sourcePath?: string | undefined;
+}>;
+export declare const collectionItemSchema: z.ZodObject<{
+    objectId: z.ZodString;
+    order: z.ZodOptional<z.ZodNumber>;
+    section: z.ZodOptional<z.ZodString>;
+    required: z.ZodOptional<z.ZodBoolean>;
+    label: z.ZodOptional<z.ZodString>;
+    description: z.ZodOptional<z.ZodString>;
+}, "strip", z.ZodTypeAny, {
+    objectId: string;
+    required?: boolean | undefined;
+    description?: string | undefined;
+    label?: string | undefined;
+    order?: number | undefined;
+    section?: string | undefined;
+}, {
+    objectId: string;
+    required?: boolean | undefined;
+    description?: string | undefined;
+    label?: string | undefined;
+    order?: number | undefined;
+    section?: string | undefined;
+}>;
+export declare const collectionSchema: z.ZodObject<{
+    id: z.ZodString;
+    slug: z.ZodString;
+    title: z.ZodString;
+    summary: z.ZodString;
+    type: z.ZodString;
+    language: z.ZodString;
+    status: z.ZodString;
+    version: z.ZodString;
+    items: z.ZodArray<z.ZodObject<{
+        objectId: z.ZodString;
+        order: z.ZodOptional<z.ZodNumber>;
+        section: z.ZodOptional<z.ZodString>;
+        required: z.ZodOptional<z.ZodBoolean>;
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+    }, "strip", z.ZodTypeAny, {
+        objectId: string;
+        required?: boolean | undefined;
+        description?: string | undefined;
+        label?: string | undefined;
+        order?: number | undefined;
+        section?: string | undefined;
+    }, {
+        objectId: string;
+        required?: boolean | undefined;
+        description?: string | undefined;
+        label?: string | undefined;
+        order?: number | undefined;
+        section?: string | undefined;
+    }>, "many">;
+}, "strip", z.ZodTypeAny, {
+    language: string;
+    title: string;
+    type: string;
+    status: string;
+    id: string;
+    slug: string;
+    summary: string;
+    version: string;
+    items: {
+        objectId: string;
+        required?: boolean | undefined;
+        description?: string | undefined;
+        label?: string | undefined;
+        order?: number | undefined;
+        section?: string | undefined;
+    }[];
+}, {
+    language: string;
+    title: string;
+    type: string;
+    status: string;
+    id: string;
+    slug: string;
+    summary: string;
+    version: string;
+    items: {
+        objectId: string;
+        required?: boolean | undefined;
+        description?: string | undefined;
+        label?: string | undefined;
+        order?: number | undefined;
+        section?: string | undefined;
+    }[];
+}>;
+export declare const taxonomyTermSchema: z.ZodObject<{
+    id: z.ZodString;
+    type: z.ZodString;
+    slug: z.ZodString;
+    label: z.ZodUnion<[z.ZodString, z.ZodRecord<z.ZodString, z.ZodString>]>;
+    description: z.ZodUnion<[z.ZodString, z.ZodRecord<z.ZodString, z.ZodString>]>;
+    status: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    description: string | Record<string, string>;
+    type: string;
+    status: string;
+    id: string;
+    slug: string;
+    label: string | Record<string, string>;
+}, {
+    description: string | Record<string, string>;
+    type: string;
+    status: string;
+    id: string;
+    slug: string;
+    label: string | Record<string, string>;
+}>;
+export declare const glossaryEntrySchema: z.ZodObject<{
+    id: z.ZodString;
+    term: z.ZodString;
+    slug: z.ZodString;
+    definition: z.ZodString;
+    language: z.ZodString;
+    status: z.ZodString;
+    audience: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    audience: string;
+    language: string;
+    status: string;
+    id: string;
+    slug: string;
+    definition: string;
+    term: string;
+}, {
+    audience: string;
+    language: string;
+    status: string;
+    id: string;
+    slug: string;
+    definition: string;
+    term: string;
+}>;
+export declare const sourceSchema: z.ZodObject<{
+    id: z.ZodString;
+    type: z.ZodString;
+    title: z.ZodString;
+    status: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    title: string;
+    type: string;
+    status: string;
+    id: string;
+}, {
+    title: string;
+    type: string;
+    status: string;
+    id: string;
+}>;
+export declare const citationSchema: z.ZodObject<{
+    id: z.ZodString;
+    sourceId: z.ZodString;
+    targetId: z.ZodString;
+    purpose: z.ZodString;
+    status: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    status: string;
+    id: string;
+    sourceId: string;
+    targetId: string;
+    purpose: string;
+}, {
+    status: string;
+    id: string;
+    sourceId: string;
+    targetId: string;
+    purpose: string;
+}>;
+export declare const mediaAssetSchema: z.ZodObject<{
+    id: z.ZodString;
+    type: z.ZodString;
+    title: z.ZodString;
+    status: z.ZodString;
+    source: z.ZodString;
+    visibility: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    source: string;
+    title: string;
+    type: string;
+    status: string;
+    id: string;
+    visibility: string;
+}, {
+    source: string;
+    title: string;
+    type: string;
+    status: string;
+    id: string;
+    visibility: string;
+}>;
+export declare const knowledgeDatasetSchema: z.ZodObject<{
+    id: z.ZodString;
+    name: z.ZodString;
+    objects: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        slug: z.ZodString;
+        title: z.ZodString;
+        summary: z.ZodString;
+        body: z.ZodString;
+        language: z.ZodString;
+        status: z.ZodEnum<["draft", "review", "published", "archived"]>;
+        version: z.ZodString;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+        author: z.ZodString;
+        metadata: z.ZodOptional<z.ZodObject<{
+            id: z.ZodOptional<z.ZodString>;
+            slug: z.ZodOptional<z.ZodString>;
+            title: z.ZodOptional<z.ZodString>;
+            summary: z.ZodOptional<z.ZodString>;
+            language: z.ZodOptional<z.ZodString>;
+            version: z.ZodOptional<z.ZodString>;
+            status: z.ZodOptional<z.ZodEnum<["draft", "review", "published", "archived"]>>;
+            author: z.ZodOptional<z.ZodString>;
+            reviewer: z.ZodOptional<z.ZodOptional<z.ZodString>>;
+            owner: z.ZodOptional<z.ZodOptional<z.ZodString>>;
+            createdAt: z.ZodOptional<z.ZodString>;
+            updatedAt: z.ZodOptional<z.ZodString>;
+            publishedAt: z.ZodOptional<z.ZodOptional<z.ZodString>>;
+            reviewedAt: z.ZodOptional<z.ZodOptional<z.ZodString>>;
+            archivedAt: z.ZodOptional<z.ZodOptional<z.ZodString>>;
+            canonicalUrl: z.ZodOptional<z.ZodOptional<z.ZodString>>;
+            entities: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>;
+            topics: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>;
+            domains: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>;
+            audiences: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>;
+            collections: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>;
+            citations: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>;
+            trustLevel: z.ZodOptional<z.ZodOptional<z.ZodString>>;
+            freshness: z.ZodOptional<z.ZodOptional<z.ZodEnum<["stable", "periodic", "frequent", "live"]>>>;
+            seo: z.ZodOptional<z.ZodOptional<z.ZodObject<{
+                title: z.ZodOptional<z.ZodString>;
+                description: z.ZodOptional<z.ZodString>;
+                canonicalUrl: z.ZodOptional<z.ZodString>;
+                robots: z.ZodOptional<z.ZodString>;
+                keywords: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                title?: string | undefined;
+                description?: string | undefined;
+                canonicalUrl?: string | undefined;
+                robots?: string | undefined;
+                keywords?: string[] | undefined;
+            }, {
+                title?: string | undefined;
+                description?: string | undefined;
+                canonicalUrl?: string | undefined;
+                robots?: string | undefined;
+                keywords?: string[] | undefined;
+            }>>>;
+            ai: z.ZodOptional<z.ZodOptional<z.ZodObject<{
+                summaryShort: z.ZodOptional<z.ZodString>;
+                summaryMedium: z.ZodOptional<z.ZodString>;
+                summaryLong: z.ZodOptional<z.ZodString>;
+                canonicalAnswer: z.ZodOptional<z.ZodString>;
+                keyTakeaways: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+                confidence: z.ZodOptional<z.ZodEnum<["low", "medium", "high"]>>;
+                answerableQuestions: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+                freshness: z.ZodOptional<z.ZodEnum<["stable", "periodic", "frequent", "live"]>>;
+            }, "strip", z.ZodTypeAny, {
+                summaryShort?: string | undefined;
+                summaryMedium?: string | undefined;
+                summaryLong?: string | undefined;
+                canonicalAnswer?: string | undefined;
+                keyTakeaways?: string[] | undefined;
+                confidence?: "low" | "medium" | "high" | undefined;
+                answerableQuestions?: string[] | undefined;
+                freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            }, {
+                summaryShort?: string | undefined;
+                summaryMedium?: string | undefined;
+                summaryLong?: string | undefined;
+                canonicalAnswer?: string | undefined;
+                keyTakeaways?: string[] | undefined;
+                confidence?: "low" | "medium" | "high" | undefined;
+                answerableQuestions?: string[] | undefined;
+                freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            }>>>;
+            technical: z.ZodOptional<z.ZodOptional<z.ZodObject<{
+                sourceFormat: z.ZodOptional<z.ZodString>;
+                renderTargets: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+                contentHash: z.ZodOptional<z.ZodString>;
+                schemaVersion: z.ZodOptional<z.ZodString>;
+                validationStatus: z.ZodOptional<z.ZodString>;
+                indexingStatus: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                sourceFormat?: string | undefined;
+                renderTargets?: string[] | undefined;
+                contentHash?: string | undefined;
+                schemaVersion?: string | undefined;
+                validationStatus?: string | undefined;
+                indexingStatus?: string | undefined;
+            }, {
+                sourceFormat?: string | undefined;
+                renderTargets?: string[] | undefined;
+                contentHash?: string | undefined;
+                schemaVersion?: string | undefined;
+                validationStatus?: string | undefined;
+                indexingStatus?: string | undefined;
+            }>>>;
+        }, "strip", z.ZodTypeAny, {
+            language?: string | undefined;
+            author?: string | undefined;
+            title?: string | undefined;
+            canonicalUrl?: string | undefined;
+            status?: "draft" | "review" | "published" | "archived" | undefined;
+            freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            id?: string | undefined;
+            slug?: string | undefined;
+            summary?: string | undefined;
+            version?: string | undefined;
+            reviewer?: string | undefined;
+            owner?: string | undefined;
+            createdAt?: string | undefined;
+            updatedAt?: string | undefined;
+            publishedAt?: string | undefined;
+            reviewedAt?: string | undefined;
+            archivedAt?: string | undefined;
+            entities?: string[] | undefined;
+            topics?: string[] | undefined;
+            domains?: string[] | undefined;
+            audiences?: string[] | undefined;
+            collections?: string[] | undefined;
+            citations?: string[] | undefined;
+            trustLevel?: string | undefined;
+            seo?: {
+                title?: string | undefined;
+                description?: string | undefined;
+                canonicalUrl?: string | undefined;
+                robots?: string | undefined;
+                keywords?: string[] | undefined;
+            } | undefined;
+            ai?: {
+                summaryShort?: string | undefined;
+                summaryMedium?: string | undefined;
+                summaryLong?: string | undefined;
+                canonicalAnswer?: string | undefined;
+                keyTakeaways?: string[] | undefined;
+                confidence?: "low" | "medium" | "high" | undefined;
+                answerableQuestions?: string[] | undefined;
+                freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            } | undefined;
+            technical?: {
+                sourceFormat?: string | undefined;
+                renderTargets?: string[] | undefined;
+                contentHash?: string | undefined;
+                schemaVersion?: string | undefined;
+                validationStatus?: string | undefined;
+                indexingStatus?: string | undefined;
+            } | undefined;
+        }, {
+            language?: string | undefined;
+            author?: string | undefined;
+            title?: string | undefined;
+            canonicalUrl?: string | undefined;
+            status?: "draft" | "review" | "published" | "archived" | undefined;
+            freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            id?: string | undefined;
+            slug?: string | undefined;
+            summary?: string | undefined;
+            version?: string | undefined;
+            reviewer?: string | undefined;
+            owner?: string | undefined;
+            createdAt?: string | undefined;
+            updatedAt?: string | undefined;
+            publishedAt?: string | undefined;
+            reviewedAt?: string | undefined;
+            archivedAt?: string | undefined;
+            entities?: string[] | undefined;
+            topics?: string[] | undefined;
+            domains?: string[] | undefined;
+            audiences?: string[] | undefined;
+            collections?: string[] | undefined;
+            citations?: string[] | undefined;
+            trustLevel?: string | undefined;
+            seo?: {
+                title?: string | undefined;
+                description?: string | undefined;
+                canonicalUrl?: string | undefined;
+                robots?: string | undefined;
+                keywords?: string[] | undefined;
+            } | undefined;
+            ai?: {
+                summaryShort?: string | undefined;
+                summaryMedium?: string | undefined;
+                summaryLong?: string | undefined;
+                canonicalAnswer?: string | undefined;
+                keyTakeaways?: string[] | undefined;
+                confidence?: "low" | "medium" | "high" | undefined;
+                answerableQuestions?: string[] | undefined;
+                freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            } | undefined;
+            technical?: {
+                sourceFormat?: string | undefined;
+                renderTargets?: string[] | undefined;
+                contentHash?: string | undefined;
+                schemaVersion?: string | undefined;
+                validationStatus?: string | undefined;
+                indexingStatus?: string | undefined;
+            } | undefined;
+        }>>;
+        aliases: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        tags: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        categories: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        media: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        citations: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        attachments: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        glossaryReferences: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        externalResources: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        translations: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
+        relatedObjects: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    }, "strip", z.ZodTypeAny, {
+        language: string;
+        author: string;
+        title: string;
+        status: "draft" | "review" | "published" | "archived";
+        id: string;
+        slug: string;
+        summary: string;
+        version: string;
+        createdAt: string;
+        updatedAt: string;
+        body: string;
+        media?: string[] | undefined;
+        citations?: string[] | undefined;
+        metadata?: {
+            language?: string | undefined;
+            author?: string | undefined;
+            title?: string | undefined;
+            canonicalUrl?: string | undefined;
+            status?: "draft" | "review" | "published" | "archived" | undefined;
+            freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            id?: string | undefined;
+            slug?: string | undefined;
+            summary?: string | undefined;
+            version?: string | undefined;
+            reviewer?: string | undefined;
+            owner?: string | undefined;
+            createdAt?: string | undefined;
+            updatedAt?: string | undefined;
+            publishedAt?: string | undefined;
+            reviewedAt?: string | undefined;
+            archivedAt?: string | undefined;
+            entities?: string[] | undefined;
+            topics?: string[] | undefined;
+            domains?: string[] | undefined;
+            audiences?: string[] | undefined;
+            collections?: string[] | undefined;
+            citations?: string[] | undefined;
+            trustLevel?: string | undefined;
+            seo?: {
+                title?: string | undefined;
+                description?: string | undefined;
+                canonicalUrl?: string | undefined;
+                robots?: string | undefined;
+                keywords?: string[] | undefined;
+            } | undefined;
+            ai?: {
+                summaryShort?: string | undefined;
+                summaryMedium?: string | undefined;
+                summaryLong?: string | undefined;
+                canonicalAnswer?: string | undefined;
+                keyTakeaways?: string[] | undefined;
+                confidence?: "low" | "medium" | "high" | undefined;
+                answerableQuestions?: string[] | undefined;
+                freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            } | undefined;
+            technical?: {
+                sourceFormat?: string | undefined;
+                renderTargets?: string[] | undefined;
+                contentHash?: string | undefined;
+                schemaVersion?: string | undefined;
+                validationStatus?: string | undefined;
+                indexingStatus?: string | undefined;
+            } | undefined;
+        } | undefined;
+        aliases?: string[] | undefined;
+        tags?: string[] | undefined;
+        categories?: string[] | undefined;
+        attachments?: string[] | undefined;
+        glossaryReferences?: string[] | undefined;
+        externalResources?: string[] | undefined;
+        translations?: Record<string, string> | undefined;
+        relatedObjects?: string[] | undefined;
+    }, {
+        language: string;
+        author: string;
+        title: string;
+        status: "draft" | "review" | "published" | "archived";
+        id: string;
+        slug: string;
+        summary: string;
+        version: string;
+        createdAt: string;
+        updatedAt: string;
+        body: string;
+        media?: string[] | undefined;
+        citations?: string[] | undefined;
+        metadata?: {
+            language?: string | undefined;
+            author?: string | undefined;
+            title?: string | undefined;
+            canonicalUrl?: string | undefined;
+            status?: "draft" | "review" | "published" | "archived" | undefined;
+            freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            id?: string | undefined;
+            slug?: string | undefined;
+            summary?: string | undefined;
+            version?: string | undefined;
+            reviewer?: string | undefined;
+            owner?: string | undefined;
+            createdAt?: string | undefined;
+            updatedAt?: string | undefined;
+            publishedAt?: string | undefined;
+            reviewedAt?: string | undefined;
+            archivedAt?: string | undefined;
+            entities?: string[] | undefined;
+            topics?: string[] | undefined;
+            domains?: string[] | undefined;
+            audiences?: string[] | undefined;
+            collections?: string[] | undefined;
+            citations?: string[] | undefined;
+            trustLevel?: string | undefined;
+            seo?: {
+                title?: string | undefined;
+                description?: string | undefined;
+                canonicalUrl?: string | undefined;
+                robots?: string | undefined;
+                keywords?: string[] | undefined;
+            } | undefined;
+            ai?: {
+                summaryShort?: string | undefined;
+                summaryMedium?: string | undefined;
+                summaryLong?: string | undefined;
+                canonicalAnswer?: string | undefined;
+                keyTakeaways?: string[] | undefined;
+                confidence?: "low" | "medium" | "high" | undefined;
+                answerableQuestions?: string[] | undefined;
+                freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            } | undefined;
+            technical?: {
+                sourceFormat?: string | undefined;
+                renderTargets?: string[] | undefined;
+                contentHash?: string | undefined;
+                schemaVersion?: string | undefined;
+                validationStatus?: string | undefined;
+                indexingStatus?: string | undefined;
+            } | undefined;
+        } | undefined;
+        aliases?: string[] | undefined;
+        tags?: string[] | undefined;
+        categories?: string[] | undefined;
+        attachments?: string[] | undefined;
+        glossaryReferences?: string[] | undefined;
+        externalResources?: string[] | undefined;
+        translations?: Record<string, string> | undefined;
+        relatedObjects?: string[] | undefined;
+    }>, "many">;
+    entities: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        type: z.ZodEnum<["concept", "person", "organization", "place", "product", "feature", "workflow", "medical_concept", "dental_concept", "business_concept", "technical_concept", "document_type", "unit", "metric", "condition", "treatment", "procedure", "tool", "material", "role"]>;
+        canonicalName: z.ZodString;
+        definition: z.ZodString;
+        language: z.ZodString;
+        status: z.ZodEnum<["draft", "review", "published", "deprecated"]>;
+        aliases: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        synonyms: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        translations: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+            canonicalName: z.ZodString;
+            aliases: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+            definition: z.ZodOptional<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            canonicalName: string;
+            aliases?: string[] | undefined;
+            definition?: string | undefined;
+        }, {
+            canonicalName: string;
+            aliases?: string[] | undefined;
+            definition?: string | undefined;
+        }>>>;
+        domain: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        audience: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        parentId: z.ZodOptional<z.ZodString>;
+        childIds: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        relatedEntityIds: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        externalIds: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
+        citations: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        media: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        disambiguation: z.ZodOptional<z.ZodString>;
+        usageNotes: z.ZodOptional<z.ZodString>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        language: string;
+        type: "concept" | "person" | "organization" | "place" | "product" | "feature" | "workflow" | "medical_concept" | "dental_concept" | "business_concept" | "technical_concept" | "document_type" | "unit" | "metric" | "condition" | "treatment" | "procedure" | "tool" | "material" | "role";
+        status: "draft" | "review" | "published" | "deprecated";
+        id: string;
+        createdAt: string;
+        updatedAt: string;
+        canonicalName: string;
+        definition: string;
+        domain?: string[] | undefined;
+        audience?: string[] | undefined;
+        media?: string[] | undefined;
+        citations?: string[] | undefined;
+        aliases?: string[] | undefined;
+        translations?: Record<string, {
+            canonicalName: string;
+            aliases?: string[] | undefined;
+            definition?: string | undefined;
+        }> | undefined;
+        synonyms?: string[] | undefined;
+        parentId?: string | undefined;
+        childIds?: string[] | undefined;
+        relatedEntityIds?: string[] | undefined;
+        externalIds?: Record<string, string> | undefined;
+        disambiguation?: string | undefined;
+        usageNotes?: string | undefined;
+    }, {
+        language: string;
+        type: "concept" | "person" | "organization" | "place" | "product" | "feature" | "workflow" | "medical_concept" | "dental_concept" | "business_concept" | "technical_concept" | "document_type" | "unit" | "metric" | "condition" | "treatment" | "procedure" | "tool" | "material" | "role";
+        status: "draft" | "review" | "published" | "deprecated";
+        id: string;
+        createdAt: string;
+        updatedAt: string;
+        canonicalName: string;
+        definition: string;
+        domain?: string[] | undefined;
+        audience?: string[] | undefined;
+        media?: string[] | undefined;
+        citations?: string[] | undefined;
+        aliases?: string[] | undefined;
+        translations?: Record<string, {
+            canonicalName: string;
+            aliases?: string[] | undefined;
+            definition?: string | undefined;
+        }> | undefined;
+        synonyms?: string[] | undefined;
+        parentId?: string | undefined;
+        childIds?: string[] | undefined;
+        relatedEntityIds?: string[] | undefined;
+        externalIds?: Record<string, string> | undefined;
+        disambiguation?: string | undefined;
+        usageNotes?: string | undefined;
+    }>, "many">;
+    relationships: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        sourceId: z.ZodString;
+        targetId: z.ZodString;
+        type: z.ZodEnum<["related_to", "parent_of", "child_of", "part_of", "requires", "explains", "cites", "authored_by", "mentions", "uses_media", "translation_of", "alternative_to", "contrasts_with", "example_of", "classified_as", "reviewed_by", "supports", "verifies"]>;
+        strength: z.ZodEnum<["weak", "medium", "strong", "canonical"]>;
+        reason: z.ZodOptional<z.ZodString>;
+        confidence: z.ZodOptional<z.ZodEnum<["low", "medium", "high"]>>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        type: "related_to" | "parent_of" | "child_of" | "part_of" | "requires" | "explains" | "cites" | "authored_by" | "mentions" | "uses_media" | "translation_of" | "alternative_to" | "contrasts_with" | "example_of" | "classified_as" | "reviewed_by" | "supports" | "verifies";
+        id: string;
+        createdAt: string;
+        updatedAt: string;
+        sourceId: string;
+        targetId: string;
+        strength: "medium" | "weak" | "strong" | "canonical";
+        confidence?: "low" | "medium" | "high" | undefined;
+        reason?: string | undefined;
+    }, {
+        type: "related_to" | "parent_of" | "child_of" | "part_of" | "requires" | "explains" | "cites" | "authored_by" | "mentions" | "uses_media" | "translation_of" | "alternative_to" | "contrasts_with" | "example_of" | "classified_as" | "reviewed_by" | "supports" | "verifies";
+        id: string;
+        createdAt: string;
+        updatedAt: string;
+        sourceId: string;
+        targetId: string;
+        strength: "medium" | "weak" | "strong" | "canonical";
+        confidence?: "low" | "medium" | "high" | undefined;
+        reason?: string | undefined;
+    }>, "many">;
+    collections: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        slug: z.ZodString;
+        title: z.ZodString;
+        summary: z.ZodString;
+        type: z.ZodString;
+        language: z.ZodString;
+        status: z.ZodString;
+        version: z.ZodString;
+        items: z.ZodArray<z.ZodObject<{
+            objectId: z.ZodString;
+            order: z.ZodOptional<z.ZodNumber>;
+            section: z.ZodOptional<z.ZodString>;
+            required: z.ZodOptional<z.ZodBoolean>;
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            objectId: string;
+            required?: boolean | undefined;
+            description?: string | undefined;
+            label?: string | undefined;
+            order?: number | undefined;
+            section?: string | undefined;
+        }, {
+            objectId: string;
+            required?: boolean | undefined;
+            description?: string | undefined;
+            label?: string | undefined;
+            order?: number | undefined;
+            section?: string | undefined;
+        }>, "many">;
+    }, "strip", z.ZodTypeAny, {
+        language: string;
+        title: string;
+        type: string;
+        status: string;
+        id: string;
+        slug: string;
+        summary: string;
+        version: string;
+        items: {
+            objectId: string;
+            required?: boolean | undefined;
+            description?: string | undefined;
+            label?: string | undefined;
+            order?: number | undefined;
+            section?: string | undefined;
+        }[];
+    }, {
+        language: string;
+        title: string;
+        type: string;
+        status: string;
+        id: string;
+        slug: string;
+        summary: string;
+        version: string;
+        items: {
+            objectId: string;
+            required?: boolean | undefined;
+            description?: string | undefined;
+            label?: string | undefined;
+            order?: number | undefined;
+            section?: string | undefined;
+        }[];
+    }>, "many">;
+    taxonomyTerms: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        type: z.ZodString;
+        slug: z.ZodString;
+        label: z.ZodUnion<[z.ZodString, z.ZodRecord<z.ZodString, z.ZodString>]>;
+        description: z.ZodUnion<[z.ZodString, z.ZodRecord<z.ZodString, z.ZodString>]>;
+        status: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        description: string | Record<string, string>;
+        type: string;
+        status: string;
+        id: string;
+        slug: string;
+        label: string | Record<string, string>;
+    }, {
+        description: string | Record<string, string>;
+        type: string;
+        status: string;
+        id: string;
+        slug: string;
+        label: string | Record<string, string>;
+    }>, "many">;
+    glossaryEntries: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        term: z.ZodString;
+        slug: z.ZodString;
+        definition: z.ZodString;
+        language: z.ZodString;
+        status: z.ZodString;
+        audience: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        audience: string;
+        language: string;
+        status: string;
+        id: string;
+        slug: string;
+        definition: string;
+        term: string;
+    }, {
+        audience: string;
+        language: string;
+        status: string;
+        id: string;
+        slug: string;
+        definition: string;
+        term: string;
+    }>, "many">;
+    sources: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        type: z.ZodString;
+        title: z.ZodString;
+        status: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        title: string;
+        type: string;
+        status: string;
+        id: string;
+    }, {
+        title: string;
+        type: string;
+        status: string;
+        id: string;
+    }>, "many">;
+    citations: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        sourceId: z.ZodString;
+        targetId: z.ZodString;
+        purpose: z.ZodString;
+        status: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        status: string;
+        id: string;
+        sourceId: string;
+        targetId: string;
+        purpose: string;
+    }, {
+        status: string;
+        id: string;
+        sourceId: string;
+        targetId: string;
+        purpose: string;
+    }>, "many">;
+    media: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        type: z.ZodString;
+        title: z.ZodString;
+        status: z.ZodString;
+        source: z.ZodString;
+        visibility: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        source: string;
+        title: string;
+        type: string;
+        status: string;
+        id: string;
+        visibility: string;
+    }, {
+        source: string;
+        title: string;
+        type: string;
+        status: string;
+        id: string;
+        visibility: string;
+    }>, "many">;
+    loadedAt: z.ZodString;
+    diagnostics: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        severity: z.ZodEnum<["info", "warning", "error", "critical"]>;
+        code: z.ZodString;
+        message: z.ZodString;
+        sourcePath: z.ZodOptional<z.ZodString>;
+        inputId: z.ZodOptional<z.ZodString>;
+        field: z.ZodOptional<z.ZodString>;
+        recommendation: z.ZodOptional<z.ZodString>;
+    }, "strip", z.ZodTypeAny, {
+        code: string;
+        message: string;
+        id: string;
+        severity: "info" | "warning" | "error" | "critical";
+        field?: string | undefined;
+        recommendation?: string | undefined;
+        sourcePath?: string | undefined;
+        inputId?: string | undefined;
+    }, {
+        code: string;
+        message: string;
+        id: string;
+        severity: "info" | "warning" | "error" | "critical";
+        field?: string | undefined;
+        recommendation?: string | undefined;
+        sourcePath?: string | undefined;
+        inputId?: string | undefined;
+    }>, "many">;
+}, "strip", z.ZodTypeAny, {
+    media: {
+        source: string;
+        title: string;
+        type: string;
+        status: string;
+        id: string;
+        visibility: string;
+    }[];
+    id: string;
+    entities: {
+        language: string;
+        type: "concept" | "person" | "organization" | "place" | "product" | "feature" | "workflow" | "medical_concept" | "dental_concept" | "business_concept" | "technical_concept" | "document_type" | "unit" | "metric" | "condition" | "treatment" | "procedure" | "tool" | "material" | "role";
+        status: "draft" | "review" | "published" | "deprecated";
+        id: string;
+        createdAt: string;
+        updatedAt: string;
+        canonicalName: string;
+        definition: string;
+        domain?: string[] | undefined;
+        audience?: string[] | undefined;
+        media?: string[] | undefined;
+        citations?: string[] | undefined;
+        aliases?: string[] | undefined;
+        translations?: Record<string, {
+            canonicalName: string;
+            aliases?: string[] | undefined;
+            definition?: string | undefined;
+        }> | undefined;
+        synonyms?: string[] | undefined;
+        parentId?: string | undefined;
+        childIds?: string[] | undefined;
+        relatedEntityIds?: string[] | undefined;
+        externalIds?: Record<string, string> | undefined;
+        disambiguation?: string | undefined;
+        usageNotes?: string | undefined;
+    }[];
+    collections: {
+        language: string;
+        title: string;
+        type: string;
+        status: string;
+        id: string;
+        slug: string;
+        summary: string;
+        version: string;
+        items: {
+            objectId: string;
+            required?: boolean | undefined;
+            description?: string | undefined;
+            label?: string | undefined;
+            order?: number | undefined;
+            section?: string | undefined;
+        }[];
+    }[];
+    citations: {
+        status: string;
+        id: string;
+        sourceId: string;
+        targetId: string;
+        purpose: string;
+    }[];
+    relationships: {
+        type: "related_to" | "parent_of" | "child_of" | "part_of" | "requires" | "explains" | "cites" | "authored_by" | "mentions" | "uses_media" | "translation_of" | "alternative_to" | "contrasts_with" | "example_of" | "classified_as" | "reviewed_by" | "supports" | "verifies";
+        id: string;
+        createdAt: string;
+        updatedAt: string;
+        sourceId: string;
+        targetId: string;
+        strength: "medium" | "weak" | "strong" | "canonical";
+        confidence?: "low" | "medium" | "high" | undefined;
+        reason?: string | undefined;
+    }[];
+    diagnostics: {
+        code: string;
+        message: string;
+        id: string;
+        severity: "info" | "warning" | "error" | "critical";
+        field?: string | undefined;
+        recommendation?: string | undefined;
+        sourcePath?: string | undefined;
+        inputId?: string | undefined;
+    }[];
+    name: string;
+    objects: {
+        language: string;
+        author: string;
+        title: string;
+        status: "draft" | "review" | "published" | "archived";
+        id: string;
+        slug: string;
+        summary: string;
+        version: string;
+        createdAt: string;
+        updatedAt: string;
+        body: string;
+        media?: string[] | undefined;
+        citations?: string[] | undefined;
+        metadata?: {
+            language?: string | undefined;
+            author?: string | undefined;
+            title?: string | undefined;
+            canonicalUrl?: string | undefined;
+            status?: "draft" | "review" | "published" | "archived" | undefined;
+            freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            id?: string | undefined;
+            slug?: string | undefined;
+            summary?: string | undefined;
+            version?: string | undefined;
+            reviewer?: string | undefined;
+            owner?: string | undefined;
+            createdAt?: string | undefined;
+            updatedAt?: string | undefined;
+            publishedAt?: string | undefined;
+            reviewedAt?: string | undefined;
+            archivedAt?: string | undefined;
+            entities?: string[] | undefined;
+            topics?: string[] | undefined;
+            domains?: string[] | undefined;
+            audiences?: string[] | undefined;
+            collections?: string[] | undefined;
+            citations?: string[] | undefined;
+            trustLevel?: string | undefined;
+            seo?: {
+                title?: string | undefined;
+                description?: string | undefined;
+                canonicalUrl?: string | undefined;
+                robots?: string | undefined;
+                keywords?: string[] | undefined;
+            } | undefined;
+            ai?: {
+                summaryShort?: string | undefined;
+                summaryMedium?: string | undefined;
+                summaryLong?: string | undefined;
+                canonicalAnswer?: string | undefined;
+                keyTakeaways?: string[] | undefined;
+                confidence?: "low" | "medium" | "high" | undefined;
+                answerableQuestions?: string[] | undefined;
+                freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            } | undefined;
+            technical?: {
+                sourceFormat?: string | undefined;
+                renderTargets?: string[] | undefined;
+                contentHash?: string | undefined;
+                schemaVersion?: string | undefined;
+                validationStatus?: string | undefined;
+                indexingStatus?: string | undefined;
+            } | undefined;
+        } | undefined;
+        aliases?: string[] | undefined;
+        tags?: string[] | undefined;
+        categories?: string[] | undefined;
+        attachments?: string[] | undefined;
+        glossaryReferences?: string[] | undefined;
+        externalResources?: string[] | undefined;
+        translations?: Record<string, string> | undefined;
+        relatedObjects?: string[] | undefined;
+    }[];
+    sources: {
+        title: string;
+        type: string;
+        status: string;
+        id: string;
+    }[];
+    taxonomyTerms: {
+        description: string | Record<string, string>;
+        type: string;
+        status: string;
+        id: string;
+        slug: string;
+        label: string | Record<string, string>;
+    }[];
+    glossaryEntries: {
+        audience: string;
+        language: string;
+        status: string;
+        id: string;
+        slug: string;
+        definition: string;
+        term: string;
+    }[];
+    loadedAt: string;
+}, {
+    media: {
+        source: string;
+        title: string;
+        type: string;
+        status: string;
+        id: string;
+        visibility: string;
+    }[];
+    id: string;
+    entities: {
+        language: string;
+        type: "concept" | "person" | "organization" | "place" | "product" | "feature" | "workflow" | "medical_concept" | "dental_concept" | "business_concept" | "technical_concept" | "document_type" | "unit" | "metric" | "condition" | "treatment" | "procedure" | "tool" | "material" | "role";
+        status: "draft" | "review" | "published" | "deprecated";
+        id: string;
+        createdAt: string;
+        updatedAt: string;
+        canonicalName: string;
+        definition: string;
+        domain?: string[] | undefined;
+        audience?: string[] | undefined;
+        media?: string[] | undefined;
+        citations?: string[] | undefined;
+        aliases?: string[] | undefined;
+        translations?: Record<string, {
+            canonicalName: string;
+            aliases?: string[] | undefined;
+            definition?: string | undefined;
+        }> | undefined;
+        synonyms?: string[] | undefined;
+        parentId?: string | undefined;
+        childIds?: string[] | undefined;
+        relatedEntityIds?: string[] | undefined;
+        externalIds?: Record<string, string> | undefined;
+        disambiguation?: string | undefined;
+        usageNotes?: string | undefined;
+    }[];
+    collections: {
+        language: string;
+        title: string;
+        type: string;
+        status: string;
+        id: string;
+        slug: string;
+        summary: string;
+        version: string;
+        items: {
+            objectId: string;
+            required?: boolean | undefined;
+            description?: string | undefined;
+            label?: string | undefined;
+            order?: number | undefined;
+            section?: string | undefined;
+        }[];
+    }[];
+    citations: {
+        status: string;
+        id: string;
+        sourceId: string;
+        targetId: string;
+        purpose: string;
+    }[];
+    relationships: {
+        type: "related_to" | "parent_of" | "child_of" | "part_of" | "requires" | "explains" | "cites" | "authored_by" | "mentions" | "uses_media" | "translation_of" | "alternative_to" | "contrasts_with" | "example_of" | "classified_as" | "reviewed_by" | "supports" | "verifies";
+        id: string;
+        createdAt: string;
+        updatedAt: string;
+        sourceId: string;
+        targetId: string;
+        strength: "medium" | "weak" | "strong" | "canonical";
+        confidence?: "low" | "medium" | "high" | undefined;
+        reason?: string | undefined;
+    }[];
+    diagnostics: {
+        code: string;
+        message: string;
+        id: string;
+        severity: "info" | "warning" | "error" | "critical";
+        field?: string | undefined;
+        recommendation?: string | undefined;
+        sourcePath?: string | undefined;
+        inputId?: string | undefined;
+    }[];
+    name: string;
+    objects: {
+        language: string;
+        author: string;
+        title: string;
+        status: "draft" | "review" | "published" | "archived";
+        id: string;
+        slug: string;
+        summary: string;
+        version: string;
+        createdAt: string;
+        updatedAt: string;
+        body: string;
+        media?: string[] | undefined;
+        citations?: string[] | undefined;
+        metadata?: {
+            language?: string | undefined;
+            author?: string | undefined;
+            title?: string | undefined;
+            canonicalUrl?: string | undefined;
+            status?: "draft" | "review" | "published" | "archived" | undefined;
+            freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            id?: string | undefined;
+            slug?: string | undefined;
+            summary?: string | undefined;
+            version?: string | undefined;
+            reviewer?: string | undefined;
+            owner?: string | undefined;
+            createdAt?: string | undefined;
+            updatedAt?: string | undefined;
+            publishedAt?: string | undefined;
+            reviewedAt?: string | undefined;
+            archivedAt?: string | undefined;
+            entities?: string[] | undefined;
+            topics?: string[] | undefined;
+            domains?: string[] | undefined;
+            audiences?: string[] | undefined;
+            collections?: string[] | undefined;
+            citations?: string[] | undefined;
+            trustLevel?: string | undefined;
+            seo?: {
+                title?: string | undefined;
+                description?: string | undefined;
+                canonicalUrl?: string | undefined;
+                robots?: string | undefined;
+                keywords?: string[] | undefined;
+            } | undefined;
+            ai?: {
+                summaryShort?: string | undefined;
+                summaryMedium?: string | undefined;
+                summaryLong?: string | undefined;
+                canonicalAnswer?: string | undefined;
+                keyTakeaways?: string[] | undefined;
+                confidence?: "low" | "medium" | "high" | undefined;
+                answerableQuestions?: string[] | undefined;
+                freshness?: "stable" | "periodic" | "frequent" | "live" | undefined;
+            } | undefined;
+            technical?: {
+                sourceFormat?: string | undefined;
+                renderTargets?: string[] | undefined;
+                contentHash?: string | undefined;
+                schemaVersion?: string | undefined;
+                validationStatus?: string | undefined;
+                indexingStatus?: string | undefined;
+            } | undefined;
+        } | undefined;
+        aliases?: string[] | undefined;
+        tags?: string[] | undefined;
+        categories?: string[] | undefined;
+        attachments?: string[] | undefined;
+        glossaryReferences?: string[] | undefined;
+        externalResources?: string[] | undefined;
+        translations?: Record<string, string> | undefined;
+        relatedObjects?: string[] | undefined;
+    }[];
+    sources: {
+        title: string;
+        type: string;
+        status: string;
+        id: string;
+    }[];
+    taxonomyTerms: {
+        description: string | Record<string, string>;
+        type: string;
+        status: string;
+        id: string;
+        slug: string;
+        label: string | Record<string, string>;
+    }[];
+    glossaryEntries: {
+        audience: string;
+        language: string;
+        status: string;
+        id: string;
+        slug: string;
+        definition: string;
+        term: string;
+    }[];
+    loadedAt: string;
+}>;

@@ -363,20 +363,28 @@ export function generateStaticExport(input: GenerateStaticExportInput): StaticEx
     }));
   }
 
-  // 10. Build the bundle (without manifest first), then generate manifest.
-  const bundleWithoutManifest: Omit<StaticExportBundle, "manifest"> = {
+  // 10. Generate the manifest. It must index all assets including the manifest asset itself.
+  const manifest = createStaticExportManifest({
     id: input.id,
     siteName: input.siteName,
     siteUrl: input.siteUrl,
     language: input.language,
-    assets,
     generatedAt,
     diagnostics,
-  };
+    assets: [
+      ...assets,
+      makeAsset({
+        type: "manifest",
+        path: "manifest.json",
+        content: {}, // placeholder content
+        sourceIds: [],
+        visibility,
+        generatedAt,
+      }),
+    ],
+  });
 
-  const manifest = createStaticExportManifest(bundleWithoutManifest);
-
-  // 11. Create the manifest asset.
+  // Now push the actual manifest asset:
   assets.push(makeAsset({
     type: "manifest",
     path: "manifest.json",
@@ -387,8 +395,14 @@ export function generateStaticExport(input: GenerateStaticExportInput): StaticEx
   }));
 
   return {
-    ...bundleWithoutManifest,
+    id: input.id,
+    siteName: input.siteName,
+    siteUrl: input.siteUrl,
+    language: input.language,
+    assets,
     manifest,
+    generatedAt,
+    diagnostics,
   };
 }
 

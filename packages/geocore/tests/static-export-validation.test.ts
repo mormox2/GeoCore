@@ -127,5 +127,16 @@ describe("Static Export Validation Tests", () => {
       // only the manifest asset which is valid, so publishable stays true.
       expect(result.publishable).toBe(true);
     });
+
+    it("fails when a public bundle contains an internal asset", () => {
+      const internalAsset = { ...validBundle.assets[0], visibility: "internal" as const };
+      const bundle: StaticExportBundle = {
+        ...validBundle,
+        assets: [...validBundle.assets, internalAsset],
+      };
+      const result = validateStaticExportBundle(bundle, "public");
+      expect(result.valid).toBe(false);
+      expect(result.issues.some((i) => i.code === "GC_EXPORT_PUBLIC_INTERNAL_ASSET")).toBe(true);
+    });
   });
 });

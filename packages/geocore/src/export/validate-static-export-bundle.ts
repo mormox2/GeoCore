@@ -29,7 +29,10 @@ import { isValidExportPath } from "./export-utils.js";
  * Validate a full static export bundle: structural shape, per-asset validation,
  * manifest consistency, and cross-asset conflict detection.
  */
-export function validateStaticExportBundle(bundle: StaticExportBundle): ValidationResult {
+export function validateStaticExportBundle(
+  bundle: StaticExportBundle,
+  visibility: "public" | "internal" = "public"
+): ValidationResult {
   const checkedAt = new Date().toISOString();
   const issues: ValidationIssue[] = [];
 
@@ -111,6 +114,11 @@ export function validateStaticExportBundle(bundle: StaticExportBundle): Validati
       message: "Bundle diagnostics must be an array.",
       field: "diagnostics",
     });
+  } else {
+    // Map bundle diagnostics to validation issues
+    bundle.diagnostics.forEach((diag, index) => {
+      issues.push(diagnosticToIssue(diag, index));
+    });
   }
 
   // Per-asset validation + cross-asset checks
@@ -161,6 +169,21 @@ export function validateStaticExportBundle(bundle: StaticExportBundle): Validati
             code: codes.GC_EXPORT_MANIFEST_ASSET_MISSING,
             message: `Manifest entry "${entry.id}" does not point to an existing asset.`,
             field: "manifest",
+          });
+        }
+      }
+    }
+
+    // Check: no public bundle contains internal assets.
+    if (visibility === "public") {
+      for (const asset of bundle.assets) {
+        if (asset?.visibility === "internal") {
+          issues.push({
+            id: `${codes.GC_EXPORT_PUBLIC_INTERNAL_ASSET}_${asset.id}`,
+            severity: "error",
+            code: codes.GC_EXPORT_PUBLIC_INTERNAL_ASSET,
+            message: `Public bundle cannot contain internal asset "${asset.id}".`,
+            field: "assets",
           });
         }
       }

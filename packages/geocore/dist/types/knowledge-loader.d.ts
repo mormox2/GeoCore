@@ -1,0 +1,12 @@
+export type RawKnowledgeInputType = "knowledge-object" | "markdown" | "entity" | "collection" | "taxonomy-term" | "glossary-entry" | "citation" | "source" | "media";
+export type RawKnowledgeInput = {
+    id?: string;
+    type: RawKnowledgeInputType;
+    sourcePath?: string;
+    content: unknown;
+};
+export type LoadKnowledgeInput = {
+    id: string;
+    name: string;
+    inputs: RawKnowledgeInput[];
+};
