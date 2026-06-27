@@ -1,0 +1,65 @@
+{
+  "type": "citation",
+  "content": [
+    {
+      "id": "citation_customer_balance_product_review",
+      "sourceId": "source_dawajin_product_review_001",
+      "targetId": "ko_customer_balance_management",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dawajin_team",
+      "reviewedAt": "2026-06-25",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "citation_delivery_product_review",
+      "sourceId": "source_dawajin_product_review_001",
+      "targetId": "ko_delivery_tracking",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dawajin_team",
+      "reviewedAt": "2026-06-25",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "citation_stock_product_review",
+      "sourceId": "source_dawajin_product_review_001",
+      "targetId": "ko_stock_management_poultry_eggs",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dawajin_team",
+      "reviewedAt": "2026-06-25",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "citation_driver_product_review",
+      "sourceId": "source_dawajin_product_review_001",
+      "targetId": "ko_driver_role",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dawajin_team",
+      "reviewedAt": "2026-06-25",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "citation_konnect_preproduction_review",
+      "sourceId": "source_dawajin_product_review_001",
+      "targetId": "ko_konnect_preproduction",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dawajin_team",
+      "reviewedAt": "2026-06-25",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    }
+  ]
+}

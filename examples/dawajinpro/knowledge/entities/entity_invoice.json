@@ -1,0 +1,15 @@
+{
+  "type": "entity",
+  "content": {
+    "id": "entity_invoice",
+    "type": "business_document",
+    "canonicalName": "Facture",
+    "definition": "Document commercial qui formalise une vente, des montants dus et des informations de paiement.",
+    "aliases": [
+      "invoice",
+      "facturation"
+    ],
+    "language": "fr",
+    "status": "published"
+  }
+}

@@ -26,6 +26,13 @@ export const entityTypeSchema = z.enum([
   "tool",
   "material",
   "role",
+  "business_document",
+  "business_event",
+  "business_workflow",
+  "user_role",
+  "inventory_concept",
+  "product_concept",
+  "payment_status",
 ]);
 
 export const knowledgeEntitySchema = z.object({

@@ -1,9 +1,9 @@
 import { z } from "zod";
 export declare const entityStatusSchema: z.ZodEnum<["draft", "review", "published", "deprecated"]>;
-export declare const entityTypeSchema: z.ZodEnum<["concept", "person", "organization", "place", "product", "feature", "workflow", "medical_concept", "dental_concept", "business_concept", "technical_concept", "document_type", "unit", "metric", "condition", "treatment", "procedure", "dental_procedure", "dental_condition", "dental_treatment", "tool", "material", "role"]>;
+export declare const entityTypeSchema: z.ZodEnum<["concept", "person", "organization", "place", "product", "feature", "workflow", "medical_concept", "dental_concept", "business_concept", "technical_concept", "document_type", "unit", "metric", "condition", "treatment", "procedure", "dental_procedure", "dental_condition", "dental_treatment", "tool", "material", "role", "business_document", "business_event", "business_workflow", "user_role", "inventory_concept", "product_concept", "payment_status"]>;
 export declare const knowledgeEntitySchema: z.ZodObject<{
     id: z.ZodString;
-    type: z.ZodEnum<["concept", "person", "organization", "place", "product", "feature", "workflow", "medical_concept", "dental_concept", "business_concept", "technical_concept", "document_type", "unit", "metric", "condition", "treatment", "procedure", "dental_procedure", "dental_condition", "dental_treatment", "tool", "material", "role"]>;
+    type: z.ZodEnum<["concept", "person", "organization", "place", "product", "feature", "workflow", "medical_concept", "dental_concept", "business_concept", "technical_concept", "document_type", "unit", "metric", "condition", "treatment", "procedure", "dental_procedure", "dental_condition", "dental_treatment", "tool", "material", "role", "business_document", "business_event", "business_workflow", "user_role", "inventory_concept", "product_concept", "payment_status"]>;
     canonicalName: z.ZodString;
     definition: z.ZodString;
     language: z.ZodString;
@@ -37,7 +37,7 @@ export declare const knowledgeEntitySchema: z.ZodObject<{
     updatedAt: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     language: string;
-    type: "concept" | "person" | "organization" | "place" | "product" | "feature" | "workflow" | "medical_concept" | "dental_concept" | "business_concept" | "technical_concept" | "document_type" | "unit" | "metric" | "condition" | "treatment" | "procedure" | "dental_procedure" | "dental_condition" | "dental_treatment" | "tool" | "material" | "role";
+    type: "concept" | "person" | "organization" | "place" | "product" | "feature" | "workflow" | "medical_concept" | "dental_concept" | "business_concept" | "technical_concept" | "document_type" | "unit" | "metric" | "condition" | "treatment" | "procedure" | "dental_procedure" | "dental_condition" | "dental_treatment" | "tool" | "material" | "role" | "business_document" | "business_event" | "business_workflow" | "user_role" | "inventory_concept" | "product_concept" | "payment_status";
     status: "draft" | "review" | "published" | "deprecated";
     id: string;
     createdAt: string;
@@ -63,7 +63,7 @@ export declare const knowledgeEntitySchema: z.ZodObject<{
     usageNotes?: string | undefined;
 }, {
     language: string;
-    type: "concept" | "person" | "organization" | "place" | "product" | "feature" | "workflow" | "medical_concept" | "dental_concept" | "business_concept" | "technical_concept" | "document_type" | "unit" | "metric" | "condition" | "treatment" | "procedure" | "dental_procedure" | "dental_condition" | "dental_treatment" | "tool" | "material" | "role";
+    type: "concept" | "person" | "organization" | "place" | "product" | "feature" | "workflow" | "medical_concept" | "dental_concept" | "business_concept" | "technical_concept" | "document_type" | "unit" | "metric" | "condition" | "treatment" | "procedure" | "dental_procedure" | "dental_condition" | "dental_treatment" | "tool" | "material" | "role" | "business_document" | "business_event" | "business_workflow" | "user_role" | "inventory_concept" | "product_concept" | "payment_status";
     status: "draft" | "review" | "published" | "deprecated";
     id: string;
     createdAt: string;

@@ -1,0 +1,21 @@
+# Dawajin Pro
+
+## Knowledge Index
+
+Gestion des créances clients
+Suivi des livraisons
+Gestion du stock volaille et œufs
+Rôle chauffeur
+Paiement Konnect en pré-production
+
+## Important Entities
+
+entity_customer_balance
+entity_invoice
+entity_payment
+entity_delivery
+entity_driver
+entity_stock_movement
+entity_poultry_product
+entity_egg_tray
+entity_konnect_preproduction

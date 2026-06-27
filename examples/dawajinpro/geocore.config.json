@@ -1,0 +1,27 @@
+{
+  "siteName": "Dawajin Pro",
+  "siteUrl": "https://dawajinpro.tn",
+  "language": "fr",
+  "knowledgeDir": "knowledge",
+  "outputDir": "dist/geocore",
+  "include": [
+    "**/*.md",
+    "**/*.json"
+  ],
+  "exclude": [
+    "**/*.draft.md"
+  ],
+  "validation": {
+    "mode": "public",
+    "failFast": false
+  },
+  "export": {
+    "includeMarkdown": true,
+    "includeJson": true,
+    "includeJsonLd": true,
+    "includeSearchIndex": true,
+    "includeLlmsTxt": true,
+    "includeLlmsFullTxt": true,
+    "includeSitemap": true
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "entity",
+  "content": {
+    "id": "entity_poultry_product",
+    "type": "product_concept",
+    "canonicalName": "Volaille",
+    "definition": "Produit avicole pouvant être suivi et vendu selon une unité adaptée, notamment au kilogramme.",
+    "aliases": [
+      "poulet",
+      "volaille kg",
+      "poultry"
+    ],
+    "language": "fr",
+    "status": "published"
+  }
+}

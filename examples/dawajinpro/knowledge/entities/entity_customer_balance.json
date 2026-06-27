@@ -1,0 +1,17 @@
+{
+  "type": "entity",
+  "content": {
+    "id": "entity_customer_balance",
+    "type": "business_concept",
+    "canonicalName": "Créance client",
+    "definition": "Montant encore dû par un client après ventes, paiements, retours ou ajustements.",
+    "aliases": [
+      "dette client",
+      "solde client",
+      "customer balance",
+      "client debt"
+    ],
+    "language": "fr",
+    "status": "published"
+  }
+}

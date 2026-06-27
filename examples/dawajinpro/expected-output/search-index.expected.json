@@ -1,0 +1,20 @@
+{
+  "expectedSourceIds": [
+    "ko_customer_balance_management",
+    "ko_delivery_tracking",
+    "ko_stock_management_poultry_eggs",
+    "ko_driver_role",
+    "ko_konnect_preproduction"
+  ],
+  "expectedEntities": [
+    "entity_customer_balance",
+    "entity_invoice",
+    "entity_payment",
+    "entity_delivery",
+    "entity_driver",
+    "entity_stock_movement",
+    "entity_poultry_product",
+    "entity_egg_tray",
+    "entity_konnect_preproduction"
+  ]
+}

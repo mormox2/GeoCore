@@ -1,0 +1,22 @@
+{
+  "type": "glossary-entry",
+  "content": {
+    "id": "glossary_net_weight_operator_fr",
+    "term": "Poids net",
+    "slug": "poids-net",
+    "definition": "Poids réellement pris en compte pour le calcul commercial après retrait des éléments non comptabilisés selon le workflow défini.",
+    "language": "fr",
+    "status": "published",
+    "audience": "operator",
+    "entityId": "entity_poultry_product",
+    "aliases": [
+      "net weight",
+      "poids facturé"
+    ],
+    "relatedObjectIds": [
+      "ko_stock_management_poultry_eggs"
+    ],
+    "createdAt": "2026-06-25",
+    "updatedAt": "2026-06-25"
+  }
+}

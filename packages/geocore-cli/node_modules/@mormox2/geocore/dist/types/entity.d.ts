@@ -1,5 +1,5 @@
 export type EntityStatus = "draft" | "review" | "published" | "deprecated";
-export type EntityType = "concept" | "person" | "organization" | "place" | "product" | "feature" | "workflow" | "medical_concept" | "dental_concept" | "business_concept" | "technical_concept" | "document_type" | "unit" | "metric" | "condition" | "treatment" | "procedure" | "dental_procedure" | "dental_condition" | "dental_treatment" | "tool" | "material" | "role";
+export type EntityType = "concept" | "person" | "organization" | "place" | "product" | "feature" | "workflow" | "medical_concept" | "dental_concept" | "business_concept" | "technical_concept" | "document_type" | "unit" | "metric" | "condition" | "treatment" | "procedure" | "dental_procedure" | "dental_condition" | "dental_treatment" | "tool" | "material" | "role" | "business_document" | "business_event" | "business_workflow" | "user_role" | "inventory_concept" | "product_concept" | "payment_status";
 export type KnowledgeEntity = {
     id: string;
     type: EntityType;

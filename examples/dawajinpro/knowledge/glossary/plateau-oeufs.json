@@ -1,0 +1,22 @@
+{
+  "type": "glossary-entry",
+  "content": {
+    "id": "glossary_egg_tray_manager_fr",
+    "term": "Plateau d’œufs",
+    "slug": "plateau-oeufs",
+    "definition": "Unité de vente correspondant généralement à un plateau de 30 œufs.",
+    "language": "fr",
+    "status": "published",
+    "audience": "manager",
+    "entityId": "entity_egg_tray",
+    "aliases": [
+      "plateau 30 œufs",
+      "tray of eggs"
+    ],
+    "relatedObjectIds": [
+      "ko_stock_management_poultry_eggs"
+    ],
+    "createdAt": "2026-06-25",
+    "updatedAt": "2026-06-25"
+  }
+}

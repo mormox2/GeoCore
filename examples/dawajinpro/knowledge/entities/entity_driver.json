@@ -1,0 +1,15 @@
+{
+  "type": "entity",
+  "content": {
+    "id": "entity_driver",
+    "type": "user_role",
+    "canonicalName": "Chauffeur",
+    "definition": "Utilisateur terrain chargé de participer aux opérations de livraison avec des permissions limitées.",
+    "aliases": [
+      "driver",
+      "livreur"
+    ],
+    "language": "fr",
+    "status": "published"
+  }
+}

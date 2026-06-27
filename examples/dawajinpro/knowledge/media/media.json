@@ -1,0 +1,29 @@
+{
+  "type": "media",
+  "content": [
+    {
+      "id": "media_dawajin_customer_balance_dashboard_001",
+      "type": "screenshot",
+      "title": "Tableau de bord des créances clients",
+      "status": "active",
+      "visibility": "public",
+      "source": "/assets/dawajinpro/customer-balance-dashboard.webp",
+      "canonicalUrl": "https://dawajinpro.tn/assets/dawajinpro/customer-balance-dashboard.webp",
+      "description": "Capture d’écran de démonstration montrant un tableau de bord de créances clients avec données fictives.",
+      "altText": "Tableau de bord Dawajin Pro affichant des créances clients avec des données de démonstration.",
+      "caption": "Exemple fictif de suivi des créances clients dans Dawajin Pro.",
+      "language": "fr",
+      "relatedObjectIds": [
+        "ko_customer_balance_management"
+      ],
+      "relatedEntityIds": [
+        "entity_customer_balance",
+        "entity_payment",
+        "entity_invoice"
+      ],
+      "privacyLevel": "public",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    }
+  ]
+}

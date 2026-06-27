@@ -1,0 +1,126 @@
+{
+  "type": "relationship",
+  "content": [
+    {
+      "id": "rel_customer_balance_explains_balance",
+      "sourceId": "ko_customer_balance_management",
+      "targetId": "entity_customer_balance",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains customer balances.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_customer_balance_mentions_invoice",
+      "sourceId": "ko_customer_balance_management",
+      "targetId": "entity_invoice",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "Customer balance is related to invoices.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_customer_balance_mentions_payment",
+      "sourceId": "ko_customer_balance_management",
+      "targetId": "entity_payment",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "Customer balance is affected by payments.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_delivery_explains_delivery",
+      "sourceId": "ko_delivery_tracking",
+      "targetId": "entity_delivery",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains delivery tracking.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_delivery_mentions_driver",
+      "sourceId": "ko_delivery_tracking",
+      "targetId": "entity_driver",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "Delivery tracking may involve a driver.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_stock_explains_stock_movement",
+      "sourceId": "ko_stock_management_poultry_eggs",
+      "targetId": "entity_stock_movement",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains stock movement.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_stock_mentions_poultry",
+      "sourceId": "ko_stock_management_poultry_eggs",
+      "targetId": "entity_poultry_product",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "Stock management includes poultry products.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_stock_mentions_eggs",
+      "sourceId": "ko_stock_management_poultry_eggs",
+      "targetId": "entity_egg_tray",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "Stock management includes egg trays.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_driver_explains_driver",
+      "sourceId": "ko_driver_role",
+      "targetId": "entity_driver",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains the driver role.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_konnect_explains_preproduction",
+      "sourceId": "ko_konnect_preproduction",
+      "targetId": "entity_konnect_preproduction",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains Konnect pre-production status.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_konnect_mentions_payment",
+      "sourceId": "ko_konnect_preproduction",
+      "targetId": "entity_payment",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "Konnect relates to payment workflows.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    }
+  ]
+}

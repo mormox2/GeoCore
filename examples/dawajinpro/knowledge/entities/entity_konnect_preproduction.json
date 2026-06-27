@@ -1,0 +1,16 @@
+{
+  "type": "entity",
+  "content": {
+    "id": "entity_konnect_preproduction",
+    "type": "payment_status",
+    "canonicalName": "Konnect en pré-production",
+    "definition": "État indiquant que l’intégration Konnect ne doit pas être considérée comme prête en production avant validation du compte marchand et tests réels contrôlés.",
+    "aliases": [
+      "Konnect non validé",
+      "paiement pré-production",
+      "payment provider not activated"
+    ],
+    "language": "fr",
+    "status": "published"
+  }
+}

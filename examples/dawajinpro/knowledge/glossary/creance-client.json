@@ -1,0 +1,23 @@
+{
+  "type": "glossary-entry",
+  "content": {
+    "id": "glossary_customer_balance_manager_fr",
+    "term": "Créance client",
+    "slug": "creance-client",
+    "definition": "Montant qu’un client doit encore payer après une vente, un paiement partiel, un retour ou un ajustement.",
+    "language": "fr",
+    "status": "published",
+    "audience": "manager",
+    "entityId": "entity_customer_balance",
+    "aliases": [
+      "dette client",
+      "solde client",
+      "customer balance"
+    ],
+    "relatedObjectIds": [
+      "ko_customer_balance_management"
+    ],
+    "createdAt": "2026-06-25",
+    "updatedAt": "2026-06-25"
+  }
+}

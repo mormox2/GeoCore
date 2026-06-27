@@ -1,0 +1,16 @@
+{
+  "type": "entity",
+  "content": {
+    "id": "entity_stock_movement",
+    "type": "inventory_concept",
+    "canonicalName": "Mouvement de stock",
+    "definition": "Entrée, sortie ou ajustement affectant la quantité disponible d’un produit.",
+    "aliases": [
+      "stock movement",
+      "entrée stock",
+      "sortie stock"
+    ],
+    "language": "fr",
+    "status": "published"
+  }
+}

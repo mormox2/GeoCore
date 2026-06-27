@@ -1,0 +1,14 @@
+{
+  "type": "source",
+  "content": {
+    "id": "source_dawajin_product_review_001",
+    "type": "product-documentation",
+    "title": "Dawajin Pro product documentation review",
+    "publisher": "Dawajin Pro",
+    "trustLevel": "high",
+    "visibility": "public",
+    "status": "active",
+    "createdAt": "2026-06-25",
+    "updatedAt": "2026-06-25"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "entity",
+  "content": {
+    "id": "entity_egg_tray",
+    "type": "product_concept",
+    "canonicalName": "Plateau d’œufs",
+    "definition": "Unité commerciale représentant généralement un plateau de 30 œufs.",
+    "aliases": [
+      "plateau 30 œufs",
+      "tray of eggs",
+      "œufs"
+    ],
+    "language": "fr",
+    "status": "published"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "entity",
+  "content": {
+    "id": "entity_delivery",
+    "type": "business_workflow",
+    "canonicalName": "Livraison",
+    "definition": "Opération terrain consistant à remettre des produits à un client dans un contexte commercial défini.",
+    "aliases": [
+      "delivery",
+      "tournée",
+      "distribution"
+    ],
+    "language": "fr",
+    "status": "published"
+  }
+}
