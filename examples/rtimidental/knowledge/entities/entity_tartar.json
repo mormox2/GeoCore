@@ -1,0 +1,15 @@
+{
+  "type": "entity",
+  "content": {
+    "id": "entity_tartar",
+    "type": "dental_condition",
+    "canonicalName": "Tartre dentaire",
+    "definition": "Dépôt durci issu de la plaque dentaire minéralisée, pouvant s’accumuler autour des dents et des gencives.",
+    "aliases": [
+      "calculus",
+      "tartre"
+    ],
+    "language": "fr",
+    "status": "published"
+  }
+}

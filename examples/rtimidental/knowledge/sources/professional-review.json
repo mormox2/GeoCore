@@ -1,0 +1,14 @@
+{
+  "type": "source",
+  "content": {
+    "id": "source_dr_mossaab_professional_review_001",
+    "type": "professional-review",
+    "title": "Professional review by Dr Mossaab Rtimi",
+    "publisher": "RTimi Dental",
+    "trustLevel": "high",
+    "visibility": "public",
+    "status": "active",
+    "createdAt": "2026-06-25",
+    "updatedAt": "2026-06-25"
+  }
+}

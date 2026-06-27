@@ -1,0 +1,7 @@
+export const EXIT_CODES = {
+    SUCCESS: 0,
+    VALIDATION_FAILED: 1,
+    COMMAND_ERROR: 2,
+    CONFIG_ERROR: 3,
+    FILESYSTEM_ERROR: 4,
+};

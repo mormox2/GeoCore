@@ -1,0 +1,157 @@
+{
+  "id": "cli-export-bundle_search",
+  "name": "RTimi Dental",
+  "language": "fr",
+  "documents": [
+    {
+      "id": "searchdoc_knowledge-object_ko_detartrage_abime_dents",
+      "type": "knowledge-object",
+      "sourceId": "ko_detartrage_abime_dents",
+      "sourceType": "knowledge-object",
+      "sourceVersion": "1.0.0",
+      "title": "Le détartrage abîme-t-il les dents ?",
+      "summary": "Réponse claire pour les patients sur le détartrage dentaire et son effet sur les dents.",
+      "body": "Le détartrage n’abîme pas les dents lorsqu’il est réalisé correctement par un professionnel.\n\nIl permet d’enlever le tartre accumulé autour des dents et près des gencives. Après un détartrage, certaines personnes peuvent ressentir une sensibilité temporaire, surtout si le tartre était important ou si les gencives étaient inflammées.\n\nCette sensibilité ne signifie pas que l’émail a été abîmé. Elle est généralement liée à l’exposition de zones auparavant couvertes par le tartre ou à l’état initial des gencives.\n\nLe détartrage fait partie des soins de prévention et d’entretien de la santé bucco-dentaire. La fréquence nécessaire dépend de l’état des gencives, de l’hygiène orale, de la présence de tartre et de l’avis du praticien.\n\nCe contenu est informatif et ne remplace pas un examen clinique personnalisé.\n",
+      "language": "fr",
+      "status": "published",
+      "visibility": "public",
+      "slug": "detartrage-abime-t-il-les-dents",
+      "entities": [
+        "entity_dental_implant",
+        "entity_gingivitis",
+        "entity_periodontal_health",
+        "entity_scaling",
+        "entity_tartar"
+      ],
+      "collections": [],
+      "citations": [
+        "citation_scaling_professional_review",
+        "citation_implant_professional_review",
+        "citation_gingivitis_professional_review"
+      ],
+      "media": [
+        "media_scaling_illustration_001"
+      ],
+      "taxonomy": [],
+      "keywords": [],
+      "aliases": [],
+      "text": "Le détartrage abîme-t-il les dents ? Réponse claire pour les patients sur le détartrage dentaire et son effet sur les dents. Le détartrage n’abîme pas les dents lorsqu’il est réalisé correctement par un professionnel. Il permet d’enlever le tartre accumulé autour des dents et près des gencives. Après un détartrage, certaines personnes peuvent ressentir une sensibilité temporaire, surtout si le tartre était important ou si les gencives étaient inflammées. Cette sensibilité ne signifie pas que l’émail a été abîmé. Elle est généralement liée à l’exposition de zones auparavant couvertes par le tartre ou à l’état initial des gencives. Le détartrage fait partie des soins de prévention et d’entretien de la santé bucco-dentaire. La fréquence nécessaire dépend de l’état des gencives, de l’hygiène orale, de la présence de tartre et de l’avis du praticien. Ce contenu est informatif et ne remplace pas un examen clinique personnalisé. entity_dental_implant entity_gingivitis entity_periodontal_health entity_scaling entity_tartar",
+      "metadata": {
+        "author": "author_dr_mossaab_rtimi",
+        "createdAt": "2026-06-27T00:04:03.476Z",
+        "updatedAt": "2026-06-27T00:04:03.476Z"
+      },
+      "generatedAt": "2026-06-27T00:04:03.492Z"
+    },
+    {
+      "id": "searchdoc_knowledge-object_ko_gingivite_definition",
+      "type": "knowledge-object",
+      "sourceId": "ko_gingivite_definition",
+      "sourceType": "knowledge-object",
+      "sourceVersion": "1.0.0",
+      "title": "Qu’est-ce que la gingivite ?",
+      "summary": "Explication simple de la gingivite, de ses signes fréquents et de l’importance de la prévention.",
+      "body": "La gingivite est une inflammation des gencives. Elle peut se manifester par une rougeur, un gonflement, une sensibilité ou un saignement lors du brossage.\n\nElle est souvent liée à l’accumulation de plaque dentaire et de tartre, mais d’autres facteurs peuvent intervenir.\n\nLorsqu’elle est prise en charge tôt, la gingivite peut généralement être contrôlée avec une amélioration de l’hygiène bucco-dentaire et des soins adaptés.\n\nUn saignement régulier des gencives ne doit pas être ignoré. Un examen dentaire permet d’évaluer la situation et de proposer une prise en charge adaptée.\n\nCe contenu est informatif et ne remplace pas un diagnostic personnalisé.\n",
+      "language": "fr",
+      "status": "published",
+      "visibility": "public",
+      "slug": "gingivite-definition",
+      "entities": [
+        "entity_dental_implant",
+        "entity_gingivitis",
+        "entity_periodontal_health",
+        "entity_scaling",
+        "entity_tartar"
+      ],
+      "collections": [],
+      "citations": [
+        "citation_scaling_professional_review",
+        "citation_implant_professional_review",
+        "citation_gingivitis_professional_review"
+      ],
+      "media": [
+        "media_scaling_illustration_001"
+      ],
+      "taxonomy": [],
+      "keywords": [],
+      "aliases": [],
+      "text": "Qu’est-ce que la gingivite ? Explication simple de la gingivite, de ses signes fréquents et de l’importance de la prévention. La gingivite est une inflammation des gencives. Elle peut se manifester par une rougeur, un gonflement, une sensibilité ou un saignement lors du brossage. Elle est souvent liée à l’accumulation de plaque dentaire et de tartre, mais d’autres facteurs peuvent intervenir. Lorsqu’elle est prise en charge tôt, la gingivite peut généralement être contrôlée avec une amélioration de l’hygiène bucco-dentaire et des soins adaptés. Un saignement régulier des gencives ne doit pas être ignoré. Un examen dentaire permet d’évaluer la situation et de proposer une prise en charge adaptée. Ce contenu est informatif et ne remplace pas un diagnostic personnalisé. entity_dental_implant entity_gingivitis entity_periodontal_health entity_scaling entity_tartar",
+      "metadata": {
+        "author": "author_dr_mossaab_rtimi",
+        "createdAt": "2026-06-27T00:04:03.477Z",
+        "updatedAt": "2026-06-27T00:04:03.477Z"
+      },
+      "generatedAt": "2026-06-27T00:04:03.492Z"
+    },
+    {
+      "id": "searchdoc_knowledge-object_ko_implant_dentaire_definition",
+      "type": "knowledge-object",
+      "sourceId": "ko_implant_dentaire_definition",
+      "sourceType": "knowledge-object",
+      "sourceVersion": "1.0.0",
+      "title": "Qu’est-ce qu’un implant dentaire ?",
+      "summary": "Définition simple d’un implant dentaire pour les patients.",
+      "body": "Un implant dentaire est une racine artificielle, généralement en titane ou en matériau biocompatible, placée dans l’os de la mâchoire pour remplacer la racine d’une dent absente.\n\nAprès la phase de cicatrisation, l’implant peut servir de support à une couronne, un bridge ou une prothèse selon la situation clinique.\n\nLa possibilité de poser un implant dépend de plusieurs facteurs : volume osseux, état des gencives, santé générale, hygiène bucco-dentaire et analyse du praticien.\n\nUn examen clinique et radiologique est nécessaire avant de proposer un traitement implantaire.\n\nCe contenu est informatif et ne remplace pas une consultation personnalisée.\n",
+      "language": "fr",
+      "status": "published",
+      "visibility": "public",
+      "slug": "implant-dentaire-definition",
+      "entities": [
+        "entity_dental_implant",
+        "entity_gingivitis",
+        "entity_periodontal_health",
+        "entity_scaling",
+        "entity_tartar"
+      ],
+      "collections": [],
+      "citations": [
+        "citation_scaling_professional_review",
+        "citation_implant_professional_review",
+        "citation_gingivitis_professional_review"
+      ],
+      "media": [
+        "media_scaling_illustration_001"
+      ],
+      "taxonomy": [],
+      "keywords": [],
+      "aliases": [],
+      "text": "Qu’est-ce qu’un implant dentaire ? Définition simple d’un implant dentaire pour les patients. Un implant dentaire est une racine artificielle, généralement en titane ou en matériau biocompatible, placée dans l’os de la mâchoire pour remplacer la racine d’une dent absente. Après la phase de cicatrisation, l’implant peut servir de support à une couronne, un bridge ou une prothèse selon la situation clinique. La possibilité de poser un implant dépend de plusieurs facteurs : volume osseux, état des gencives, santé générale, hygiène bucco-dentaire et analyse du praticien. Un examen clinique et radiologique est nécessaire avant de proposer un traitement implantaire. Ce contenu est informatif et ne remplace pas une consultation personnalisée. entity_dental_implant entity_gingivitis entity_periodontal_health entity_scaling entity_tartar",
+      "metadata": {
+        "author": "author_dr_mossaab_rtimi",
+        "createdAt": "2026-06-27T00:04:03.478Z",
+        "updatedAt": "2026-06-27T00:04:03.478Z"
+      },
+      "generatedAt": "2026-06-27T00:04:03.492Z"
+    }
+  ],
+  "generatedAt": "2026-06-27T00:04:03.492Z",
+  "diagnostics": [
+    {
+      "id": "GC_SEARCH_DOCUMENT_CANONICAL_URL_MISSING_canonicalUrl",
+      "severity": "warning",
+      "code": "GC_SEARCH_DOCUMENT_CANONICAL_URL_MISSING",
+      "message": "Public published search document lacks a canonical URL.",
+      "documentId": "searchdoc_knowledge-object_ko_detartrage_abime_dents",
+      "sourceId": "ko_detartrage_abime_dents",
+      "field": "canonicalUrl"
+    },
+    {
+      "id": "GC_SEARCH_DOCUMENT_CANONICAL_URL_MISSING_canonicalUrl",
+      "severity": "warning",
+      "code": "GC_SEARCH_DOCUMENT_CANONICAL_URL_MISSING",
+      "message": "Public published search document lacks a canonical URL.",
+      "documentId": "searchdoc_knowledge-object_ko_gingivite_definition",
+      "sourceId": "ko_gingivite_definition",
+      "field": "canonicalUrl"
+    },
+    {
+      "id": "GC_SEARCH_DOCUMENT_CANONICAL_URL_MISSING_canonicalUrl",
+      "severity": "warning",
+      "code": "GC_SEARCH_DOCUMENT_CANONICAL_URL_MISSING",
+      "message": "Public published search document lacks a canonical URL.",
+      "documentId": "searchdoc_knowledge-object_ko_implant_dentaire_definition",
+      "sourceId": "ko_implant_dentaire_definition",
+      "field": "canonicalUrl"
+    }
+  ]
+}

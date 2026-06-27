@@ -1,0 +1,36 @@
+import { SearchDocumentType, SearchDocumentStatus, SearchDocumentVisibility } from "./search.js";
+export type SearchDocument = {
+    id: string;
+    type: SearchDocumentType;
+    sourceId: string;
+    sourceType: string;
+    sourceVersion?: string;
+    title: string;
+    summary?: string;
+    body?: string;
+    language: string;
+    status: SearchDocumentStatus;
+    visibility: SearchDocumentVisibility;
+    slug?: string;
+    canonicalUrl?: string;
+    entities: string[];
+    collections: string[];
+    citations: string[];
+    media: string[];
+    taxonomy: string[];
+    keywords: string[];
+    aliases: string[];
+    text: string;
+    metadata: {
+        author?: string;
+        reviewer?: string;
+        owner?: string;
+        trustLevel?: string;
+        freshness?: string;
+        createdAt?: string;
+        updatedAt?: string;
+        publishedAt?: string;
+        reviewedAt?: string;
+    };
+    generatedAt: string;
+};

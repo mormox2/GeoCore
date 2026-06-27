@@ -1,0 +1,17 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Qu’est-ce qu’un implant dentaire ?",
+  "description": "Définition simple d’un implant dentaire pour les patients.",
+  "author": {
+    "@type": "Person",
+    "name": "author_dr_mossaab_rtimi"
+  },
+  "dateCreated": "2026-06-27T00:04:03.478Z",
+  "dateModified": "2026-06-27T00:04:03.478Z",
+  "citation": [
+    "citation_scaling_professional_review",
+    "citation_implant_professional_review",
+    "citation_gingivitis_professional_review"
+  ]
+}

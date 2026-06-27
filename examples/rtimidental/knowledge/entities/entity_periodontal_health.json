@@ -1,0 +1,15 @@
+{
+  "type": "entity",
+  "content": {
+    "id": "entity_periodontal_health",
+    "type": "dental_concept",
+    "canonicalName": "Santé parodontale",
+    "definition": "État de santé des tissus qui soutiennent les dents, notamment les gencives et l’os alvéolaire.",
+    "aliases": [
+      "santé des gencives",
+      "periodontal health"
+    ],
+    "language": "fr",
+    "status": "published"
+  }
+}

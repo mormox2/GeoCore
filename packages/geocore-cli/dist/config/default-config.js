@@ -1,0 +1,20 @@
+export const DEFAULT_CONFIG = {
+    siteName: "GeoCore Site",
+    knowledgeDir: "knowledge",
+    outputDir: "dist/geocore",
+    include: ["**/*.md", "**/*.json"],
+    exclude: ["**/*.draft.md"],
+    validation: {
+        mode: "public",
+        failFast: false,
+    },
+    export: {
+        includeMarkdown: true,
+        includeJson: true,
+        includeJsonLd: true,
+        includeSearchIndex: true,
+        includeLlmsTxt: true,
+        includeLlmsFullTxt: true,
+        includeSitemap: true,
+    },
+};

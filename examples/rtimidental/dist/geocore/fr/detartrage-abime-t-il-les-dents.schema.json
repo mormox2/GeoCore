@@ -1,0 +1,17 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Le détartrage abîme-t-il les dents ?",
+  "description": "Réponse claire pour les patients sur le détartrage dentaire et son effet sur les dents.",
+  "author": {
+    "@type": "Person",
+    "name": "author_dr_mossaab_rtimi"
+  },
+  "dateCreated": "2026-06-27T00:04:03.476Z",
+  "dateModified": "2026-06-27T00:04:03.476Z",
+  "citation": [
+    "citation_scaling_professional_review",
+    "citation_implant_professional_review",
+    "citation_gingivitis_professional_review"
+  ]
+}

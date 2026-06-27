@@ -1,0 +1,231 @@
+{
+  "id": "ko_detartrage_abime_dents",
+  "slug": "detartrage-abime-t-il-les-dents",
+  "title": "Le détartrage abîme-t-il les dents ?",
+  "summary": "Réponse claire pour les patients sur le détartrage dentaire et son effet sur les dents.",
+  "language": "fr",
+  "version": "1.0.0",
+  "status": "published",
+  "body": "Le détartrage n’abîme pas les dents lorsqu’il est réalisé correctement par un professionnel.\n\nIl permet d’enlever le tartre accumulé autour des dents et près des gencives. Après un détartrage, certaines personnes peuvent ressentir une sensibilité temporaire, surtout si le tartre était important ou si les gencives étaient inflammées.\n\nCette sensibilité ne signifie pas que l’émail a été abîmé. Elle est généralement liée à l’exposition de zones auparavant couvertes par le tartre ou à l’état initial des gencives.\n\nLe détartrage fait partie des soins de prévention et d’entretien de la santé bucco-dentaire. La fréquence nécessaire dépend de l’état des gencives, de l’hygiène orale, de la présence de tartre et de l’avis du praticien.\n\nCe contenu est informatif et ne remplace pas un examen clinique personnalisé.\n",
+  "metadata": {
+    "id": "ko_detartrage_abime_dents",
+    "title": "Le détartrage abîme-t-il les dents ?",
+    "summary": "Réponse claire pour les patients sur le détartrage dentaire et son effet sur les dents.",
+    "language": "fr",
+    "version": "1.0.0",
+    "status": "published",
+    "author": "author_dr_mossaab_rtimi"
+  },
+  "relationships": [
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_detartrage_explains_scaling",
+      "sourceId": "ko_detartrage_abime_dents",
+      "targetId": "entity_scaling",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains dental scaling."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_detartrage_mentions_tartar",
+      "sourceId": "ko_detartrage_abime_dents",
+      "targetId": "entity_tartar",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "The article discusses tartar removal."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_detartrage_authored_by_dr",
+      "sourceId": "ko_detartrage_abime_dents",
+      "targetId": "author_dr_mossaab_rtimi",
+      "type": "authored_by",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The content is authored by Dr Mossaab Rtimi."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_implant_explains_implant",
+      "sourceId": "ko_implant_dentaire_definition",
+      "targetId": "entity_dental_implant",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article defines dental implant."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_gingivite_explains_gingivitis",
+      "sourceId": "ko_gingivite_definition",
+      "targetId": "entity_gingivitis",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains gingivitis."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_gingivite_mentions_tartar",
+      "sourceId": "ko_gingivite_definition",
+      "targetId": "entity_tartar",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "The article mentions tartar as a related factor."
+    }
+  ],
+  "entities": [
+    {
+      "definition": "Racine artificielle placée dans l’os pour remplacer la racine d’une dent absente.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-06-27T00:04:03.476Z",
+      "updatedAt": "2026-06-27T00:04:03.476Z",
+      "id": "entity_dental_implant",
+      "type": "dental_treatment",
+      "canonicalName": "Implant dentaire",
+      "aliases": [
+        "implant",
+        "implantologie",
+        "dental implant"
+      ]
+    },
+    {
+      "definition": "Inflammation des gencives pouvant provoquer rougeur, gonflement ou saignement.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-06-27T00:04:03.476Z",
+      "updatedAt": "2026-06-27T00:04:03.476Z",
+      "id": "entity_gingivitis",
+      "type": "dental_condition",
+      "canonicalName": "Gingivite",
+      "aliases": [
+        "inflammation des gencives",
+        "gum inflammation",
+        "gingivitis"
+      ]
+    },
+    {
+      "definition": "État de santé des tissus qui soutiennent les dents, notamment les gencives et l’os alvéolaire.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-06-27T00:04:03.476Z",
+      "updatedAt": "2026-06-27T00:04:03.476Z",
+      "id": "entity_periodontal_health",
+      "type": "dental_concept",
+      "canonicalName": "Santé parodontale",
+      "aliases": [
+        "santé des gencives",
+        "periodontal health"
+      ]
+    },
+    {
+      "definition": "Soin dentaire destiné à retirer le tartre accumulé sur les dents et près des gencives.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-06-27T00:04:03.476Z",
+      "updatedAt": "2026-06-27T00:04:03.476Z",
+      "id": "entity_scaling",
+      "type": "dental_procedure",
+      "canonicalName": "Détartrage",
+      "aliases": [
+        "nettoyage dentaire",
+        "dental scaling",
+        "élimination du tartre"
+      ]
+    },
+    {
+      "definition": "Dépôt durci issu de la plaque dentaire minéralisée, pouvant s’accumuler autour des dents et des gencives.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-06-27T00:04:03.476Z",
+      "updatedAt": "2026-06-27T00:04:03.476Z",
+      "id": "entity_tartar",
+      "type": "dental_condition",
+      "canonicalName": "Tartre dentaire",
+      "aliases": [
+        "calculus",
+        "tartre"
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "citation_scaling_professional_review",
+      "sourceId": "source_dr_mossaab_professional_review_001",
+      "targetId": "ko_detartrage_abime_dents",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dr_mossaab_rtimi",
+      "reviewedAt": "2026-06-25"
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "citation_implant_professional_review",
+      "sourceId": "source_dr_mossaab_professional_review_001",
+      "targetId": "ko_implant_dentaire_definition",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dr_mossaab_rtimi",
+      "reviewedAt": "2026-06-25"
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "citation_gingivitis_professional_review",
+      "sourceId": "source_dr_mossaab_professional_review_001",
+      "targetId": "ko_gingivite_definition",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dr_mossaab_rtimi",
+      "reviewedAt": "2026-06-25"
+    }
+  ],
+  "collections": [],
+  "media": [
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "media_scaling_illustration_001",
+      "type": "diagram",
+      "title": "Illustration du détartrage dentaire",
+      "status": "active",
+      "visibility": "public",
+      "source": "/assets/rtimidental/scaling-illustration.webp",
+      "canonicalUrl": "https://rtimidental.tn/assets/rtimidental/scaling-illustration.webp",
+      "description": "Illustration pédagogique montrant le retrait du tartre autour des dents.",
+      "altText": "Illustration montrant du tartre autour des dents et son retrait pendant un détartrage.",
+      "caption": "Le détartrage retire le tartre accumulé près des gencives.",
+      "language": "fr",
+      "relatedObjectIds": [
+        "ko_detartrage_abime_dents"
+      ],
+      "relatedEntityIds": [
+        "entity_scaling",
+        "entity_tartar"
+      ],
+      "consentStatus": "not-required",
+      "privacyLevel": "public"
+    }
+  ],
+  "generatedFor": {
+    "format": "json",
+    "rendererId": "renderer_json_basic"
+  }
+}

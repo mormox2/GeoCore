@@ -1,0 +1,24 @@
+{
+  "name": "@mormox2/geocore-cli",
+  "version": "1.0.0",
+  "description": "GeoCore CLI tools to validate and export knowledge repositories",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "geocore": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "geocore": "node dist/index.js"
+  },
+  "dependencies": {
+    "@mormox2/geocore": "file:../geocore",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0",
+    "@types/node": "^20.11.0"
+  }
+}

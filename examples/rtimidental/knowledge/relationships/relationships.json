@@ -1,0 +1,71 @@
+{
+  "type": "relationship",
+  "content": [
+    {
+      "id": "rel_detartrage_explains_scaling",
+      "sourceId": "ko_detartrage_abime_dents",
+      "targetId": "entity_scaling",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains dental scaling.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_detartrage_mentions_tartar",
+      "sourceId": "ko_detartrage_abime_dents",
+      "targetId": "entity_tartar",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "The article discusses tartar removal.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_detartrage_authored_by_dr",
+      "sourceId": "ko_detartrage_abime_dents",
+      "targetId": "author_dr_mossaab_rtimi",
+      "type": "authored_by",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The content is authored by Dr Mossaab Rtimi.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_implant_explains_implant",
+      "sourceId": "ko_implant_dentaire_definition",
+      "targetId": "entity_dental_implant",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article defines dental implant.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_gingivite_explains_gingivitis",
+      "sourceId": "ko_gingivite_definition",
+      "targetId": "entity_gingivitis",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains gingivitis.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "rel_gingivite_mentions_tartar",
+      "sourceId": "ko_gingivite_definition",
+      "targetId": "entity_tartar",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "The article mentions tartar as a related factor.",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    }
+  ]
+}

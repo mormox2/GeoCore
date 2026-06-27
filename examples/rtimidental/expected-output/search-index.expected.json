@@ -1,0 +1,14 @@
+{
+  "expectedSourceIds": [
+    "ko_detartrage_abime_dents",
+    "ko_implant_dentaire_definition",
+    "ko_gingivite_definition"
+  ],
+  "expectedEntities": [
+    "entity_scaling",
+    "entity_tartar",
+    "entity_dental_implant",
+    "entity_gingivitis",
+    "entity_periodontal_health"
+  ]
+}

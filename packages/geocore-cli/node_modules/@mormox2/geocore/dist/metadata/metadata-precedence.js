@@ -1,0 +1,8 @@
+export const PRECEDENCE_ORDER = [
+    "1. Explicit Knowledge Object metadata",
+    "2. Knowledge Object core fields",
+    "3. Collection metadata",
+    "4. Entity metadata",
+    "5. Global project defaults",
+    "6. System fallback defaults",
+];

@@ -1,0 +1,15 @@
+# RTimi Dental
+
+## Knowledge Index
+
+Le détartrage abîme-t-il les dents ?
+Qu’est-ce qu’un implant dentaire ?
+Qu’est-ce que la gingivite ?
+
+## Important Entities
+
+entity_scaling
+entity_tartar
+entity_dental_implant
+entity_gingivitis
+entity_periodontal_health

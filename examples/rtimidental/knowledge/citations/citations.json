@@ -1,0 +1,41 @@
+{
+  "type": "citation",
+  "content": [
+    {
+      "id": "citation_scaling_professional_review",
+      "sourceId": "source_dr_mossaab_professional_review_001",
+      "targetId": "ko_detartrage_abime_dents",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dr_mossaab_rtimi",
+      "reviewedAt": "2026-06-25",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "citation_implant_professional_review",
+      "sourceId": "source_dr_mossaab_professional_review_001",
+      "targetId": "ko_implant_dentaire_definition",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dr_mossaab_rtimi",
+      "reviewedAt": "2026-06-25",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    },
+    {
+      "id": "citation_gingivitis_professional_review",
+      "sourceId": "source_dr_mossaab_professional_review_001",
+      "targetId": "ko_gingivite_definition",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dr_mossaab_rtimi",
+      "reviewedAt": "2026-06-25",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    }
+  ]
+}

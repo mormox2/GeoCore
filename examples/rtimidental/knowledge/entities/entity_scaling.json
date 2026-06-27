@@ -1,0 +1,16 @@
+{
+  "type": "entity",
+  "content": {
+    "id": "entity_scaling",
+    "type": "dental_procedure",
+    "canonicalName": "Détartrage",
+    "definition": "Soin dentaire destiné à retirer le tartre accumulé sur les dents et près des gencives.",
+    "aliases": [
+      "nettoyage dentaire",
+      "dental scaling",
+      "élimination du tartre"
+    ],
+    "language": "fr",
+    "status": "published"
+  }
+}

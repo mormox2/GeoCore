@@ -1,0 +1,16 @@
+{
+  "type": "entity",
+  "content": {
+    "id": "entity_gingivitis",
+    "type": "dental_condition",
+    "canonicalName": "Gingivite",
+    "definition": "Inflammation des gencives pouvant provoquer rougeur, gonflement ou saignement.",
+    "aliases": [
+      "inflammation des gencives",
+      "gum inflammation",
+      "gingivitis"
+    ],
+    "language": "fr",
+    "status": "published"
+  }
+}

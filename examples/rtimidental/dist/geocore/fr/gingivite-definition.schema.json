@@ -1,0 +1,17 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Qu’est-ce que la gingivite ?",
+  "description": "Explication simple de la gingivite, de ses signes fréquents et de l’importance de la prévention.",
+  "author": {
+    "@type": "Person",
+    "name": "author_dr_mossaab_rtimi"
+  },
+  "dateCreated": "2026-06-27T00:04:03.477Z",
+  "dateModified": "2026-06-27T00:04:03.477Z",
+  "citation": [
+    "citation_scaling_professional_review",
+    "citation_implant_professional_review",
+    "citation_gingivitis_professional_review"
+  ]
+}

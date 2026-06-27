@@ -1,0 +1,29 @@
+{
+  "type": "media",
+  "content": [
+    {
+      "id": "media_scaling_illustration_001",
+      "type": "diagram",
+      "title": "Illustration du détartrage dentaire",
+      "status": "active",
+      "visibility": "public",
+      "source": "/assets/rtimidental/scaling-illustration.webp",
+      "canonicalUrl": "https://rtimidental.tn/assets/rtimidental/scaling-illustration.webp",
+      "description": "Illustration pédagogique montrant le retrait du tartre autour des dents.",
+      "altText": "Illustration montrant du tartre autour des dents et son retrait pendant un détartrage.",
+      "caption": "Le détartrage retire le tartre accumulé près des gencives.",
+      "language": "fr",
+      "relatedObjectIds": [
+        "ko_detartrage_abime_dents"
+      ],
+      "relatedEntityIds": [
+        "entity_scaling",
+        "entity_tartar"
+      ],
+      "consentStatus": "not-required",
+      "privacyLevel": "public",
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25"
+    }
+  ]
+}

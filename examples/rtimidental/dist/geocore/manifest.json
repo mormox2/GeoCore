@@ -1,0 +1,142 @@
+{
+  "id": "cli-export-bundle_manifest",
+  "bundleId": "cli-export-bundle",
+  "siteName": "RTimi Dental",
+  "siteUrl": "https://rtimidental.tn",
+  "language": "fr",
+  "assets": [
+    {
+      "id": "exportasset_markdown_fr-detartrage-abime-t-il-les-dents-md",
+      "type": "markdown",
+      "path": "fr/detartrage-abime-t-il-les-dents.md",
+      "mimeType": "text/markdown",
+      "sourceIds": [
+        "ko_detartrage_abime_dents"
+      ]
+    },
+    {
+      "id": "exportasset_json_fr-detartrage-abime-t-il-les-dents-json",
+      "type": "json",
+      "path": "fr/detartrage-abime-t-il-les-dents.json",
+      "mimeType": "application/json",
+      "sourceIds": [
+        "ko_detartrage_abime_dents"
+      ]
+    },
+    {
+      "id": "exportasset_json-ld_fr-detartrage-abime-t-il-les-dents-schema-json",
+      "type": "json-ld",
+      "path": "fr/detartrage-abime-t-il-les-dents.schema.json",
+      "mimeType": "application/ld+json",
+      "sourceIds": [
+        "ko_detartrage_abime_dents"
+      ]
+    },
+    {
+      "id": "exportasset_markdown_fr-gingivite-definition-md",
+      "type": "markdown",
+      "path": "fr/gingivite-definition.md",
+      "mimeType": "text/markdown",
+      "sourceIds": [
+        "ko_gingivite_definition"
+      ]
+    },
+    {
+      "id": "exportasset_json_fr-gingivite-definition-json",
+      "type": "json",
+      "path": "fr/gingivite-definition.json",
+      "mimeType": "application/json",
+      "sourceIds": [
+        "ko_gingivite_definition"
+      ]
+    },
+    {
+      "id": "exportasset_json-ld_fr-gingivite-definition-schema-json",
+      "type": "json-ld",
+      "path": "fr/gingivite-definition.schema.json",
+      "mimeType": "application/ld+json",
+      "sourceIds": [
+        "ko_gingivite_definition"
+      ]
+    },
+    {
+      "id": "exportasset_markdown_fr-implant-dentaire-definition-md",
+      "type": "markdown",
+      "path": "fr/implant-dentaire-definition.md",
+      "mimeType": "text/markdown",
+      "sourceIds": [
+        "ko_implant_dentaire_definition"
+      ]
+    },
+    {
+      "id": "exportasset_json_fr-implant-dentaire-definition-json",
+      "type": "json",
+      "path": "fr/implant-dentaire-definition.json",
+      "mimeType": "application/json",
+      "sourceIds": [
+        "ko_implant_dentaire_definition"
+      ]
+    },
+    {
+      "id": "exportasset_json-ld_fr-implant-dentaire-definition-schema-json",
+      "type": "json-ld",
+      "path": "fr/implant-dentaire-definition.schema.json",
+      "mimeType": "application/ld+json",
+      "sourceIds": [
+        "ko_implant_dentaire_definition"
+      ]
+    },
+    {
+      "id": "exportasset_search-index_search-index-json",
+      "type": "search-index",
+      "path": "search-index.json",
+      "mimeType": "application/json",
+      "sourceIds": [
+        "ko_detartrage_abime_dents",
+        "ko_gingivite_definition",
+        "ko_implant_dentaire_definition"
+      ]
+    },
+    {
+      "id": "exportasset_llms_llms-txt",
+      "type": "llms",
+      "path": "llms.txt",
+      "mimeType": "text/plain",
+      "sourceIds": [
+        "ko_detartrage_abime_dents",
+        "ko_gingivite_definition",
+        "ko_implant_dentaire_definition"
+      ]
+    },
+    {
+      "id": "exportasset_llms-full_llms-full-txt",
+      "type": "llms-full",
+      "path": "llms-full.txt",
+      "mimeType": "text/plain",
+      "sourceIds": [
+        "ko_detartrage_abime_dents",
+        "ko_gingivite_definition",
+        "ko_implant_dentaire_definition"
+      ]
+    },
+    {
+      "id": "exportasset_sitemap_sitemap-xml",
+      "type": "sitemap",
+      "path": "sitemap.xml",
+      "mimeType": "application/xml",
+      "sourceIds": [
+        "ko_detartrage_abime_dents",
+        "ko_gingivite_definition",
+        "ko_implant_dentaire_definition"
+      ]
+    },
+    {
+      "id": "exportasset_manifest_manifest-json",
+      "type": "manifest",
+      "path": "manifest.json",
+      "mimeType": "application/json",
+      "sourceIds": []
+    }
+  ],
+  "generatedAt": "2026-06-27T00:04:03.492Z"
+}

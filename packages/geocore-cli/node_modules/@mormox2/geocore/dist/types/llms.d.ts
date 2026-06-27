@@ -1,0 +1,22 @@
+import { KnowledgeObject } from "./knowledge-object.js";
+import { ResolvedMetadata } from "./metadata.js";
+import { KnowledgeRelationship } from "./relationship.js";
+import { KnowledgeEntity } from "./entity.js";
+import { KnowledgeCollection } from "./collection.js";
+import { KnowledgeCitation } from "./citation.js";
+import { KnowledgeSource } from "./citation.js";
+export type GenerateLlmsInput = {
+    id: string;
+    siteName: string;
+    siteDescription?: string;
+    siteUrl?: string;
+    language?: string;
+    objects: KnowledgeObject[];
+    metadata?: Record<string, ResolvedMetadata>;
+    relationships?: KnowledgeRelationship[];
+    entities?: KnowledgeEntity[];
+    collections?: KnowledgeCollection[];
+    citations?: KnowledgeCitation[];
+    sources?: KnowledgeSource[];
+    includeFullContent?: boolean;
+};

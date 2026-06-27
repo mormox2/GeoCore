@@ -1,0 +1,16 @@
+{
+  "type": "entity",
+  "content": {
+    "id": "entity_dental_implant",
+    "type": "dental_treatment",
+    "canonicalName": "Implant dentaire",
+    "definition": "Racine artificielle placée dans l’os pour remplacer la racine d’une dent absente.",
+    "aliases": [
+      "implant",
+      "implantologie",
+      "dental implant"
+    ],
+    "language": "fr",
+    "status": "published"
+  }
+}
