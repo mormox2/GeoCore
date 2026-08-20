@@ -174,3 +174,34 @@ export * from "./pipeline/pipeline-stages.js";
 export * from "./pipeline/pipeline-report.js";
 export * from "./pipeline/validation-pipeline.js";
 export * from "./fixtures/validation-pipeline.fixture.js";
+// Export Citation Engine — Schemas, Utils, Filter, Formatter, Validators, Extractor, Fixtures
+export * from "./schemas/citation.schema.js";
+export * from "./citation/citation-utils.js";
+export * from "./citation/citation-filter.js";
+export * from "./citation/citation-formatter.js";
+export * from "./citation/validate-source.js";
+export * from "./citation/validate-citation.js";
+export * from "./citation/citation-extractor.js";
+export * from "./fixtures/citation.fixture.js";
+// Export Media Engine — Schema, Utils, Filter, Formatter, Validator, Extractor, Sitemap, Schema Gen, Fixture
+export * from "./schemas/media.schema.js";
+export * from "./media/media-utils.js";
+export * from "./media/media-filter.js";
+export * from "./media/media-formatter.js";
+export * from "./media/validate-media-asset.js";
+export * from "./media/media-extractor.js";
+export * from "./media/media-sitemap.js";
+export * from "./media/media-schema.js";
+export * from "./fixtures/media.fixture.js";
+// Export API Engine — Types, Response, Endpoints, Validator, Fixture
+export * from "./api/api-types.js";
+export * from "./api/api-response.js";
+export * from "./api/knowledge-api.js";
+export * from "./api/entity-api.js";
+export * from "./api/search-api.js";
+export * from "./api/context-api.js";
+export * from "./api/sitemap-api.js";
+export * from "./api/media-api.js";
+export * from "./api/citation-api.js";
+export * from "./api/validate-api-response.js";
+export * from "./fixtures/api.fixture.js";

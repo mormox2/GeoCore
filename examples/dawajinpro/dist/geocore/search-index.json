@@ -44,10 +44,10 @@
       "text": "Gestion des créances clients Comprendre et suivre les créances clients dans une activité de distribution avicole. Une créance client représente un montant encore dû par un client après une vente, une livraison, un paiement partiel, un retour ou un ajustement. Dans une activité de distribution avicole, le suivi des créances est important parce que les ventes peuvent être fréquentes, les livraisons multiples et les paiements parfois différés. Dawajin Pro structure cette logique autour des ventes, paiements, factures, livraisons et soldes clients afin d’aider l’équipe à mieux suivre les montants dus. Le contenu de cette page décrit le principe fonctionnel général. Il ne doit pas être utilisé comme une garantie comptable, fiscale ou légale. Les données affichées dans les exemples doivent toujours être des données fictives ou de démonstration. entity_customer_balance entity_delivery entity_driver entity_egg_tray entity_invoice entity_konnect_preproduction entity_payment entity_poultry_product entity_stock_movement",
       "metadata": {
         "author": "author_dawajin_team",
-        "createdAt": "2026-08-20T22:20:36.625Z",
-        "updatedAt": "2026-08-20T22:20:36.625Z"
+        "createdAt": "2026-08-20T22:47:27.416Z",
+        "updatedAt": "2026-08-20T22:47:27.416Z"
       },
-      "generatedAt": "2026-08-20T22:20:36.644Z"
+      "generatedAt": "2026-08-20T22:47:27.440Z"
     },
     {
       "id": "searchdoc_knowledge-object_ko_stock_management_poultry_eggs",
@@ -90,10 +90,10 @@
       "text": "Gestion du stock volaille et œufs Comprendre le suivi du stock pour la volaille et les plateaux d’œufs dans Dawajin Pro. La gestion du stock permet de suivre les entrées, sorties et ajustements liés aux produits vendus. Dans Dawajin Pro, les produits par défaut peuvent inclure la volaille vendue au kilogramme et les œufs vendus par plateau. Le suivi du stock doit rester cohérent avec les ventes, les achats, les retours et les corrections éventuelles. Les exemples publics ne doivent pas afficher de données réelles d’entreprise, de fournisseur ou de client. entity_customer_balance entity_delivery entity_driver entity_egg_tray entity_invoice entity_konnect_preproduction entity_payment entity_poultry_product entity_stock_movement",
       "metadata": {
         "author": "author_dawajin_team",
-        "createdAt": "2026-08-20T22:20:36.627Z",
-        "updatedAt": "2026-08-20T22:20:36.627Z"
+        "createdAt": "2026-08-20T22:47:27.417Z",
+        "updatedAt": "2026-08-20T22:47:27.417Z"
       },
-      "generatedAt": "2026-08-20T22:20:36.644Z"
+      "generatedAt": "2026-08-20T22:47:27.440Z"
     },
     {
       "id": "searchdoc_knowledge-object_ko_konnect_preproduction",
@@ -136,10 +136,10 @@
       "text": "Paiement Konnect en pré-production État de prudence concernant l’intégration Konnect dans Dawajin Pro. L’intégration Konnect doit être considérée comme pré-production tant que le compte marchand n’est pas activé, validé et testé avec des paiements réels contrôlés. La documentation publique ne doit pas présenter Konnect comme pleinement opérationnel en production avant validation effective du compte marchand, des webhooks et du cycle complet de paiement. Les validations importantes comprennent notamment : statut confirmé côté serveur, montant attendu, devise attendue, référence de paiement non réutilisée, cohérence avec l’abonnement concerné et garde explicite de production. Cette page sert à documenter la prudence produit. Elle ne constitue pas une annonce de disponibilité commerciale du paiement en production. entity_customer_balance entity_delivery entity_driver entity_egg_tray entity_invoice entity_konnect_preproduction entity_payment entity_poultry_product entity_stock_movement",
       "metadata": {
         "author": "author_dawajin_team",
-        "createdAt": "2026-08-20T22:20:36.627Z",
-        "updatedAt": "2026-08-20T22:20:36.627Z"
+        "createdAt": "2026-08-20T22:47:27.418Z",
+        "updatedAt": "2026-08-20T22:47:27.418Z"
       },
-      "generatedAt": "2026-08-20T22:20:36.644Z"
+      "generatedAt": "2026-08-20T22:47:27.440Z"
     },
     {
       "id": "searchdoc_knowledge-object_ko_driver_role",
@@ -182,10 +182,10 @@
       "text": "Rôle chauffeur Comprendre le rôle chauffeur et ses limites dans Dawajin Pro. Le rôle chauffeur permet de limiter l’accès aux informations nécessaires à l’exécution terrain. Dans Dawajin Pro, un chauffeur ne doit pas avoir les mêmes permissions qu’un administrateur ou qu’un propriétaire de compte. La séparation des rôles aide à réduire les erreurs, limiter l’exposition des données et mieux contrôler les opérations. Cette documentation décrit le principe fonctionnel général et ne doit pas exposer les règles internes sensibles de sécurité. entity_customer_balance entity_delivery entity_driver entity_egg_tray entity_invoice entity_konnect_preproduction entity_payment entity_poultry_product entity_stock_movement",
       "metadata": {
         "author": "author_dawajin_team",
-        "createdAt": "2026-08-20T22:20:36.627Z",
-        "updatedAt": "2026-08-20T22:20:36.627Z"
+        "createdAt": "2026-08-20T22:47:27.418Z",
+        "updatedAt": "2026-08-20T22:47:27.418Z"
       },
-      "generatedAt": "2026-08-20T22:20:36.644Z"
+      "generatedAt": "2026-08-20T22:47:27.440Z"
     },
     {
       "id": "searchdoc_knowledge-object_ko_delivery_tracking",
@@ -228,13 +228,13 @@
       "text": "Suivi des livraisons Comprendre le rôle du suivi des livraisons dans Dawajin Pro. Le suivi des livraisons permet de relier une opération commerciale à son exécution terrain. Dans Dawajin Pro, une livraison peut être associée à un client, un chauffeur, des produits, des quantités et des informations de règlement selon le workflow configuré. Cette structure aide l’équipe à comprendre ce qui a été livré, à qui, par qui, et dans quel contexte commercial. Les exemples de livraison doivent utiliser des données fictives. Aucune donnée réelle de client ou de chauffeur ne doit être exposée dans les contenus publics. entity_customer_balance entity_delivery entity_driver entity_egg_tray entity_invoice entity_konnect_preproduction entity_payment entity_poultry_product entity_stock_movement",
       "metadata": {
         "author": "author_dawajin_team",
-        "createdAt": "2026-08-20T22:20:36.627Z",
-        "updatedAt": "2026-08-20T22:20:36.627Z"
+        "createdAt": "2026-08-20T22:47:27.418Z",
+        "updatedAt": "2026-08-20T22:47:27.418Z"
       },
-      "generatedAt": "2026-08-20T22:20:36.644Z"
+      "generatedAt": "2026-08-20T22:47:27.440Z"
     }
   ],
-  "generatedAt": "2026-08-20T22:20:36.644Z",
+  "generatedAt": "2026-08-20T22:47:27.441Z",
   "diagnostics": [
     {
       "id": "GC_SEARCH_DOCUMENT_CANONICAL_URL_MISSING_canonicalUrl",

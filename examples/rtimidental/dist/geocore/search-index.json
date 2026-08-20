@@ -38,10 +38,10 @@
       "text": "Le détartrage abîme-t-il les dents ? Réponse claire pour les patients sur le détartrage dentaire et son effet sur les dents. Le détartrage n’abîme pas les dents lorsqu’il est réalisé correctement par un professionnel. Il permet d’enlever le tartre accumulé autour des dents et près des gencives. Après un détartrage, certaines personnes peuvent ressentir une sensibilité temporaire, surtout si le tartre était important ou si les gencives étaient inflammées. Cette sensibilité ne signifie pas que l’émail a été abîmé. Elle est généralement liée à l’exposition de zones auparavant couvertes par le tartre ou à l’état initial des gencives. Le détartrage fait partie des soins de prévention et d’entretien de la santé bucco-dentaire. La fréquence nécessaire dépend de l’état des gencives, de l’hygiène orale, de la présence de tartre et de l’avis du praticien. Ce contenu est informatif et ne remplace pas un examen clinique personnalisé. entity_dental_implant entity_gingivitis entity_periodontal_health entity_scaling entity_tartar",
       "metadata": {
         "author": "author_dr_mossaab_rtimi",
-        "createdAt": "2026-08-20T22:20:26.462Z",
-        "updatedAt": "2026-08-20T22:20:26.462Z"
+        "createdAt": "2026-08-20T22:47:26.698Z",
+        "updatedAt": "2026-08-20T22:47:26.698Z"
       },
-      "generatedAt": "2026-08-20T22:20:26.480Z"
+      "generatedAt": "2026-08-20T22:47:26.717Z"
     },
     {
       "id": "searchdoc_knowledge-object_ko_gingivite_definition",
@@ -78,10 +78,10 @@
       "text": "Qu’est-ce que la gingivite ? Explication simple de la gingivite, de ses signes fréquents et de l’importance de la prévention. La gingivite est une inflammation des gencives. Elle peut se manifester par une rougeur, un gonflement, une sensibilité ou un saignement lors du brossage. Elle est souvent liée à l’accumulation de plaque dentaire et de tartre, mais d’autres facteurs peuvent intervenir. Lorsqu’elle est prise en charge tôt, la gingivite peut généralement être contrôlée avec une amélioration de l’hygiène bucco-dentaire et des soins adaptés. Un saignement régulier des gencives ne doit pas être ignoré. Un examen dentaire permet d’évaluer la situation et de proposer une prise en charge adaptée. Ce contenu est informatif et ne remplace pas un diagnostic personnalisé. entity_dental_implant entity_gingivitis entity_periodontal_health entity_scaling entity_tartar",
       "metadata": {
         "author": "author_dr_mossaab_rtimi",
-        "createdAt": "2026-08-20T22:20:26.464Z",
-        "updatedAt": "2026-08-20T22:20:26.464Z"
+        "createdAt": "2026-08-20T22:47:26.700Z",
+        "updatedAt": "2026-08-20T22:47:26.700Z"
       },
-      "generatedAt": "2026-08-20T22:20:26.480Z"
+      "generatedAt": "2026-08-20T22:47:26.717Z"
     },
     {
       "id": "searchdoc_knowledge-object_ko_implant_dentaire_definition",
@@ -118,13 +118,13 @@
       "text": "Qu’est-ce qu’un implant dentaire ? Définition simple d’un implant dentaire pour les patients. Un implant dentaire est une racine artificielle, généralement en titane ou en matériau biocompatible, placée dans l’os de la mâchoire pour remplacer la racine d’une dent absente. Après la phase de cicatrisation, l’implant peut servir de support à une couronne, un bridge ou une prothèse selon la situation clinique. La possibilité de poser un implant dépend de plusieurs facteurs : volume osseux, état des gencives, santé générale, hygiène bucco-dentaire et analyse du praticien. Un examen clinique et radiologique est nécessaire avant de proposer un traitement implantaire. Ce contenu est informatif et ne remplace pas une consultation personnalisée. entity_dental_implant entity_gingivitis entity_periodontal_health entity_scaling entity_tartar",
       "metadata": {
         "author": "author_dr_mossaab_rtimi",
-        "createdAt": "2026-08-20T22:20:26.464Z",
-        "updatedAt": "2026-08-20T22:20:26.464Z"
+        "createdAt": "2026-08-20T22:47:26.701Z",
+        "updatedAt": "2026-08-20T22:47:26.701Z"
       },
-      "generatedAt": "2026-08-20T22:20:26.480Z"
+      "generatedAt": "2026-08-20T22:47:26.717Z"
     }
   ],
-  "generatedAt": "2026-08-20T22:20:26.480Z",
+  "generatedAt": "2026-08-20T22:47:26.717Z",
   "diagnostics": [
     {
       "id": "GC_SEARCH_DOCUMENT_CANONICAL_URL_MISSING_canonicalUrl",

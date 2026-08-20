@@ -25,4 +25,4 @@ Les données affichées dans les exemples doivent toujours être des données fi
 - Version: 1.0.0
 - Status: published
 - Author: author_dawajin_team
-- Last Updated: 2026-08-20T22:20:36.625Z
+- Last Updated: 2026-08-20T22:47:27.416Z

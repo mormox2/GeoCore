@@ -1,0 +1,11 @@
+import type { KnowledgeSource, KnowledgeCitation } from "../types/citation.js";
+export declare const whoOralHealthSource: KnowledgeSource;
+export declare const drMossaabProfessionalReview: KnowledgeSource;
+export declare const dawajinInternalReleaseNotes: KnowledgeSource;
+export declare const deprecatedSource: KnowledgeSource;
+export declare const scalingCitation: KnowledgeCitation;
+export declare const professionalReviewCitation: KnowledgeCitation;
+export declare const dawajinInternalCitation: KnowledgeCitation;
+export declare const removedCitation: KnowledgeCitation;
+export declare const allSourcesFixture: KnowledgeSource[];
+export declare const allCitationsFixture: KnowledgeCitation[];

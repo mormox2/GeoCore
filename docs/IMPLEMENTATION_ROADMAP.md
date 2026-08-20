@@ -461,6 +461,10 @@ This prevents architecture drift and uncontrolled code generation.
 
 # 10. Immediate Next Action
 
-All MVP sprints (Sprint 1 through Sprint 16) are complete and validated!
+- **MVP Phase (Sprints 1-16)**: Complete and validated.
+- **Phase 2 (Sprints 17-19)**:
+  - **Sprint 17 (Citation Engine)**: Completed and validated (Zod schemas, utils, filter, formatter, source/citation validators, extractor, fixtures, tests).
+  - **Sprint 18 (Media Engine)**: Completed and validated (Zod schema, utils, filter, formatter, asset validator, extractor, media sitemap, Schema.org generator, fixtures, tests).
+  - **Sprint 19 (Build-Time API Engine)**: Completed and validated (typed in-process API, ApiResponse envelopes, knowledge/entity/search/context/sitemap/media/citation endpoints, validator, fixtures, tests).
 
-The next phase is Phase 2 (Website Integrations, Next.js Adapters, API package, etc.).
+All 88 test files and 652 tests across GeoCore are compiling and passing cleanly.
