@@ -251,3 +251,5 @@ export * from "./api/citation-api.js";
 export * from "./api/validate-api-response.js";
 
 export * from "./fixtures/api.fixture.js";
+export * from "./fixtures/rtimidental.fixture.js";
+export * from "./fixtures/dawajinpro.fixture.js";
