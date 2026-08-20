@@ -1,3 +1,4 @@
+import * as path from "path";
 import { loadConfig } from "../config/load-config.js";
 import { discoverKnowledgeFiles } from "../fs/discover-files.js";
 import { readKnowledgeFiles } from "../fs/read-knowledge-files.js";
@@ -13,8 +14,13 @@ export async function inspectCommand(flags: {
     knowledgeDir: flags.knowledgeDir,
   });
 
+  const baseDir = flags.config ? path.dirname(path.resolve(flags.config)) : process.cwd();
+  const effectiveKnowledgeDir = path.isAbsolute(config.knowledgeDir)
+    ? config.knowledgeDir
+    : path.resolve(baseDir, config.knowledgeDir);
+
   const files = await discoverKnowledgeFiles({
-    knowledgeDir: config.knowledgeDir,
+    knowledgeDir: effectiveKnowledgeDir,
     include: config.include,
     exclude: config.exclude,
   });

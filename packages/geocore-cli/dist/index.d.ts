@@ -1,6 +1,4 @@
-#!/usr/bin/env node
-import { runCli } from "./cli.js";
-export { runCli };
+export { runCli } from "./cli.js";
 export { initCommand } from "./commands/init.command.js";
 export { validateCommand } from "./commands/validate.command.js";
 export { exportCommand } from "./commands/export.command.js";

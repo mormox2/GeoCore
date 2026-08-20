@@ -1,0 +1,19 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Gestion du stock volaille et œufs",
+  "description": "Comprendre le suivi du stock pour la volaille et les plateaux d’œufs dans Dawajin Pro.",
+  "author": {
+    "@type": "Person",
+    "name": "author_dawajin_team"
+  },
+  "dateCreated": "2026-08-20T22:20:36.627Z",
+  "dateModified": "2026-08-20T22:20:36.627Z",
+  "citation": [
+    "citation_customer_balance_product_review",
+    "citation_delivery_product_review",
+    "citation_stock_product_review",
+    "citation_driver_product_review",
+    "citation_konnect_preproduction_review"
+  ]
+}

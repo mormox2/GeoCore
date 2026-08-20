@@ -1,0 +1,19 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Gestion des créances clients",
+  "description": "Comprendre et suivre les créances clients dans une activité de distribution avicole.",
+  "author": {
+    "@type": "Person",
+    "name": "author_dawajin_team"
+  },
+  "dateCreated": "2026-08-20T22:20:36.625Z",
+  "dateModified": "2026-08-20T22:20:36.625Z",
+  "citation": [
+    "citation_customer_balance_product_review",
+    "citation_delivery_product_review",
+    "citation_stock_product_review",
+    "citation_driver_product_review",
+    "citation_konnect_preproduction_review"
+  ]
+}

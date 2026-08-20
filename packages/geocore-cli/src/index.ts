@@ -1,7 +1,4 @@
-#!/usr/bin/env node
-import { runCli } from "./cli.js";
-
-export { runCli };
+export { runCli } from "./cli.js";
 
 export { initCommand } from "./commands/init.command.js";
 export { validateCommand } from "./commands/validate.command.js";
@@ -24,8 +21,3 @@ export { EXIT_CODES } from "./utils/exit-codes.js";
 export { CliError } from "./utils/cli-error.js";
 export { parseArgs } from "./utils/parse-args.js";
 
-if (process.argv[1] && (process.argv[1].includes("index.js") || process.argv[1].includes("geocore"))) {
-  runCli(process.argv.slice(2)).then((code) => {
-    process.exit(code);
-  });
-}

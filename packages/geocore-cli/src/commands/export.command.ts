@@ -1,3 +1,4 @@
+import * as path from "path";
 import { loadConfig } from "../config/load-config.js";
 import { discoverKnowledgeFiles } from "../fs/discover-files.js";
 import { readKnowledgeFiles } from "../fs/read-knowledge-files.js";
@@ -24,8 +25,16 @@ export async function exportCommand(flags: {
     mode: flags.mode,
   });
 
+  const baseDir = flags.config ? path.dirname(path.resolve(flags.config)) : process.cwd();
+  const effectiveKnowledgeDir = path.isAbsolute(config.knowledgeDir)
+    ? config.knowledgeDir
+    : path.resolve(baseDir, config.knowledgeDir);
+  const effectiveOutputDir = path.isAbsolute(config.outputDir)
+    ? config.outputDir
+    : path.resolve(baseDir, config.outputDir);
+
   const files = await discoverKnowledgeFiles({
-    knowledgeDir: config.knowledgeDir,
+    knowledgeDir: effectiveKnowledgeDir,
     include: config.include,
     exclude: config.exclude,
   });
@@ -77,7 +86,7 @@ export async function exportCommand(flags: {
 
   const { writtenFiles } = await writeExportBundle({
     bundle,
-    outputDir: config.outputDir,
+    outputDir: effectiveOutputDir,
   });
 
   if (flags.json) {

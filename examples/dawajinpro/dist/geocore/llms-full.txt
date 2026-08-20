@@ -1,0 +1,139 @@
+# Dawajin Pro — Full Knowledge Context
+
+Website: https://dawajinpro.tn
+
+## Document: Gestion des créances clients
+
+ID: ko_customer_balance_management
+Language: fr
+Version: 1.0.0
+Author: author_dawajin_team
+Canonical URL: https://dawajinpro.tn/fr/help/gestion-creances-clients
+
+Summary:
+Comprendre et suivre les créances clients dans une activité de distribution avicole.
+
+Content:
+Une créance client représente un montant encore dû par un client après une vente, une livraison, un paiement partiel, un retour ou un ajustement.
+
+Dans une activité de distribution avicole, le suivi des créances est important parce que les ventes peuvent être fréquentes, les livraisons multiples et les paiements parfois différés.
+
+Dawajin Pro structure cette logique autour des ventes, paiements, factures, livraisons et soldes clients afin d’aider l’équipe à mieux suivre les montants dus.
+
+Le contenu de cette page décrit le principe fonctionnel général. Il ne doit pas être utilisé comme une garantie comptable, fiscale ou légale.
+
+Les données affichées dans les exemples doivent toujours être des données fictives ou de démonstration.
+
+
+Entities:
+- entity_customer_balance
+- entity_invoice
+- entity_payment
+
+---
+
+## Document: Gestion du stock volaille et œufs
+
+ID: ko_stock_management_poultry_eggs
+Language: fr
+Version: 1.0.0
+Author: author_dawajin_team
+Canonical URL: https://dawajinpro.tn/fr/help/gestion-stock-volaille-oeufs
+
+Summary:
+Comprendre le suivi du stock pour la volaille et les plateaux d’œufs dans Dawajin Pro.
+
+Content:
+La gestion du stock permet de suivre les entrées, sorties et ajustements liés aux produits vendus.
+
+Dans Dawajin Pro, les produits par défaut peuvent inclure la volaille vendue au kilogramme et les œufs vendus par plateau.
+
+Le suivi du stock doit rester cohérent avec les ventes, les achats, les retours et les corrections éventuelles.
+
+Les exemples publics ne doivent pas afficher de données réelles d’entreprise, de fournisseur ou de client.
+
+
+Entities:
+- entity_stock_movement
+- entity_poultry_product
+- entity_egg_tray
+
+---
+
+## Document: Paiement Konnect en pré-production
+
+ID: ko_konnect_preproduction
+Language: fr
+Version: 1.0.0
+Author: author_dawajin_team
+Canonical URL: https://dawajinpro.tn/fr/help/konnect-preproduction
+
+Summary:
+État de prudence concernant l’intégration Konnect dans Dawajin Pro.
+
+Content:
+L’intégration Konnect doit être considérée comme pré-production tant que le compte marchand n’est pas activé, validé et testé avec des paiements réels contrôlés.
+
+La documentation publique ne doit pas présenter Konnect comme pleinement opérationnel en production avant validation effective du compte marchand, des webhooks et du cycle complet de paiement.
+
+Les validations importantes comprennent notamment : statut confirmé côté serveur, montant attendu, devise attendue, référence de paiement non réutilisée, cohérence avec l’abonnement concerné et garde explicite de production.
+
+Cette page sert à documenter la prudence produit. Elle ne constitue pas une annonce de disponibilité commerciale du paiement en production.
+
+
+Entities:
+- entity_konnect_preproduction
+- entity_payment
+
+---
+
+## Document: Rôle chauffeur
+
+ID: ko_driver_role
+Language: fr
+Version: 1.0.0
+Author: author_dawajin_team
+Canonical URL: https://dawajinpro.tn/fr/help/role-chauffeur
+
+Summary:
+Comprendre le rôle chauffeur et ses limites dans Dawajin Pro.
+
+Content:
+Le rôle chauffeur permet de limiter l’accès aux informations nécessaires à l’exécution terrain.
+
+Dans Dawajin Pro, un chauffeur ne doit pas avoir les mêmes permissions qu’un administrateur ou qu’un propriétaire de compte.
+
+La séparation des rôles aide à réduire les erreurs, limiter l’exposition des données et mieux contrôler les opérations.
+
+Cette documentation décrit le principe fonctionnel général et ne doit pas exposer les règles internes sensibles de sécurité.
+
+
+Entities:
+- entity_driver
+
+---
+
+## Document: Suivi des livraisons
+
+ID: ko_delivery_tracking
+Language: fr
+Version: 1.0.0
+Author: author_dawajin_team
+Canonical URL: https://dawajinpro.tn/fr/help/suivi-livraisons
+
+Summary:
+Comprendre le rôle du suivi des livraisons dans Dawajin Pro.
+
+Content:
+Le suivi des livraisons permet de relier une opération commerciale à son exécution terrain.
+
+Dans Dawajin Pro, une livraison peut être associée à un client, un chauffeur, des produits, des quantités et des informations de règlement selon le workflow configuré.
+
+Cette structure aide l’équipe à comprendre ce qui a été livré, à qui, par qui, et dans quel contexte commercial.
+
+Les exemples de livraison doivent utiliser des données fictives. Aucune donnée réelle de client ou de chauffeur ne doit être exposée dans les contenus publics.
+
+
+Entities:
+- entity_delivery
+- entity_driver

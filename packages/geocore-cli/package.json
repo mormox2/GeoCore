@@ -5,12 +5,12 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "geocore": "./dist/index.js"
+    "geocore": "./dist/bin.js"
   },
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
-    "geocore": "node dist/index.js"
+    "geocore": "node dist/bin.js"
   },
   "dependencies": {
     "@mormox2/geocore": "file:../geocore",

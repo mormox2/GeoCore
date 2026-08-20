@@ -1,0 +1,30 @@
+{
+  "name": "geocore-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GeoCore AI-native Knowledge Operating System monorepo",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm test --workspaces",
+    "test:core": "npm test --workspace=@mormox2/geocore",
+    "test:cli": "npm test --workspace=@mormox2/geocore-cli",
+    "test:rtimidental": "npm test --workspace=@geocore/example-rtimidental",
+    "test:dawajinpro": "npm test --workspace=@geocore/example-dawajinpro",
+    "validate:rtimidental": "node ./packages/geocore-cli/dist/bin.js validate --config ./examples/rtimidental/geocore.config.json",
+    "export:rtimidental": "node ./packages/geocore-cli/dist/bin.js export --config ./examples/rtimidental/geocore.config.json",
+    "inspect:rtimidental": "node ./packages/geocore-cli/dist/bin.js inspect --config ./examples/rtimidental/geocore.config.json",
+    "validate:dawajinpro": "node ./packages/geocore-cli/dist/bin.js validate --config ./examples/dawajinpro/geocore.config.json",
+    "export:dawajinpro": "node ./packages/geocore-cli/dist/bin.js export --config ./examples/dawajinpro/geocore.config.json",
+    "inspect:dawajinpro": "node ./packages/geocore-cli/dist/bin.js inspect --config ./examples/dawajinpro/geocore.config.json"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0",
+    "@types/node": "^20.11.0"
+  }
+}

@@ -1,0 +1,370 @@
+{
+  "id": "ko_delivery_tracking",
+  "slug": "suivi-livraisons",
+  "title": "Suivi des livraisons",
+  "summary": "Comprendre le rôle du suivi des livraisons dans Dawajin Pro.",
+  "language": "fr",
+  "version": "1.0.0",
+  "status": "published",
+  "body": "Le suivi des livraisons permet de relier une opération commerciale à son exécution terrain.\n\nDans Dawajin Pro, une livraison peut être associée à un client, un chauffeur, des produits, des quantités et des informations de règlement selon le workflow configuré.\n\nCette structure aide l’équipe à comprendre ce qui a été livré, à qui, par qui, et dans quel contexte commercial.\n\nLes exemples de livraison doivent utiliser des données fictives. Aucune donnée réelle de client ou de chauffeur ne doit être exposée dans les contenus publics.\n",
+  "metadata": {
+    "id": "ko_delivery_tracking",
+    "title": "Suivi des livraisons",
+    "summary": "Comprendre le rôle du suivi des livraisons dans Dawajin Pro.",
+    "language": "fr",
+    "version": "1.0.0",
+    "status": "published",
+    "author": "author_dawajin_team"
+  },
+  "relationships": [
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_customer_balance_explains_balance",
+      "sourceId": "ko_customer_balance_management",
+      "targetId": "entity_customer_balance",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains customer balances."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_customer_balance_mentions_invoice",
+      "sourceId": "ko_customer_balance_management",
+      "targetId": "entity_invoice",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "Customer balance is related to invoices."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_customer_balance_mentions_payment",
+      "sourceId": "ko_customer_balance_management",
+      "targetId": "entity_payment",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "Customer balance is affected by payments."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_delivery_explains_delivery",
+      "sourceId": "ko_delivery_tracking",
+      "targetId": "entity_delivery",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains delivery tracking."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_delivery_mentions_driver",
+      "sourceId": "ko_delivery_tracking",
+      "targetId": "entity_driver",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "Delivery tracking may involve a driver."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_stock_explains_stock_movement",
+      "sourceId": "ko_stock_management_poultry_eggs",
+      "targetId": "entity_stock_movement",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains stock movement."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_stock_mentions_poultry",
+      "sourceId": "ko_stock_management_poultry_eggs",
+      "targetId": "entity_poultry_product",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "Stock management includes poultry products."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_stock_mentions_eggs",
+      "sourceId": "ko_stock_management_poultry_eggs",
+      "targetId": "entity_egg_tray",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "Stock management includes egg trays."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_driver_explains_driver",
+      "sourceId": "ko_driver_role",
+      "targetId": "entity_driver",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains the driver role."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_konnect_explains_preproduction",
+      "sourceId": "ko_konnect_preproduction",
+      "targetId": "entity_konnect_preproduction",
+      "type": "explains",
+      "strength": "canonical",
+      "confidence": "high",
+      "reason": "The article explains Konnect pre-production status."
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "rel_konnect_mentions_payment",
+      "sourceId": "ko_konnect_preproduction",
+      "targetId": "entity_payment",
+      "type": "mentions",
+      "strength": "strong",
+      "confidence": "high",
+      "reason": "Konnect relates to payment workflows."
+    }
+  ],
+  "entities": [
+    {
+      "definition": "Montant encore dû par un client après ventes, paiements, retours ou ajustements.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-08-20T22:20:36.625Z",
+      "updatedAt": "2026-08-20T22:20:36.625Z",
+      "id": "entity_customer_balance",
+      "type": "business_concept",
+      "canonicalName": "Créance client",
+      "aliases": [
+        "dette client",
+        "solde client",
+        "customer balance",
+        "client debt"
+      ]
+    },
+    {
+      "definition": "Opération terrain consistant à remettre des produits à un client dans un contexte commercial défini.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-08-20T22:20:36.625Z",
+      "updatedAt": "2026-08-20T22:20:36.625Z",
+      "id": "entity_delivery",
+      "type": "business_workflow",
+      "canonicalName": "Livraison",
+      "aliases": [
+        "delivery",
+        "tournée",
+        "distribution"
+      ]
+    },
+    {
+      "definition": "Utilisateur terrain chargé de participer aux opérations de livraison avec des permissions limitées.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-08-20T22:20:36.625Z",
+      "updatedAt": "2026-08-20T22:20:36.625Z",
+      "id": "entity_driver",
+      "type": "user_role",
+      "canonicalName": "Chauffeur",
+      "aliases": [
+        "driver",
+        "livreur"
+      ]
+    },
+    {
+      "definition": "Unité commerciale représentant généralement un plateau de 30 œufs.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-08-20T22:20:36.625Z",
+      "updatedAt": "2026-08-20T22:20:36.625Z",
+      "id": "entity_egg_tray",
+      "type": "product_concept",
+      "canonicalName": "Plateau d’œufs",
+      "aliases": [
+        "plateau 30 œufs",
+        "tray of eggs",
+        "œufs"
+      ]
+    },
+    {
+      "definition": "Document commercial qui formalise une vente, des montants dus et des informations de paiement.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-08-20T22:20:36.625Z",
+      "updatedAt": "2026-08-20T22:20:36.625Z",
+      "id": "entity_invoice",
+      "type": "business_document",
+      "canonicalName": "Facture",
+      "aliases": [
+        "invoice",
+        "facturation"
+      ]
+    },
+    {
+      "definition": "État indiquant que l’intégration Konnect ne doit pas être considérée comme prête en production avant validation du compte marchand et tests réels contrôlés.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-08-20T22:20:36.625Z",
+      "updatedAt": "2026-08-20T22:20:36.625Z",
+      "id": "entity_konnect_preproduction",
+      "type": "payment_status",
+      "canonicalName": "Konnect en pré-production",
+      "aliases": [
+        "Konnect non validé",
+        "paiement pré-production",
+        "payment provider not activated"
+      ]
+    },
+    {
+      "definition": "Opération par laquelle un client règle tout ou partie d’un montant dû.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-08-20T22:20:36.625Z",
+      "updatedAt": "2026-08-20T22:20:36.625Z",
+      "id": "entity_payment",
+      "type": "business_event",
+      "canonicalName": "Paiement",
+      "aliases": [
+        "règlement",
+        "payment"
+      ]
+    },
+    {
+      "definition": "Produit avicole pouvant être suivi et vendu selon une unité adaptée, notamment au kilogramme.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-08-20T22:20:36.625Z",
+      "updatedAt": "2026-08-20T22:20:36.625Z",
+      "id": "entity_poultry_product",
+      "type": "product_concept",
+      "canonicalName": "Volaille",
+      "aliases": [
+        "poulet",
+        "volaille kg",
+        "poultry"
+      ]
+    },
+    {
+      "definition": "Entrée, sortie ou ajustement affectant la quantité disponible d’un produit.",
+      "language": "fr",
+      "status": "published",
+      "createdAt": "2026-08-20T22:20:36.625Z",
+      "updatedAt": "2026-08-20T22:20:36.625Z",
+      "id": "entity_stock_movement",
+      "type": "inventory_concept",
+      "canonicalName": "Mouvement de stock",
+      "aliases": [
+        "stock movement",
+        "entrée stock",
+        "sortie stock"
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "citation_customer_balance_product_review",
+      "sourceId": "source_dawajin_product_review_001",
+      "targetId": "ko_customer_balance_management",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dawajin_team",
+      "reviewedAt": "2026-06-25"
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "citation_delivery_product_review",
+      "sourceId": "source_dawajin_product_review_001",
+      "targetId": "ko_delivery_tracking",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dawajin_team",
+      "reviewedAt": "2026-06-25"
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "citation_stock_product_review",
+      "sourceId": "source_dawajin_product_review_001",
+      "targetId": "ko_stock_management_poultry_eggs",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dawajin_team",
+      "reviewedAt": "2026-06-25"
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "citation_driver_product_review",
+      "sourceId": "source_dawajin_product_review_001",
+      "targetId": "ko_driver_role",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dawajin_team",
+      "reviewedAt": "2026-06-25"
+    },
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "citation_konnect_preproduction_review",
+      "sourceId": "source_dawajin_product_review_001",
+      "targetId": "ko_konnect_preproduction",
+      "purpose": "reviews",
+      "status": "active",
+      "confidence": "high",
+      "reviewedBy": "author_dawajin_team",
+      "reviewedAt": "2026-06-25"
+    }
+  ],
+  "collections": [],
+  "media": [
+    {
+      "createdAt": "2026-06-25",
+      "updatedAt": "2026-06-25",
+      "id": "media_dawajin_customer_balance_dashboard_001",
+      "type": "screenshot",
+      "title": "Tableau de bord des créances clients",
+      "status": "active",
+      "visibility": "public",
+      "source": "/assets/dawajinpro/customer-balance-dashboard.webp",
+      "canonicalUrl": "https://dawajinpro.tn/assets/dawajinpro/customer-balance-dashboard.webp",
+      "description": "Capture d’écran de démonstration montrant un tableau de bord de créances clients avec données fictives.",
+      "altText": "Tableau de bord Dawajin Pro affichant des créances clients avec des données de démonstration.",
+      "caption": "Exemple fictif de suivi des créances clients dans Dawajin Pro.",
+      "language": "fr",
+      "relatedObjectIds": [
+        "ko_customer_balance_management"
+      ],
+      "relatedEntityIds": [
+        "entity_customer_balance",
+        "entity_payment",
+        "entity_invoice"
+      ],
+      "privacyLevel": "public"
+    }
+  ],
+  "generatedFor": {
+    "format": "json",
+    "rendererId": "renderer_json_basic"
+  }
+}

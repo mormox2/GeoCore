@@ -1,0 +1,204 @@
+{
+  "id": "cli-export-bundle_manifest",
+  "bundleId": "cli-export-bundle",
+  "siteName": "Dawajin Pro",
+  "siteUrl": "https://dawajinpro.tn",
+  "language": "fr",
+  "assets": [
+    {
+      "id": "exportasset_markdown_fr-gestion-creances-clients-md",
+      "type": "markdown",
+      "path": "fr/gestion-creances-clients.md",
+      "mimeType": "text/markdown",
+      "sourceIds": [
+        "ko_customer_balance_management"
+      ]
+    },
+    {
+      "id": "exportasset_json_fr-gestion-creances-clients-json",
+      "type": "json",
+      "path": "fr/gestion-creances-clients.json",
+      "mimeType": "application/json",
+      "sourceIds": [
+        "ko_customer_balance_management"
+      ]
+    },
+    {
+      "id": "exportasset_json-ld_fr-gestion-creances-clients-schema-json",
+      "type": "json-ld",
+      "path": "fr/gestion-creances-clients.schema.json",
+      "mimeType": "application/ld+json",
+      "sourceIds": [
+        "ko_customer_balance_management"
+      ]
+    },
+    {
+      "id": "exportasset_markdown_fr-gestion-stock-volaille-oeufs-md",
+      "type": "markdown",
+      "path": "fr/gestion-stock-volaille-oeufs.md",
+      "mimeType": "text/markdown",
+      "sourceIds": [
+        "ko_stock_management_poultry_eggs"
+      ]
+    },
+    {
+      "id": "exportasset_json_fr-gestion-stock-volaille-oeufs-json",
+      "type": "json",
+      "path": "fr/gestion-stock-volaille-oeufs.json",
+      "mimeType": "application/json",
+      "sourceIds": [
+        "ko_stock_management_poultry_eggs"
+      ]
+    },
+    {
+      "id": "exportasset_json-ld_fr-gestion-stock-volaille-oeufs-schema-json",
+      "type": "json-ld",
+      "path": "fr/gestion-stock-volaille-oeufs.schema.json",
+      "mimeType": "application/ld+json",
+      "sourceIds": [
+        "ko_stock_management_poultry_eggs"
+      ]
+    },
+    {
+      "id": "exportasset_markdown_fr-konnect-preproduction-md",
+      "type": "markdown",
+      "path": "fr/konnect-preproduction.md",
+      "mimeType": "text/markdown",
+      "sourceIds": [
+        "ko_konnect_preproduction"
+      ]
+    },
+    {
+      "id": "exportasset_json_fr-konnect-preproduction-json",
+      "type": "json",
+      "path": "fr/konnect-preproduction.json",
+      "mimeType": "application/json",
+      "sourceIds": [
+        "ko_konnect_preproduction"
+      ]
+    },
+    {
+      "id": "exportasset_json-ld_fr-konnect-preproduction-schema-json",
+      "type": "json-ld",
+      "path": "fr/konnect-preproduction.schema.json",
+      "mimeType": "application/ld+json",
+      "sourceIds": [
+        "ko_konnect_preproduction"
+      ]
+    },
+    {
+      "id": "exportasset_markdown_fr-role-chauffeur-md",
+      "type": "markdown",
+      "path": "fr/role-chauffeur.md",
+      "mimeType": "text/markdown",
+      "sourceIds": [
+        "ko_driver_role"
+      ]
+    },
+    {
+      "id": "exportasset_json_fr-role-chauffeur-json",
+      "type": "json",
+      "path": "fr/role-chauffeur.json",
+      "mimeType": "application/json",
+      "sourceIds": [
+        "ko_driver_role"
+      ]
+    },
+    {
+      "id": "exportasset_json-ld_fr-role-chauffeur-schema-json",
+      "type": "json-ld",
+      "path": "fr/role-chauffeur.schema.json",
+      "mimeType": "application/ld+json",
+      "sourceIds": [
+        "ko_driver_role"
+      ]
+    },
+    {
+      "id": "exportasset_markdown_fr-suivi-livraisons-md",
+      "type": "markdown",
+      "path": "fr/suivi-livraisons.md",
+      "mimeType": "text/markdown",
+      "sourceIds": [
+        "ko_delivery_tracking"
+      ]
+    },
+    {
+      "id": "exportasset_json_fr-suivi-livraisons-json",
+      "type": "json",
+      "path": "fr/suivi-livraisons.json",
+      "mimeType": "application/json",
+      "sourceIds": [
+        "ko_delivery_tracking"
+      ]
+    },
+    {
+      "id": "exportasset_json-ld_fr-suivi-livraisons-schema-json",
+      "type": "json-ld",
+      "path": "fr/suivi-livraisons.schema.json",
+      "mimeType": "application/ld+json",
+      "sourceIds": [
+        "ko_delivery_tracking"
+      ]
+    },
+    {
+      "id": "exportasset_search-index_search-index-json",
+      "type": "search-index",
+      "path": "search-index.json",
+      "mimeType": "application/json",
+      "sourceIds": [
+        "ko_customer_balance_management",
+        "ko_stock_management_poultry_eggs",
+        "ko_konnect_preproduction",
+        "ko_driver_role",
+        "ko_delivery_tracking"
+      ]
+    },
+    {
+      "id": "exportasset_llms_llms-txt",
+      "type": "llms",
+      "path": "llms.txt",
+      "mimeType": "text/plain",
+      "sourceIds": [
+        "ko_customer_balance_management",
+        "ko_stock_management_poultry_eggs",
+        "ko_konnect_preproduction",
+        "ko_driver_role",
+        "ko_delivery_tracking"
+      ]
+    },
+    {
+      "id": "exportasset_llms-full_llms-full-txt",
+      "type": "llms-full",
+      "path": "llms-full.txt",
+      "mimeType": "text/plain",
+      "sourceIds": [
+        "ko_customer_balance_management",
+        "ko_stock_management_poultry_eggs",
+        "ko_konnect_preproduction",
+        "ko_driver_role",
+        "ko_delivery_tracking"
+      ]
+    },
+    {
+      "id": "exportasset_sitemap_sitemap-xml",
+      "type": "sitemap",
+      "path": "sitemap.xml",
+      "mimeType": "application/xml",
+      "sourceIds": [
+        "ko_customer_balance_management",
+        "ko_stock_management_poultry_eggs",
+        "ko_konnect_preproduction",
+        "ko_driver_role",
+        "ko_delivery_tracking"
+      ]
+    },
+    {
+      "id": "exportasset_manifest_manifest-json",
+      "type": "manifest",
+      "path": "manifest.json",
+      "mimeType": "application/json",
+      "sourceIds": []
+    }
+  ],
+  "generatedAt": "2026-08-20T22:20:36.643Z"
+}
