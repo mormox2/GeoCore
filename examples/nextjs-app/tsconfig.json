@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "declaration": true,
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": ["../../packages/geocore/node_modules/@types"],
+    "types": ["node"],
+    "jsx": "react-jsx",
+    "paths": {
+      "@mormox2/geocore": ["../../packages/geocore/dist/index.d.ts"],
+      "@mormox2/geocore-next": ["../../packages/geocore-next/dist/index.d.ts"],
+      "@mormox2/geocore-ai": ["../../packages/geocore-ai/dist/index.d.ts"]
+    }
+  },
+  "include": ["src/**/*"]
+}

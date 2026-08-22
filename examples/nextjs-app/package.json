@@ -1,0 +1,19 @@
+{
+  "name": "@geocore/example-nextjs-app",
+  "version": "1.0.0",
+  "description": "GeoCore Next.js 14+ App Router Reference Application with SEO Metadata, Universal Handlers, and RAG Chat",
+  "type": "module",
+  "scripts": {
+    "build": "node ../../packages/geocore/node_modules/typescript/bin/tsc",
+    "test": "node ../../packages/geocore/node_modules/vitest/vitest.mjs run"
+  },
+  "dependencies": {
+    "@mormox2/geocore": "file:../../packages/geocore",
+    "@mormox2/geocore-next": "file:../../packages/geocore-next",
+    "@mormox2/geocore-ai": "file:../../packages/geocore-ai"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "@types/node": "^20.11.0"
+  }
+}
