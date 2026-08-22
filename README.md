@@ -17,16 +17,19 @@ GeoCore/
 │   ├── geocore-next/     @mormox2/geocore-next    Next.js 14+ App Router metadata, route handlers & UI components
 │   ├── geocore-ai/       @mormox2/geocore-ai      AI / RAG engine, semantic chunking & citation grounding guardrails
 │   ├── geocore-server/   @mormox2/geocore-server  Standalone HTTP/REST API server with OpenAPI 3.1 & auth middleware
-│   └── geocore-db/       @mormox2/geocore-db      Persistence & repository layer (In-Memory & SQLite/SQL adapters)
+│   ├── geocore-db/       @mormox2/geocore-db      Persistence & repository layer (In-Memory & SQLite/SQL adapters)
+│   └── geocore-vector/   @mormox2/geocore-vector  Semantic embeddings, vector store & hybrid search engine (RRF)
 ├── apps/
 │   └── geocore-studio/   @geocore/studio          Interactive Visual Studio (2D/3D Graph, Live Editor & RAG Playground)
 ├── examples/
+│   ├── nextjs-app/       @geocore/example-nextjs-app    Next.js 14+ App Router reference integration & RAG chat
 │   ├── rtimidental/      @geocore/example-rtimidental   RTimi Dental (Medical / Dental domain integration)
 │   └── dawajinpro/       @geocore/example-dawajinpro    Dawajin Pro (AgriTech / Poultry ERP integration)
 ├── specs/                Normative specifications (GC-SPEC-0001 through GC-SPEC-0019)
 ├── docs/                 Architecture, playbooks, guidelines, and roadmaps
 └── .github/workflows/    Automated CI/CD build, test & validation pipelines
 ```
+
 
 ---
 
