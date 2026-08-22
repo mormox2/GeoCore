@@ -4,8 +4,22 @@
   "description": "GeoCore CLI tools to validate, export, inspect, serve, vectorize, and explore knowledge repositories",
   "type": "module",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "bin": {
     "geocore": "./dist/bin.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "author": "Mormox",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mormox2/GeoCore.git",
+    "directory": "packages/geocore-cli"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc",
@@ -13,10 +27,10 @@
     "geocore": "node dist/bin.js"
   },
   "dependencies": {
-    "@mormox2/geocore": "file:../geocore",
-    "@mormox2/geocore-ai": "file:../geocore-ai",
-    "@mormox2/geocore-server": "file:../geocore-server",
-    "@mormox2/geocore-vector": "file:../geocore-vector",
+    "@mormox2/geocore": "^1.0.0",
+    "@mormox2/geocore-ai": "^1.0.0",
+    "@mormox2/geocore-server": "^1.0.0",
+    "@mormox2/geocore-vector": "^1.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

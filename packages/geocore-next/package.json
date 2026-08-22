@@ -1,16 +1,29 @@
 {
   "name": "@mormox2/geocore-next",
   "version": "1.0.0",
-  "description": "GeoCore Next.js App Router adapter for automated SEO metadata, route handlers, and structured data",
+  "description": "GeoCore Next.js 14+ App Router adapters, metadata generators, route handlers, and UI components",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "author": "Mormox",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mormox2/GeoCore.git",
+    "directory": "packages/geocore-next"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "node ../geocore/node_modules/typescript/bin/tsc",
     "test": "node ../geocore/node_modules/vitest/vitest.mjs run"
   },
   "dependencies": {
-    "@mormox2/geocore": "file:../geocore",
+    "@mormox2/geocore": "^1.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

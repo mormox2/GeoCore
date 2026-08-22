@@ -1,16 +1,29 @@
 {
   "name": "@mormox2/geocore-db",
   "version": "1.0.0",
-  "description": "GeoCore repository and database persistence layer with In-Memory and SQLite adapters",
+  "description": "GeoCore universal persistence and repository abstraction with In-Memory and SQLite adapters",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "author": "Mormox",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mormox2/GeoCore.git",
+    "directory": "packages/geocore-db"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "node ../geocore/node_modules/typescript/bin/tsc",
     "test": "node ../geocore/node_modules/vitest/vitest.mjs run"
   },
   "dependencies": {
-    "@mormox2/geocore": "file:../geocore",
+    "@mormox2/geocore": "^1.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

@@ -1,16 +1,29 @@
 {
   "name": "@mormox2/geocore-ai",
   "version": "1.0.0",
-  "description": "GeoCore AI & RAG knowledge engine for semantic chunking, context building, and citation-grounded generation",
+  "description": "GeoCore AI / RAG prompt context builder, semantic markdown chunking, and citation grounding verification",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "author": "Mormox",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mormox2/GeoCore.git",
+    "directory": "packages/geocore-ai"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "node ../geocore/node_modules/typescript/bin/tsc",
     "test": "node ../geocore/node_modules/vitest/vitest.mjs run"
   },
   "dependencies": {
-    "@mormox2/geocore": "file:../geocore",
+    "@mormox2/geocore": "^1.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
