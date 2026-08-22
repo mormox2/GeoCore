@@ -19,8 +19,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "node ../geocore/node_modules/typescript/bin/tsc",
-    "test": "node ../geocore/node_modules/vitest/vitest.mjs run"
+    "build": "tsc",
+    "test": "vitest run"
   },
   "dependencies": {
     "@mormox2/geocore": "^1.0.0",
@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "typescript": "^5.4.5",
+    "vitest": "^1.6.0",
     "@types/node": "^20.11.0"
   }
 }

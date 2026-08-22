@@ -5,7 +5,7 @@
     "validate": "geocore validate --config geocore.config.json",
     "export": "geocore export --config geocore.config.json",
     "inspect": "geocore inspect --config geocore.config.json",
-    "test": "node ../../packages/geocore/node_modules/vitest/vitest.mjs run"
+    "test": "vitest run"
   },
   "devDependencies": {
     "vitest": "^1.6.0",
