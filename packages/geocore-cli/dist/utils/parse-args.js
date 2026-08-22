@@ -3,9 +3,10 @@ export function parseArgs(args) {
         flags: {},
         unknownArgs: [],
     };
+    const VALID_COMMANDS = new Set(["init", "validate", "export", "inspect", "serve", "vectorize", "studio", "help"]);
     for (let i = 0; i < args.length; i++) {
         const arg = args[i];
-        if (arg === "init" || arg === "validate" || arg === "export" || arg === "inspect" || arg === "help") {
+        if (VALID_COMMANDS.has(arg)) {
             if (!parsed.command) {
                 parsed.command = arg;
             }
@@ -27,6 +28,22 @@ export function parseArgs(args) {
         }
         else if (arg === "--language") {
             parsed.flags.language = args[++i];
+        }
+        else if (arg === "--port") {
+            const portVal = parseInt(args[++i], 10);
+            if (!isNaN(portVal))
+                parsed.flags.port = portVal;
+        }
+        else if (arg === "--host") {
+            parsed.flags.host = args[++i];
+        }
+        else if (arg === "--dim" || arg === "--dimension") {
+            const dimVal = parseInt(args[++i], 10);
+            if (!isNaN(dimVal))
+                parsed.flags.dim = dimVal;
+        }
+        else if (arg === "--api-key") {
+            parsed.flags.apiKey = args[++i];
         }
         else if (arg === "--mode") {
             const modeVal = args[++i];

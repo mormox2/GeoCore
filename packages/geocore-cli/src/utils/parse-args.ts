@@ -7,6 +7,10 @@ export type ParsedArgs = {
     siteUrl?: string;
     language?: string;
     mode?: "public" | "internal";
+    port?: number;
+    host?: string;
+    dim?: number;
+    apiKey?: string;
     json?: boolean;
     force?: boolean;
     failFast?: boolean;
@@ -21,10 +25,12 @@ export function parseArgs(args: string[]): ParsedArgs {
     unknownArgs: [],
   };
 
+  const VALID_COMMANDS = new Set(["init", "validate", "export", "inspect", "serve", "vectorize", "studio", "help"]);
+
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
 
-    if (arg === "init" || arg === "validate" || arg === "export" || arg === "inspect" || arg === "help") {
+    if (VALID_COMMANDS.has(arg)) {
       if (!parsed.command) {
         parsed.command = arg;
       } else {
@@ -40,6 +46,16 @@ export function parseArgs(args: string[]): ParsedArgs {
       parsed.flags.siteUrl = args[++i];
     } else if (arg === "--language") {
       parsed.flags.language = args[++i];
+    } else if (arg === "--port") {
+      const portVal = parseInt(args[++i], 10);
+      if (!isNaN(portVal)) parsed.flags.port = portVal;
+    } else if (arg === "--host") {
+      parsed.flags.host = args[++i];
+    } else if (arg === "--dim" || arg === "--dimension") {
+      const dimVal = parseInt(args[++i], 10);
+      if (!isNaN(dimVal)) parsed.flags.dim = dimVal;
+    } else if (arg === "--api-key") {
+      parsed.flags.apiKey = args[++i];
     } else if (arg === "--mode") {
       const modeVal = args[++i];
       if (modeVal === "public" || modeVal === "internal") {

@@ -23,13 +23,17 @@
     "test:nextjs-app": "npm test --workspace=@geocore/example-nextjs-app",
     "test:rtimidental": "npm test --workspace=@geocore/example-rtimidental",
     "test:dawajinpro": "npm test --workspace=@geocore/example-dawajinpro",
-    "preview:studio": "node ./scripts/serve-studio.js",
+    "preview:studio": "node ./packages/geocore-cli/dist/bin.js studio",
     "validate:rtimidental": "node ./packages/geocore-cli/dist/bin.js validate --config ./examples/rtimidental/geocore.config.json",
     "export:rtimidental": "node ./packages/geocore-cli/dist/bin.js export --config ./examples/rtimidental/geocore.config.json",
     "inspect:rtimidental": "node ./packages/geocore-cli/dist/bin.js inspect --config ./examples/rtimidental/geocore.config.json",
+    "vectorize:rtimidental": "node ./packages/geocore-cli/dist/bin.js vectorize --config ./examples/rtimidental/geocore.config.json",
+    "serve:rtimidental": "node ./packages/geocore-cli/dist/bin.js serve --config ./examples/rtimidental/geocore.config.json",
     "validate:dawajinpro": "node ./packages/geocore-cli/dist/bin.js validate --config ./examples/dawajinpro/geocore.config.json",
     "export:dawajinpro": "node ./packages/geocore-cli/dist/bin.js export --config ./examples/dawajinpro/geocore.config.json",
-    "inspect:dawajinpro": "node ./packages/geocore-cli/dist/bin.js inspect --config ./examples/dawajinpro/geocore.config.json"
+    "inspect:dawajinpro": "node ./packages/geocore-cli/dist/bin.js inspect --config ./examples/dawajinpro/geocore.config.json",
+    "vectorize:dawajinpro": "node ./packages/geocore-cli/dist/bin.js vectorize --config ./examples/dawajinpro/geocore.config.json",
+    "serve:dawajinpro": "node ./packages/geocore-cli/dist/bin.js serve --config ./examples/dawajinpro/geocore.config.json"
   },
   "devDependencies": {
     "typescript": "^5.4.5",

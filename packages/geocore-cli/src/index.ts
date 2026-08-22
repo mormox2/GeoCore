@@ -4,6 +4,9 @@ export { initCommand } from "./commands/init.command.js";
 export { validateCommand } from "./commands/validate.command.js";
 export { exportCommand } from "./commands/export.command.js";
 export { inspectCommand } from "./commands/inspect.command.js";
+export { serveCommand } from "./commands/serve.command.js";
+export { vectorizeCommand } from "./commands/vectorize.command.js";
+export { studioCommand } from "./commands/studio.command.js";
 
 export { loadConfig } from "./config/load-config.js";
 export type { GeoCoreCliConfig } from "./config/geocore-config.js";
@@ -20,4 +23,3 @@ export { formatInspectOutput } from "./output/format-inspect-output.js";
 export { EXIT_CODES } from "./utils/exit-codes.js";
 export { CliError } from "./utils/cli-error.js";
 export { parseArgs } from "./utils/parse-args.js";
-

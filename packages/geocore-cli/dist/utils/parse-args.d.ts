@@ -7,6 +7,10 @@ export type ParsedArgs = {
         siteUrl?: string;
         language?: string;
         mode?: "public" | "internal";
+        port?: number;
+        host?: string;
+        dim?: number;
+        apiKey?: string;
         json?: boolean;
         force?: boolean;
         failFast?: boolean;
