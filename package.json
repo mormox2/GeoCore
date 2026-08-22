@@ -32,11 +32,13 @@
     "inspect:rtimidental": "node ./packages/geocore-cli/dist/bin.js inspect --config ./examples/rtimidental/geocore.config.json",
     "vectorize:rtimidental": "node ./packages/geocore-cli/dist/bin.js vectorize --config ./examples/rtimidental/geocore.config.json",
     "serve:rtimidental": "node ./packages/geocore-cli/dist/bin.js serve --config ./examples/rtimidental/geocore.config.json",
+    "sync:rtimidental": "node ./scripts/sync-rtimidental.js",
     "validate:dawajinpro": "node ./packages/geocore-cli/dist/bin.js validate --config ./examples/dawajinpro/geocore.config.json",
     "export:dawajinpro": "node ./packages/geocore-cli/dist/bin.js export --config ./examples/dawajinpro/geocore.config.json",
     "inspect:dawajinpro": "node ./packages/geocore-cli/dist/bin.js inspect --config ./examples/dawajinpro/geocore.config.json",
     "vectorize:dawajinpro": "node ./packages/geocore-cli/dist/bin.js vectorize --config ./examples/dawajinpro/geocore.config.json",
-    "serve:dawajinpro": "node ./packages/geocore-cli/dist/bin.js serve --config ./examples/dawajinpro/geocore.config.json"
+    "serve:dawajinpro": "node ./packages/geocore-cli/dist/bin.js serve --config ./examples/dawajinpro/geocore.config.json",
+    "sync:dawajinpro": "node ./scripts/sync-dawajinpro.js"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
