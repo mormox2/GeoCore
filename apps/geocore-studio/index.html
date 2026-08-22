@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoCore Visual Studio — Knowledge Operating System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="studio-header">
+    <div class="studio-brand">
+      <div class="brand-badge">GC</div>
+      <div>
+        <span class="brand-title">GeoCore Studio</span>
+        <span class="brand-version">v1.0.0</span>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="graph">
+        <span>🌐</span> Graph Explorer
+      </button>
+      <button class="tab-btn" data-tab="editor">
+        <span>📝</span> Live Editor & Validation
+      </button>
+      <button class="tab-btn" data-tab="rag">
+        <span>🤖</span> RAG & Grounding
+      </button>
+      <button class="tab-btn" data-tab="health">
+        <span>📊</span> Repository Health
+      </button>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <select id="datasetSelect" class="dataset-select">
+        <option value="rtimidental">RTimi Dental (Dentisterie)</option>
+        <option value="dawajinpro">Dawajin Pro (Aviculture)</option>
+      </select>
+      <button id="btnExport" class="btn-action">Export Static</button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="studio-main">
+
+    <!-- TAB 1: Graph Explorer -->
+    <section id="tab-graph" class="tab-panel active">
+      <div class="metrics-row">
+        <div class="metric-card">
+          <span class="metric-label">Knowledge Objects</span>
+          <span id="metricKoCount" class="metric-value">3</span>
+          <span class="metric-sub">100% Published</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Domain Entities</span>
+          <span id="metricEntityCount" class="metric-value">2</span>
+          <span class="metric-sub">Graph connected</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Verified Citations</span>
+          <span id="metricCitationCount" class="metric-value">3</span>
+          <span class="metric-sub">Authoritative evidence</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Media Assets</span>
+          <span id="metricMediaCount" class="metric-value">4</span>
+          <span class="metric-sub">Accessible (alt text)</span>
+        </div>
+      </div>
+
+      <div class="graph-layout">
+        <!-- Canvas Visualizer -->
+        <div class="canvas-container">
+          <canvas id="graphCanvas"></canvas>
+          <div class="canvas-overlay">
+            <button class="chip-btn active" data-filter="all">All Nodes</button>
+            <button class="chip-btn" data-filter="knowledge-object">Objects</button>
+            <button class="chip-btn" data-filter="entity">Entities</button>
+            <button class="chip-btn" data-filter="citation">Citations</button>
+          </div>
+        </div>
+
+        <!-- Inspector Sidebar -->
+        <aside class="glass-panel inspector-sidebar">
+          <h3 class="inspector-title">Node Inspector</h3>
+          <div id="inspectorContent" class="inspector-details">
+            <p style="color: var(--text-dim);">Cliquez sur un nœud dans le graphe pour inspecter ses relations, métadonnées et citations.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- TAB 2: Live Editor & Validation -->
+    <section id="tab-editor" class="tab-panel">
+      <div class="editor-layout">
+        <div class="code-editor-box">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <label style="font-weight:600; font-size:0.9rem;">Markdown & YAML Frontmatter</label>
+            <span style="font-size:0.75rem; color:var(--accent-cyan);">Live Validation Active</span>
+          </div>
+          <textarea id="markdownEditor" class="code-area" spellcheck="false">---
+id: ko_detartrage_abime_dents
+slug: detartrage-abime-t-il-les-dents
+title: Le détartrage abîme-t-il les dents ?
+summary: Réponse claire sur les effets du détartrage sur l'émail et les gencives.
+language: fr
+status: published
+version: 1.0.0
+author: author_dr_mossaab_rtimi
+entities:
+  - entity_scaling
+  - entity_tartar
+citations:
+  - citation_who_scaling_001
+---
+
+## Non, le détartrage n'abîme pas l'émail dentaire
+
+Le détartrage est un soin préventif indispensable qui permet d'éliminer la plaque dentaire calcifiée (tartre).
+Lorsqu'il est réalisé avec des ultrasons par un professionnel, il n'altère en aucun cas l'émail dentaire.</textarea>
+        </div>
+
+        <div class="preview-box">
+          <h3 style="font-size:1rem; font-weight:600; border-bottom:1px solid var(--border-glass); padding-bottom:10px;">
+            Pipeline Validation Diagnostics (10 Stages)
+          </h3>
+          <div id="validationOutput" style="display:flex; flex-direction:column; gap:8px;">
+            <!-- Live diagnostics injected here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: RAG & Grounding Playground -->
+    <section id="tab-rag" class="tab-panel">
+      <div class="rag-layout">
+        <div class="glass-panel rag-input-box">
+          <h3 style="font-size:1rem; font-weight:600;">Testeur de Requête & Vérification</h3>
+          <div>
+            <label style="font-size:0.8rem; color:var(--text-muted); display:block; margin-bottom:6px;">Question Patient / Utilisateur :</label>
+            <input type="text" id="ragQueryInput" class="rag-input" value="Est-ce que le détartrage fait mal et abîme l'émail ?">
+          </div>
+          <div>
+            <label style="font-size:0.8rem; color:var(--text-muted); display:block; margin-bottom:6px;">Réponse IA générée à vérifier :</label>
+            <textarea id="ragAnswerInput" class="code-area" style="min-height:160px;">Le détartrage n'abîme pas les dents lorsqu'il est réalisé par un praticien qualifié. Selon les recommandations de l'Organisation Mondiale de la Santé (WHO), il prévient l'accumulation de tartre et les maladies parodontales.</textarea>
+          </div>
+          <button id="btnVerifyGrounding" class="btn-action" style="margin-top:auto;">Vérifier l'ancrage & Hallucination</button>
+        </div>
+
+        <div class="glass-panel" style="display:flex; flex-direction:column; gap:16px;">
+          <h3 style="font-size:1rem; font-weight:600; border-bottom:1px solid var(--border-glass); padding-bottom:10px;">
+            Rapport d'Ancrage & Garde-Fous IA
+          </h3>
+          <div id="groundingResult" style="display:flex; flex-direction:column; gap:12px;">
+            <!-- Grounding result injected here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: Repository Health Dashboard -->
+    <section id="tab-health" class="tab-panel">
+      <div class="glass-panel" style="display:flex; flex-direction:column; gap:20px;">
+        <h3 style="font-size:1.1rem; font-weight:600;">Santé Globale du Référentiel</h3>
+        <div class="metrics-row">
+          <div class="metric-card">
+            <span class="metric-label">Statut Global</span>
+            <span class="metric-value" style="color:var(--accent-emerald);">PUBLIABLE</span>
+            <span class="metric-sub">Prêt pour la production</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Objets Orphelins</span>
+            <span class="metric-value" style="color:var(--accent-cyan);">0</span>
+            <span class="metric-sub">Tous interconnectés</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Couverture SEO / JSON-LD</span>
+            <span class="metric-value">100%</span>
+            <span class="metric-sub">Article, FAQ, Breadcrumb</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Indexation AI (llms.txt)</span>
+            <span class="metric-value" style="color:var(--accent-emerald);">Active</span>
+            <span class="metric-sub">llms.txt + llms-full.txt</span>
+          </div>
+        </div>
+
+        <div style="background:#0b0f19; border:1px solid var(--border-glass); border-radius:var(--radius-md); padding:16px;">
+          <h4 style="margin-bottom:10px; font-size:0.9rem;">Fichiers d'Export Statiques Générés</h4>
+          <ul style="list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:8px; font-family:var(--font-mono); font-size:0.8rem; color:var(--text-muted);">
+            <li>✅ fr/detartrage-abime-t-il-les-dents.md</li>
+            <li>✅ fr/detartrage-abime-t-il-les-dents.json</li>
+            <li>✅ fr/detartrage-abime-t-il-les-dents.schema.json</li>
+            <li>✅ search-index.json</li>
+            <li>✅ llms.txt (format IA léger)</li>
+            <li>✅ llms-full.txt (corpus complet RAG)</li>
+            <li>✅ sitemap.xml (SEO + images/vidéos)</li>
+            <li>✅ manifest.json (intégrité & hashes)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

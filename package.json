@@ -6,15 +6,19 @@
   "type": "module",
   "workspaces": [
     "packages/*",
-    "examples/*"
+    "examples/*",
+    "apps/*"
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
     "test": "npm test --workspaces",
     "test:core": "npm test --workspace=@mormox2/geocore",
     "test:cli": "npm test --workspace=@mormox2/geocore-cli",
+    "test:server": "npm test --workspace=@mormox2/geocore-server",
+    "test:db": "npm test --workspace=@mormox2/geocore-db",
     "test:next": "npm test --workspace=@mormox2/geocore-next",
     "test:ai": "npm test --workspace=@mormox2/geocore-ai",
+    "test:studio": "npm test --workspace=@geocore/studio",
     "test:rtimidental": "npm test --workspace=@geocore/example-rtimidental",
     "test:dawajinpro": "npm test --workspace=@geocore/example-dawajinpro",
     "validate:rtimidental": "node ./packages/geocore-cli/dist/bin.js validate --config ./examples/rtimidental/geocore.config.json",

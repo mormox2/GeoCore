@@ -390,21 +390,24 @@ These belong to Phase 2 or later.
 
 ---
 
-# 7. Phase 2 After MVP
+# 7. Phase 2 & Phase 3 (Completed)
 
-After Sprint 16, the next phase may include:
+All phases and extensions have been implemented, tested, and validated:
 
 ```txt
-Phase 2.1 — RTimi Dental website integration
-Phase 2.2 — Dawajin Pro website integration
-Phase 2.3 — Next.js adapter
-Phase 2.4 — API package
-Phase 2.5 — Admin dashboard
-Phase 2.6 — AI/RAG assistant
-Phase 2.7 — Database persistence
+[COMPLETED] Sprint 17 — Citation Engine & Source Graph
+[COMPLETED] Sprint 18 — Media Engine & Accessible Assets
+[COMPLETED] Sprint 19 — Build-Time In-Process Typed API
+[COMPLETED] Phase 2.1 — RTimi Dental website integration
+[COMPLETED] Phase 2.2 — Dawajin Pro website integration
+[COMPLETED] Phase 2.3 — Next.js adapter (@mormox2/geocore-next)
+[COMPLETED] Phase 2.4 — Standalone HTTP/REST Server (@mormox2/geocore-server)
+[COMPLETED] Phase 2.5 — GeoCore Visual Studio Web App (apps/geocore-studio)
+[COMPLETED] Phase 2.6 — AI/RAG engine & Grounding (@mormox2/geocore-ai)
+[COMPLETED] Phase 2.7 — Database persistence & Repository layer (@mormox2/geocore-db)
+[COMPLETED] Phase 3.0 — CI/CD GitHub Actions & Automation
 ```
 
-Do not start Phase 2 until the MVP is stable.
 
 ---
 

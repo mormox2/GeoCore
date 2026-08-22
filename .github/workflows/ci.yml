@@ -1,15 +1,36 @@
-name: CI
+name: GeoCore CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
-  placeholder:
+  test:
+    name: Build & Test All Packages
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Placeholder
-        run: echo "Add build, test, and lint steps when packages and apps are defined."
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build All Packages
+        run: npm run build
+
+      - name: Run Full Test Suite
+        run: npm test
+
+      - name: Validate Example Repositories
+        run: |
+          npm run validate:rtimidental
+          npm run validate:dawajinpro
