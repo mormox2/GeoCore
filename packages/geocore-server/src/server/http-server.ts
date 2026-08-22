@@ -1,6 +1,7 @@
 import * as http from "node:http";
 import type { IncomingMessage, ServerResponse, Server } from "node:http";
 import type { KnowledgeDataset } from "@mormox2/geocore";
+import type { VectorStore, EmbeddingProvider } from "@mormox2/geocore-vector";
 import { handleCors, CorsOptions } from "../middleware/cors.js";
 import { routeRequest, RouterOptions } from "../routes/api-router.js";
 import { AuthOptions } from "../middleware/auth.js";
@@ -12,6 +13,8 @@ export type GeoCoreServerOptions = {
   siteUrl?: string;
   cors?: CorsOptions;
   auth?: AuthOptions;
+  vectorStore?: VectorStore;
+  embeddingProvider?: EmbeddingProvider;
 };
 
 export type GeoCoreServerInstance = {
@@ -24,9 +27,9 @@ export type GeoCoreServerInstance = {
  * Creates a standalone HTTP server instance for GeoCore.
  */
 export function createGeoCoreServer(options: GeoCoreServerOptions): GeoCoreServerInstance {
-  const { dataset, port = 3000, host = "0.0.0.0", siteUrl, cors, auth } = options;
+  const { dataset, port = 3000, host = "0.0.0.0", siteUrl, cors, auth, vectorStore, embeddingProvider } = options;
 
-  const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
+  const server = http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
     // 1. Handle CORS
     const isOptions = handleCors(req, res, cors);
     if (isOptions) {
@@ -35,7 +38,7 @@ export function createGeoCoreServer(options: GeoCoreServerOptions): GeoCoreServe
 
     // 2. Dispatch route
     try {
-      routeRequest(req, res, { dataset, siteUrl, auth });
+      await routeRequest(req, res, { dataset, siteUrl, auth, vectorStore, embeddingProvider });
     } catch (err) {
       const message = err instanceof Error ? err.message : "Internal Server Error";
       res.statusCode = 500;

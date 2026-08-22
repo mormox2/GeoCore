@@ -10,7 +10,8 @@
   "dependencies": {
     "@mormox2/geocore": "file:../../packages/geocore",
     "@mormox2/geocore-next": "file:../../packages/geocore-next",
-    "@mormox2/geocore-ai": "file:../../packages/geocore-ai"
+    "@mormox2/geocore-ai": "file:../../packages/geocore-ai",
+    "@mormox2/geocore-vector": "file:../../packages/geocore-vector"
   },
   "devDependencies": {
     "typescript": "^5.4.5",

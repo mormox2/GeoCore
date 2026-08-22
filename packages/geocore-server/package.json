@@ -12,6 +12,7 @@
   "dependencies": {
     "@mormox2/geocore": "file:../geocore",
     "@mormox2/geocore-ai": "file:../geocore-ai",
+    "@mormox2/geocore-vector": "file:../geocore-vector",
     "zod": "^3.23.8"
   },
   "devDependencies": {

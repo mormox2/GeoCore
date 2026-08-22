@@ -4,6 +4,9 @@ export type ChatRequestBody = {
 };
 export type ChatResponsePayload = {
     answer: string;
+    matchedObjectId: string;
+    matchType?: "both" | "lexical-only" | "semantic-only";
+    combinedScore?: number;
     groundingScore: number;
     hallucinationRisk: "low" | "medium" | "high";
     groundedEntities: string[];
@@ -15,6 +18,6 @@ export type ChatResponsePayload = {
     promptContextPreview: string;
 };
 /**
- * Next.js 14+ POST handler for AI / RAG conversational queries.
+ * Next.js 14+ POST handler for AI / RAG conversational queries with Hybrid Semantic Search.
  */
 export declare function POST(req: Request): Promise<Response>;

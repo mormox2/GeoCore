@@ -85,6 +85,29 @@ export function generateOpenApiSpec(info = {}) {
                     },
                 },
             },
+            "/api/search/hybrid": {
+                get: {
+                    summary: "Hybrid Vector + BM25 Search (RRF)",
+                    description: "Performs dense vector semantic search combined with full-text search blended via Reciprocal Rank Fusion.",
+                    parameters: [
+                        { name: "q", in: "query", required: true, schema: { type: "string" } },
+                        { name: "language", in: "query", schema: { type: "string" } },
+                        { name: "limit", in: "query", schema: { type: "integer", default: 10 } },
+                    ],
+                    responses: {
+                        "200": { description: "Hybrid search results with RRF scores" },
+                    },
+                },
+            },
+            "/api/vectorize": {
+                post: {
+                    summary: "Index Dataset into Vector Store",
+                    description: "Generates semantic chunk embeddings for all published knowledge objects in the dataset.",
+                    responses: {
+                        "200": { description: "Vectorization report" },
+                    },
+                },
+            },
             "/api/context/{id}": {
                 get: {
                     summary: "Get AI Context Package (RAG Endpoint)",

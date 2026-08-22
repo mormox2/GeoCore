@@ -1,5 +1,6 @@
 import { getKnowledgeObject, listKnowledgeObjects, getEntity, listEntities, searchKnowledge, getAiContext, getMedia, listMedia, getSource, listSources, getCitation, listCitations, generateLlmsTxt, generateLlmsFullTxt, generateSitemap, runValidationPipeline, } from "@mormox2/geocore";
 import { buildPromptContext } from "@mormox2/geocore-ai";
+import { searchHybrid, vectorizeDataset, MemoryVectorStore, DeterministicEmbeddingProvider, } from "@mormox2/geocore-vector";
 import { generateOpenApiSpec } from "../openapi/openapi-generator.js";
 import { authenticateRequest } from "../middleware/auth.js";
 function sendJson(res, statusCode, data) {
@@ -13,22 +14,29 @@ function sendText(res, statusCode, text, contentType = "text/plain; charset=utf-
     res.setHeader("Content-Type", contentType);
     res.end(text);
 }
+// Internal default vector store and embedding provider for server instance
+let defaultStore = null;
+let defaultProvider = null;
 /**
  * Main request router for GeoCore HTTP server.
  */
-export function routeRequest(req, res, options) {
+export async function routeRequest(req, res, options) {
     const { dataset, siteUrl, auth } = options;
     const rawUrl = req.url || "/";
     const parsedUrl = new URL(rawUrl, "http://localhost");
     const pathname = parsedUrl.pathname;
     const query = parsedUrl.searchParams;
+    const store = options.vectorStore ?? (defaultStore ??= new MemoryVectorStore());
+    const provider = options.embeddingProvider ?? (defaultProvider ??= new DeterministicEmbeddingProvider(64));
     // 1. Health check
     if (pathname === "/api/health" || pathname === "/health") {
+        const vectorCount = await store.count();
         return sendJson(res, 200, {
             status: "ok",
             datasetId: dataset.id,
             name: dataset.name,
             objectsCount: dataset.objects.length,
+            vectorsCount: vectorCount,
             timestamp: new Date().toISOString(),
         });
     }
@@ -83,7 +91,27 @@ export function routeRequest(req, res, options) {
         });
         return sendJson(res, 200, result);
     }
-    // 7. Knowledge Objects: /api/objects and /api/objects/:id
+    // 7. Hybrid Search API: /api/search/hybrid?q=...
+    if (pathname === "/api/search/hybrid") {
+        const q = query.get("q") || query.get("query") || "";
+        const language = query.get("language") || undefined;
+        const limit = query.get("limit") ? parseInt(query.get("limit"), 10) : undefined;
+        // If vector store is empty, vectorize automatically
+        if ((await store.count()) === 0) {
+            await vectorizeDataset(dataset, store, provider);
+        }
+        const result = await searchHybrid(q, dataset, store, provider, {
+            language,
+            limit,
+        });
+        return sendJson(res, 200, { status: "ok", data: result.results, totalHits: result.totalHits, tookMs: result.tookMs });
+    }
+    // 8. Vectorize Dataset: POST /api/vectorize
+    if (pathname === "/api/vectorize" && req.method === "POST") {
+        const report = await vectorizeDataset(dataset, store, provider);
+        return sendJson(res, 200, { status: "ok", report });
+    }
+    // 9. Knowledge Objects: /api/objects and /api/objects/:id
     if (pathname === "/api/objects") {
         const language = query.get("language") || undefined;
         const status = query.get("status") || undefined;
@@ -105,7 +133,7 @@ export function routeRequest(req, res, options) {
         const status = result.status === "ok" ? 200 : result.status === "not-found" ? 404 : 403;
         return sendJson(res, status, result);
     }
-    // 8. Entities: /api/entities and /api/entities/:id
+    // 10. Entities: /api/entities and /api/entities/:id
     if (pathname === "/api/entities") {
         const language = query.get("language") || undefined;
         const limit = query.get("limit") ? parseInt(query.get("limit"), 10) : undefined;
@@ -125,7 +153,7 @@ export function routeRequest(req, res, options) {
         const status = result.status === "ok" ? 200 : result.status === "not-found" ? 404 : 403;
         return sendJson(res, status, result);
     }
-    // 9. AI Context: /api/context/:id
+    // 11. AI Context: /api/context/:id
     const contextMatch = pathname.match(/^\/api\/context\/([^/]+)$/);
     if (contextMatch) {
         const objectId = contextMatch[1];
@@ -133,7 +161,7 @@ export function routeRequest(req, res, options) {
         const status = result.status === "ok" ? 200 : result.status === "not-found" ? 404 : 403;
         return sendJson(res, status, result);
     }
-    // 10. Formatted LLM Prompt Context: /api/prompt-context/:id
+    // 12. Formatted LLM Prompt Context: /api/prompt-context/:id
     const promptMatch = pathname.match(/^\/api\/prompt-context\/([^/]+)$/);
     if (promptMatch) {
         const objectId = promptMatch[1];
@@ -144,7 +172,7 @@ export function routeRequest(req, res, options) {
         const formatted = buildPromptContext(result.data);
         return sendText(res, 200, formatted);
     }
-    // 11. Citations: /api/citations and /api/citations/:id
+    // 13. Citations: /api/citations and /api/citations/:id
     if (pathname === "/api/citations") {
         const targetId = query.get("targetId") || undefined;
         const sourceId = query.get("sourceId") || undefined;
@@ -157,7 +185,7 @@ export function routeRequest(req, res, options) {
         const result = getCitation(dataset, { id, visibility: effectiveVisibility });
         return sendJson(res, result.status === "ok" ? 200 : 404, result);
     }
-    // 12. Sources: /api/sources and /api/sources/:id
+    // 14. Sources: /api/sources and /api/sources/:id
     if (pathname === "/api/sources") {
         const result = listSources(dataset, { visibility: effectiveVisibility });
         return sendJson(res, 200, result);
@@ -168,7 +196,7 @@ export function routeRequest(req, res, options) {
         const result = getSource(dataset, { id, visibility: effectiveVisibility });
         return sendJson(res, result.status === "ok" ? 200 : 404, result);
     }
-    // 13. Media: /api/media and /api/media/:id
+    // 15. Media: /api/media and /api/media/:id
     if (pathname === "/api/media") {
         const result = listMedia(dataset, { visibility: effectiveVisibility });
         return sendJson(res, 200, result);
@@ -179,7 +207,7 @@ export function routeRequest(req, res, options) {
         const result = getMedia(dataset, { id, visibility: effectiveVisibility });
         return sendJson(res, result.status === "ok" ? 200 : 404, result);
     }
-    // 14. Validation report: /api/validate
+    // 16. Validation report: /api/validate
     if (pathname === "/api/validate") {
         const mode = query.get("mode") || "public";
         const report = runValidationPipeline({ dataset, config: { mode } });

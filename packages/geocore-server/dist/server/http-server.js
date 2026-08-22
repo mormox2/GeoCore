@@ -5,8 +5,8 @@ import { routeRequest } from "../routes/api-router.js";
  * Creates a standalone HTTP server instance for GeoCore.
  */
 export function createGeoCoreServer(options) {
-    const { dataset, port = 3000, host = "0.0.0.0", siteUrl, cors, auth } = options;
-    const server = http.createServer((req, res) => {
+    const { dataset, port = 3000, host = "0.0.0.0", siteUrl, cors, auth, vectorStore, embeddingProvider } = options;
+    const server = http.createServer(async (req, res) => {
         // 1. Handle CORS
         const isOptions = handleCors(req, res, cors);
         if (isOptions) {
@@ -14,7 +14,7 @@ export function createGeoCoreServer(options) {
         }
         // 2. Dispatch route
         try {
-            routeRequest(req, res, { dataset, siteUrl, auth });
+            await routeRequest(req, res, { dataset, siteUrl, auth, vectorStore, embeddingProvider });
         }
         catch (err) {
             const message = err instanceof Error ? err.message : "Internal Server Error";

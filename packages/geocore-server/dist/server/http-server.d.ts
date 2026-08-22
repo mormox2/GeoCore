@@ -1,5 +1,6 @@
 import type { Server } from "node:http";
 import type { KnowledgeDataset } from "@mormox2/geocore";
+import type { VectorStore, EmbeddingProvider } from "@mormox2/geocore-vector";
 import { CorsOptions } from "../middleware/cors.js";
 import { AuthOptions } from "../middleware/auth.js";
 export type GeoCoreServerOptions = {
@@ -9,6 +10,8 @@ export type GeoCoreServerOptions = {
     siteUrl?: string;
     cors?: CorsOptions;
     auth?: AuthOptions;
+    vectorStore?: VectorStore;
+    embeddingProvider?: EmbeddingProvider;
 };
 export type GeoCoreServerInstance = {
     server: Server;

@@ -130,6 +130,26 @@ describe("GeoCore Standalone HTTP Server", () => {
     expect(result.data.id).toBe("ko_draft_internal_note");
   });
 
+  it("POST /api/vectorize indexes dataset chunks and GET /api/search/hybrid performs hybrid search", async () => {
+    // 1. Post vectorize
+    const vecRes = await fetch(`${baseUrl}/api/vectorize`, { method: "POST" });
+    expect(vecRes.status).toBe(200);
+    const vecData = await vecRes.json();
+    expect(vecData.status).toBe("ok");
+    expect(vecData.report.objectsProcessed).toBe(2);
+    expect(vecData.report.vectorsIndexed).toBeGreaterThan(0);
+
+    // 2. Query hybrid search
+    const searchRes = await fetch(`${baseUrl}/api/search/hybrid?q=détartrage`);
+    expect(searchRes.status).toBe(200);
+    const searchData = await searchRes.json();
+    expect(searchData.status).toBe("ok");
+    expect(searchData.totalHits).toBeGreaterThan(0);
+    expect(searchData.data.length).toBeGreaterThan(0);
+    expect(searchData.data[0].combinedScore).toBeGreaterThan(0);
+    expect(searchData.data[0].title).toContain("détartrage");
+  });
+
   it("Refuses internal draft object when no API key is provided", async () => {
     const res = await fetch(`${baseUrl}/api/objects/ko_draft_internal_note`);
     expect(res.status).toBe(403);

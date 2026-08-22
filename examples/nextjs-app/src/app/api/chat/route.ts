@@ -1,6 +1,24 @@
-import { getAiContext, searchKnowledge } from "@mormox2/geocore";
+import { getAiContext } from "@mormox2/geocore";
 import { buildPromptContext, verifyAnswerGrounding } from "@mormox2/geocore-ai";
+import {
+  searchHybrid,
+  vectorizeDataset,
+  MemoryVectorStore,
+  DeterministicEmbeddingProvider,
+} from "@mormox2/geocore-vector";
 import { appDataset } from "../../../data/dataset.js";
+
+// Cached vector store for Next.js route handler
+const vectorStore = new MemoryVectorStore();
+const embeddingProvider = new DeterministicEmbeddingProvider(64);
+let isVectorized = false;
+
+async function ensureVectorized(): Promise<void> {
+  if (!isVectorized) {
+    await vectorizeDataset(appDataset, vectorStore, embeddingProvider);
+    isVectorized = true;
+  }
+}
 
 export type ChatRequestBody = {
   message: string;
@@ -9,6 +27,9 @@ export type ChatRequestBody = {
 
 export type ChatResponsePayload = {
   answer: string;
+  matchedObjectId: string;
+  matchType?: "both" | "lexical-only" | "semantic-only";
+  combinedScore?: number;
   groundingScore: number;
   hallucinationRisk: "low" | "medium" | "high";
   groundedEntities: string[];
@@ -21,19 +42,26 @@ export type ChatResponsePayload = {
 };
 
 /**
- * Next.js 14+ POST handler for AI / RAG conversational queries.
+ * Next.js 14+ POST handler for AI / RAG conversational queries with Hybrid Semantic Search.
  */
 export async function POST(req: Request): Promise<Response> {
   try {
     const body = (await req.json()) as ChatRequestBody;
     const query = body.message || "";
 
-    // 1. Resolve relevant Knowledge Object (by explicit ID or search)
+    await ensureVectorized();
+
+    // 1. Resolve relevant Knowledge Object via Hybrid Semantic Search (RRF) or explicit ID
     let targetObjectId = body.objectId;
+    let matchType: "both" | "lexical-only" | "semantic-only" | undefined;
+    let combinedScore: number | undefined;
+
     if (!targetObjectId && query) {
-      const searchRes = searchKnowledge(appDataset, { query, limit: 1 });
-      if (searchRes.status === "ok" && searchRes.data && searchRes.data.length > 0) {
-        targetObjectId = searchRes.data[0].id;
+      const hybridRes = await searchHybrid(query, appDataset, vectorStore, embeddingProvider, { limit: 1 });
+      if (hybridRes.results.length > 0) {
+        targetObjectId = hybridRes.results[0].objectId;
+        matchType = hybridRes.results[0].matchType;
+        combinedScore = hybridRes.results[0].combinedScore;
       }
     }
 
@@ -66,6 +94,9 @@ export async function POST(req: Request): Promise<Response> {
 
     const payload: ChatResponsePayload = {
       answer,
+      matchedObjectId: targetObjectId,
+      matchType,
+      combinedScore,
       groundingScore: grounding.score,
       hallucinationRisk: grounding.hallucinationRisk,
       groundedEntities: grounding.matchedEntities,
