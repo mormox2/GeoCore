@@ -26,6 +26,9 @@
       <button class="tab-btn" data-tab="editor">
         <span>📝</span> Live Editor & Validation
       </button>
+      <button class="tab-btn" data-tab="chat">
+        <span>💬</span> Live Vector Chat
+      </button>
       <button class="tab-btn" data-tab="rag">
         <span>🤖</span> RAG & Grounding
       </button>
@@ -99,34 +102,38 @@
       <div class="editor-layout">
         <div class="code-editor-box">
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <label style="font-weight:600; font-size:0.9rem;">Markdown & YAML Frontmatter</label>
-            <span style="font-size:0.75rem; color:var(--accent-cyan);">Live Validation Active</span>
+            <h3 style="font-size:1rem; font-weight:600;">Éditeur Markdown & Frontmatter</h3>
+            <span style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-mono);">fr/detartrage-abime-t-il-les-dents.md</span>
           </div>
-          <textarea id="markdownEditor" class="code-area" spellcheck="false">---
-id: ko_detartrage_abime_dents
-slug: detartrage-abime-t-il-les-dents
-title: Le détartrage abîme-t-il les dents ?
-summary: Réponse claire sur les effets du détartrage sur l'émail et les gencives.
-language: fr
-status: published
-version: 1.0.0
-author: author_dr_mossaab_rtimi
+          <textarea id="markdownEditor" class="code-area">---
+id: "ko_detartrage_abime_dents"
+title: "Le détartrage abîme-t-il les dents ? Vérité scientifique"
+summary: "Non, le détartrage n'abîme pas l'émail lorsqu'il est réalisé avec des ultrasons professionnels."
+slug: "detartrage-abime-les-dents"
+language: "fr"
+status: "published"
+visibility: "public"
+author: "Dr Mossaab Rtimi"
+reviewer: "Conseil Scientifique RTimi Dental"
 entities:
-  - entity_scaling
-  - entity_tartar
+  - "entity_scaling"
+  - "entity_tartar"
 citations:
-  - citation_who_scaling_001
+  - "cit_who_oral_health_2023"
 ---
 
-## Non, le détartrage n'abîme pas l'émail dentaire
+# Le détartrage abîme-t-il les dents ?
 
-Le détartrage est un soin préventif indispensable qui permet d'éliminer la plaque dentaire calcifiée (tartre).
-Lorsqu'il est réalisé avec des ultrasons par un professionnel, il n'altère en aucun cas l'émail dentaire.</textarea>
+Le détartrage dentaire est une procédure médicale prophylactique indispensable.
+
+## Mécanisme ultrasonique
+Les inserts modernes vibrent à haute fréquence pour décoller le tartre sans rayer l'émail sain.
+</textarea>
         </div>
 
-        <div class="preview-box">
+        <div class="glass-panel" style="display:flex; flex-direction:column; gap:16px;">
           <h3 style="font-size:1rem; font-weight:600; border-bottom:1px solid var(--border-glass); padding-bottom:10px;">
-            Pipeline Validation Diagnostics (10 Stages)
+            Pipeline de Validation (10 Étapes)
           </h3>
           <div id="validationOutput" style="display:flex; flex-direction:column; gap:8px;">
             <!-- Live diagnostics injected here -->
@@ -135,7 +142,53 @@ Lorsqu'il est réalisé avec des ultrasons par un professionnel, il n'altère en
       </div>
     </section>
 
-    <!-- TAB 3: RAG & Grounding Playground -->
+    <!-- TAB 3: Live Vector Chat -->
+    <section id="tab-chat" class="tab-panel">
+      <div class="chat-layout">
+        <!-- Chat conversation box -->
+        <div class="glass-panel chat-container">
+          <div class="chat-header">
+            <div>
+              <h3 style="font-size:1rem; font-weight:600;">Assistant Clinique RAG & Vectoriel</h3>
+              <p style="font-size:0.75rem; color:var(--text-muted);">Recherche hybride dense (Embeddings 64D) + BM25 avec scoring RRF</p>
+            </div>
+            <span class="badge-grounded">🛡️ Garde-fous actifs</span>
+          </div>
+
+          <div id="chatMessages" class="chat-messages">
+            <div class="chat-message bot">
+              <div class="chat-avatar">AI</div>
+              <div class="chat-bubble">
+                Bonjour ! Je suis l'assistant clinique intelligent alimenté par GeoCore. Posez-moi une question sur le catalogue (détartrage, hygiène dentaire, créances, etc.).
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-presets">
+            <button class="preset-btn" data-query="Le détartrage abîme-t-il les dents ?">🦷 Détartrage & émail</button>
+            <button class="preset-btn" data-query="Qu'est-ce que la gingivite et comment la soigner ?">🩸 Gingivite</button>
+            <button class="preset-btn" data-query="Comment poser un implant dentaire ?">🔩 Implant dentaire</button>
+          </div>
+
+          <div class="chat-input-row">
+            <input type="text" id="chatInput" class="rag-input" placeholder="Posez votre question en langage naturel..." />
+            <button id="btnSendChat" class="btn-action">Envoyer</button>
+          </div>
+        </div>
+
+        <!-- Vector Search & RRF Inspector -->
+        <aside class="glass-panel vector-inspector">
+          <h3 class="inspector-title" style="border-bottom:1px solid var(--border-glass); padding-bottom:8px;">
+            ⚡ Décomposition RRF & Vecteurs
+          </h3>
+          <div id="vectorInspectorContent" style="display:flex; flex-direction:column; gap:12px;">
+            <p style="color:var(--text-dim); font-size:0.85rem;">Envoyez un message pour visualiser le calcul de similarité cosinus, le classement lexical BM25 et la fusion RRF en temps réel.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- TAB 4: RAG & Grounding Playground -->
     <section id="tab-rag" class="tab-panel">
       <div class="rag-layout">
         <div class="glass-panel rag-input-box">
@@ -162,7 +215,7 @@ Lorsqu'il est réalisé avec des ultrasons par un professionnel, il n'altère en
       </div>
     </section>
 
-    <!-- TAB 4: Repository Health Dashboard -->
+    <!-- TAB 5: Repository Health Dashboard -->
     <section id="tab-health" class="tab-panel">
       <div class="glass-panel" style="display:flex; flex-direction:column; gap:20px;">
         <h3 style="font-size:1.1rem; font-weight:600;">Santé Globale du Référentiel</h3>
