@@ -11,6 +11,8 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
+    "build:site": "npm run build && node scripts/build-site.js",
+    "deploy:vercel": "npx vercel --prod",
     "test": "npm test --workspaces",
     "test:core": "npm test --workspace=@mormox2/geocore",
     "test:cli": "npm test --workspace=@mormox2/geocore-cli",
