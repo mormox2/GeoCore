@@ -4,13 +4,10 @@
   "description": "GeoCore Visual Knowledge Studio: interactive graph explorer, live validator, and RAG playground",
   "type": "module",
   "scripts": {
-    "test": "vitest run"
+    "test": "node ../../packages/geocore/node_modules/vitest/vitest.mjs run"
   },
   "dependencies": {
     "@mormox2/geocore": "file:../../packages/geocore",
     "@mormox2/geocore-ai": "file:../../packages/geocore-ai"
-  },
-  "devDependencies": {
-    "vitest": "^1.6.0"
   }
 }
