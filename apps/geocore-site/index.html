@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GeoCore — AI-Native Knowledge Operating System</title>
+  <meta name="description" content="Build knowledge once. Deliver it everywhere. GeoCore is the AI-native operating system that structures, validates, and distributes domain knowledge across websites, APIs, search engines, and RAG systems." />
+  <meta property="og:title" content="GeoCore — AI-Native Knowledge Operating System" />
+  <meta property="og:description" content="Build knowledge once. Deliver it everywhere." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ═══════════ Navigation ═══════════ -->
+<nav class="nav" id="mainNav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-brand">
+      <div class="nav-logo">GC</div>
+      <span class="nav-name">GeoCore</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#cli">CLI</a></li>
+      <li><a href="#cases">Case Studies</a></li>
+      <li><a href="https://github.com/mormox2/GeoCore" class="nav-cta" target="_blank">GitHub ↗</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════ Hero ═══════════ -->
+<section class="hero" id="hero">
+  <div class="hero-glow"></div>
+  <div class="grid-bg"></div>
+  <div class="container hero-content">
+    <div class="hero-badge">
+      <span class="badge badge-accent">✨ v1.0 — 749 Tests Passing</span>
+    </div>
+    <h1>Build Knowledge Once.<br/><span class="text-gradient">Deliver It Everywhere.</span></h1>
+    <p class="hero-description">
+      GeoCore is the AI-native Knowledge Operating System that structures, validates, and distributes 
+      domain knowledge across websites, REST APIs, search engines, and RAG systems.
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/mormox2/GeoCore" class="btn-primary" target="_blank">
+        <span>⚡</span> Get Started
+      </a>
+      <a href="#features" class="btn-secondary">
+        <span>📖</span> Learn More
+      </a>
+    </div>
+
+    <div class="hero-terminal">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <div class="terminal-dot red"></div>
+          <div class="terminal-dot yellow"></div>
+          <div class="terminal-dot green"></div>
+          <span class="terminal-title">~/GeoCore</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="out">$</span> <span class="cmd">geocore validate</span> <span class="flag">--config</span> ./geocore.config.json</div>
+          <div>&nbsp;</div>
+          <div><span class="str">✅ Valid: yes</span> &nbsp;|&nbsp; <span class="str">Publishable: yes</span></div>
+          <div><span class="out">Stages: </span><span class="ok">dataset ✓</span> <span class="ok">knowledge-objects ✓</span> <span class="ok">relationships ✓</span></div>
+          <div><span class="out">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="ok">metadata ✓</span> <span class="ok">routes ✓</span> <span class="ok">search ✓</span> <span class="ok">schema ✓</span></div>
+          <div><span class="out">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="ok">llms ✓</span> <span class="ok">sitemap ✓</span> <span class="ok">static-export ✓</span></div>
+          <div>&nbsp;</div>
+          <div><span class="out">$</span> <span class="cmd">geocore vectorize</span></div>
+          <div><span class="out">🧠</span> <span class="num">6</span> chunks → <span class="num">6</span> vectors <span class="out">(64D)</span> indexed in <span class="num">1ms</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ Stats Bar ═══════════ -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number text-gradient">749</div>
+        <div class="stat-label">Tests Passing</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number text-gradient">7</div>
+        <div class="stat-label">Core Packages</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number text-gradient">10</div>
+        <div class="stat-label">Validation Stages</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number text-gradient">100%</div>
+        <div class="stat-label">TypeScript Strict</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ Features ═══════════ -->
+<section class="features section-spacing" id="features">
+  <div class="container">
+    <div class="section-label">Core Capabilities</div>
+    <h2 class="section-title">Everything Your Knowledge<br/> Infrastructure Needs</h2>
+    <p class="section-subtitle">
+      From structured authoring to semantic vector search — GeoCore handles the full lifecycle
+      of domain knowledge at scale.
+    </p>
+
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon cyan">🛡️</div>
+        <h3>10-Stage Validation</h3>
+        <p>Every knowledge object passes through dataset integrity, schema conformance, graph connectivity, metadata, routes, search indexing, JSON-LD, LLMs.txt, sitemap, and static export checks.</p>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon blue">🧠</div>
+        <h3>Semantic Vector Search</h3>
+        <p>Built-in 64D/1536D embeddings engine with memory vector store, cosine similarity, BM25 full-text scoring, and Reciprocal Rank Fusion (RRF) hybrid retrieval.</p>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon indigo">🔍</div>
+        <h3>RAG Grounding Guardrails</h3>
+        <p>AI answer verification with hallucination detection, clinical grounding rules, citation enforcement, and real-time confidence scoring for medical-grade accuracy.</p>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon emerald">📦</div>
+        <h3>Static Export Engine</h3>
+        <p>One command generates Markdown, JSON, JSON-LD Schema.org, search indexes, llms.txt, llms-full.txt, XML sitemaps, and deployment manifests — all optimized for SEO and AI consumption.</p>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon amber">🖥️</div>
+        <h3>Visual Studio</h3>
+        <p>Interactive web dashboard with 2D graph explorer, live markdown editor, RAG inspector, repository health monitor, and live vector chat with RRF breakdown.</p>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon rose">💬</div>
+        <h3>Embeddable Widget</h3>
+        <p>Drop-in Web Component with Shadow DOM isolation. One script tag adds a full RAG chat to any website — WordPress, Shopify, Webflow, or plain HTML.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ Pipeline ═══════════ -->
+<section class="pipeline section-spacing" id="pipeline">
+  <div class="container">
+    <div class="section-label">Validation Pipeline</div>
+    <h2 class="section-title">10 Stages of <span class="text-gradient">Rigorous Safety</span></h2>
+    <p class="section-subtitle">
+      Every knowledge object is validated across 10 consecutive stages before it can be published.
+      Zero errors. Zero hallucinations. Zero compromises.
+    </p>
+
+    <div class="pipeline-visual">
+      <div class="pipeline-stage reveal">
+        <div class="stage-number">1</div>
+        <div class="stage-name">Dataset</div>
+        <div class="stage-desc">Schema conformance, no duplicate IDs</div>
+      </div>
+      <div class="pipeline-stage reveal">
+        <div class="stage-number">2</div>
+        <div class="stage-name">Knowledge Objects</div>
+        <div class="stage-desc">Frontmatter, required fields, visibility</div>
+      </div>
+      <div class="pipeline-stage reveal">
+        <div class="stage-number">3</div>
+        <div class="stage-name">Relationships</div>
+        <div class="stage-desc">Graph connectivity, no orphans</div>
+      </div>
+      <div class="pipeline-stage reveal">
+        <div class="stage-number">4</div>
+        <div class="stage-name">Metadata</div>
+        <div class="stage-desc">Canonical URL, Open Graph, alternates</div>
+      </div>
+      <div class="pipeline-stage reveal">
+        <div class="stage-number">5</div>
+        <div class="stage-name">Routes</div>
+        <div class="stage-desc">Clean pathing, canonical resolution</div>
+      </div>
+      <div class="pipeline-stage reveal">
+        <div class="stage-number">6</div>
+        <div class="stage-name">Search</div>
+        <div class="stage-desc">Full-text index, weighting</div>
+      </div>
+      <div class="pipeline-stage reveal">
+        <div class="stage-number">7</div>
+        <div class="stage-name">Schema.org</div>
+        <div class="stage-desc">Article, FAQ, MedicalWebPage</div>
+      </div>
+      <div class="pipeline-stage reveal">
+        <div class="stage-number">8</div>
+        <div class="stage-name">LLMs.txt</div>
+        <div class="stage-desc">AI-readable content standard</div>
+      </div>
+      <div class="pipeline-stage reveal">
+        <div class="stage-number">9</div>
+        <div class="stage-name">Sitemap</div>
+        <div class="stage-desc">XML + image extensions</div>
+      </div>
+      <div class="pipeline-stage reveal">
+        <div class="stage-number">10</div>
+        <div class="stage-name">Static Export</div>
+        <div class="stage-desc">Atomic multi-target bundle</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ Architecture ═══════════ -->
+<section class="architecture section-spacing" id="architecture">
+  <div class="container">
+    <div class="section-label">Monorepo Architecture</div>
+    <h2 class="section-title">7 Packages. <span class="text-gradient">One System.</span></h2>
+    <p class="section-subtitle">
+      Modular by design — import only what you need, from schema validation to full REST API with hybrid search.
+    </p>
+
+    <div class="arch-grid">
+      <div class="arch-card reveal">
+        <div class="arch-icon cyan">🧬</div>
+        <div>
+          <h4>Core Engine</h4>
+          <div class="pkg-name">@mormox2/geocore</div>
+          <p>Domain schemas, knowledge graph, renderers, citations, media, validation pipeline, widget engine.</p>
+        </div>
+      </div>
+
+      <div class="arch-card reveal">
+        <div class="arch-icon blue">⌨️</div>
+        <div>
+          <h4>CLI</h4>
+          <div class="pkg-name">@mormox2/geocore-cli</div>
+          <p>7 commands — init, validate, export, inspect, serve, vectorize, studio.</p>
+        </div>
+      </div>
+
+      <div class="arch-card reveal">
+        <div class="arch-icon indigo">🌐</div>
+        <div>
+          <h4>REST Server</h4>
+          <div class="pkg-name">@mormox2/geocore-server</div>
+          <p>Standalone HTTP API with OpenAPI 3.1.0, auth middleware, and hybrid search endpoints.</p>
+        </div>
+      </div>
+
+      <div class="arch-card reveal">
+        <div class="arch-icon emerald">🗄️</div>
+        <div>
+          <h4>Database</h4>
+          <div class="pkg-name">@mormox2/geocore-db</div>
+          <p>Persistence layer with In-Memory and SQLite adapters, dataset reconciler.</p>
+        </div>
+      </div>
+
+      <div class="arch-card reveal">
+        <div class="arch-icon amber">🧠</div>
+        <div>
+          <h4>Vector Engine</h4>
+          <div class="pkg-name">@mormox2/geocore-vector</div>
+          <p>Semantic embeddings, memory vector store, cosine similarity, BM25, and RRF hybrid search.</p>
+        </div>
+      </div>
+
+      <div class="arch-card reveal">
+        <div class="arch-icon rose">⚛️</div>
+        <div>
+          <h4>Next.js</h4>
+          <div class="pkg-name">@mormox2/geocore-next</div>
+          <p>App Router integration — metadata, route handlers, JSON-LD, and UI components for Next.js 14+/15+.</p>
+        </div>
+      </div>
+
+      <div class="arch-card reveal">
+        <div class="arch-icon cyan">🤖</div>
+        <div>
+          <h4>AI Engine</h4>
+          <div class="pkg-name">@mormox2/geocore-ai</div>
+          <p>Markdown chunker, prompt context builder, answer grounding verification, hallucination detection.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CLI Demo ═══════════ -->
+<section class="cli-demo section-spacing" id="cli">
+  <div class="container">
+    <div class="section-label">Command Line</div>
+    <h2 class="section-title">7 Commands. <span class="text-gradient">Total Control.</span></h2>
+    <p class="section-subtitle">
+      Every workflow — from validation to vector indexing — is a single command away.
+    </p>
+
+    <div class="cli-tabs">
+      <button class="cli-tab active" data-cli="validate">validate</button>
+      <button class="cli-tab" data-cli="export">export</button>
+      <button class="cli-tab" data-cli="inspect">inspect</button>
+      <button class="cli-tab" data-cli="vectorize">vectorize</button>
+      <button class="cli-tab" data-cli="serve">serve</button>
+      <button class="cli-tab" data-cli="studio">studio</button>
+    </div>
+
+    <div class="cli-panel active" id="cli-validate">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <div class="terminal-dot red"></div><div class="terminal-dot yellow"></div><div class="terminal-dot green"></div>
+          <span class="terminal-title">geocore validate</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="out">$</span> <span class="cmd">geocore validate</span> <span class="flag">--config</span> ./geocore.config.json <span class="flag">--json</span></div>
+          <div>&nbsp;</div>
+          <div>{ <span class="str">"valid"</span>: <span class="ok">true</span>, <span class="str">"publishable"</span>: <span class="ok">true</span> }</div>
+          <div><span class="str">"stagesTotal"</span>: <span class="num">10</span>, <span class="str">"stagesPassed"</span>: <span class="num">10</span></div>
+          <div><span class="str">"errors"</span>: <span class="num">0</span>, <span class="str">"warnings"</span>: <span class="num">0</span>, <span class="str">"critical"</span>: <span class="num">0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cli-panel" id="cli-export">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <div class="terminal-dot red"></div><div class="terminal-dot yellow"></div><div class="terminal-dot green"></div>
+          <span class="terminal-title">geocore export</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="out">$</span> <span class="cmd">geocore export</span> <span class="flag">--config</span> ./geocore.config.json</div>
+          <div>&nbsp;</div>
+          <div><span class="str">GeoCore Export Summary</span></div>
+          <div><span class="out">Assets:</span> <span class="num">14</span>  |  <span class="out">Written files:</span> <span class="num">14</span></div>
+          <div>&nbsp;</div>
+          <div><span class="ok">✓</span> fr/implant-dentaire.md</div>
+          <div><span class="ok">✓</span> fr/implant-dentaire.json</div>
+          <div><span class="ok">✓</span> fr/implant-dentaire.schema.json</div>
+          <div><span class="ok">✓</span> search-index.json</div>
+          <div><span class="ok">✓</span> llms.txt &nbsp;|&nbsp; llms-full.txt</div>
+          <div><span class="ok">✓</span> sitemap.xml &nbsp;|&nbsp; manifest.json</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cli-panel" id="cli-inspect">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <div class="terminal-dot red"></div><div class="terminal-dot yellow"></div><div class="terminal-dot green"></div>
+          <span class="terminal-title">geocore inspect</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="out">$</span> <span class="cmd">geocore inspect</span> <span class="flag">--config</span> ./geocore.config.json</div>
+          <div>&nbsp;</div>
+          <div><span class="out">Objects:</span>       <span class="num">3</span></div>
+          <div><span class="out">Entities:</span>      <span class="num">5</span></div>
+          <div><span class="out">Relationships:</span> <span class="num">6</span></div>
+          <div><span class="out">Sources:</span>       <span class="num">1</span></div>
+          <div><span class="out">Citations:</span>     <span class="num">3</span></div>
+          <div><span class="out">Media:</span>         <span class="num">1</span></div>
+          <div><span class="out">Diagnostics:</span>   <span class="ok">0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cli-panel" id="cli-vectorize">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <div class="terminal-dot red"></div><div class="terminal-dot yellow"></div><div class="terminal-dot green"></div>
+          <span class="terminal-title">geocore vectorize</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="out">$</span> <span class="cmd">geocore vectorize</span> <span class="flag">--config</span> ./geocore.config.json</div>
+          <div>&nbsp;</div>
+          <div>🧠 <span class="str">GeoCore Vectorization Complete!</span></div>
+          <div><span class="out">📚 Dataset:</span>           RTimi Dental</div>
+          <div><span class="out">📐 Dimensions:</span>        <span class="num">64D</span></div>
+          <div><span class="out">📄 Objects vectorisés:</span> <span class="num">3</span></div>
+          <div><span class="out">🧩 Chunks générés:</span>    <span class="num">6</span></div>
+          <div><span class="out">⚡ Vecteurs indexés:</span>  <span class="num">6</span></div>
+          <div><span class="out">⏱️  Durée:</span>             <span class="ok">1ms</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cli-panel" id="cli-serve">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <div class="terminal-dot red"></div><div class="terminal-dot yellow"></div><div class="terminal-dot green"></div>
+          <span class="terminal-title">geocore serve</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="out">$</span> <span class="cmd">geocore serve</span> <span class="flag">--port</span> 3000 <span class="flag">--api-key</span> sk-***</div>
+          <div>&nbsp;</div>
+          <div>🚀 <span class="str">GeoCore REST API Server</span></div>
+          <div><span class="out">📡 Listening:</span>  http://localhost:<span class="num">3000</span></div>
+          <div><span class="out">📘 OpenAPI:</span>    /api/openapi.json</div>
+          <div><span class="out">🔍 Search:</span>     /api/search?q=implant</div>
+          <div><span class="out">🧠 Vectors:</span>    /api/vector/search</div>
+          <div><span class="out">🔒 Auth:</span>       API Key middleware <span class="ok">active</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cli-panel" id="cli-studio">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <div class="terminal-dot red"></div><div class="terminal-dot yellow"></div><div class="terminal-dot green"></div>
+          <span class="terminal-title">geocore studio</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="out">$</span> <span class="cmd">geocore studio</span> <span class="flag">--port</span> 4200</div>
+          <div>&nbsp;</div>
+          <div>🎨 <span class="str">GeoCore Visual Studio</span></div>
+          <div><span class="out">🌐 URL:</span>       http://localhost:<span class="num">4200</span></div>
+          <div>&nbsp;</div>
+          <div><span class="out">Tabs:</span></div>
+          <div>  <span class="ok">📊</span> Graph Explorer — 2D knowledge graph visualization</div>
+          <div>  <span class="ok">✏️</span> Live Editor — Markdown + real-time validation</div>
+          <div>  <span class="ok">🔍</span> RAG Inspector — Grounding & hallucination check</div>
+          <div>  <span class="ok">🏥</span> Repository Health — SEO, JSON-LD, export readiness</div>
+          <div>  <span class="ok">💬</span> Live Vector Chat — RRF breakdown & cosine scores</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ Case Studies ═══════════ -->
+<section class="case-studies section-spacing" id="cases">
+  <div class="container">
+    <div class="section-label">Case Studies</div>
+    <h2 class="section-title">Powering <span class="text-gradient">Real-World</span> Knowledge</h2>
+    <p class="section-subtitle">
+      From dental clinics to agricultural ERP — GeoCore adapts to any domain.
+    </p>
+
+    <div class="cases-grid">
+      <div class="case-card reveal">
+        <div class="case-emoji">🏥</div>
+        <h3>RTimi Dental</h3>
+        <div class="case-domain">Medical / Dental</div>
+        <p>
+          Clinical dental knowledge base with OMS-compliant safety rules, 
+          SEO-optimized patient education content, and RAG-powered chat 
+          with grounding verification for medical accuracy.
+        </p>
+        <div class="case-stats">
+          <div class="case-stat"><div class="val">3</div><div class="lbl">Objects</div></div>
+          <div class="case-stat"><div class="val">6</div><div class="lbl">Relations</div></div>
+          <div class="case-stat"><div class="val">14</div><div class="lbl">Assets</div></div>
+          <div class="case-stat"><div class="val">6</div><div class="lbl">Vectors</div></div>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="case-emoji">🐔</div>
+        <h3>Dawajin Pro</h3>
+        <div class="case-domain">AgriTech / Poultry ERP</div>
+        <p>
+          Integrated poultry management knowledge system covering flock health, 
+          feed optimization, Konnect CRM debt collection, and financial analytics — 
+          with bilingual FR/AR support and domain-specific entity extraction.
+        </p>
+        <div class="case-stats">
+          <div class="case-stat"><div class="val">4</div><div class="lbl">Objects</div></div>
+          <div class="case-stat"><div class="val">8</div><div class="lbl">Relations</div></div>
+          <div class="case-stat"><div class="val">20</div><div class="lbl">Assets</div></div>
+          <div class="case-stat"><div class="val">8</div><div class="lbl">Vectors</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ Integration ═══════════ -->
+<section class="integration section-spacing" id="integration">
+  <div class="container">
+    <div class="section-label">Integrations</div>
+    <h2 class="section-title">Works With <span class="text-gradient">Everything</span></h2>
+    <p class="section-subtitle">
+      Embed GeoCore knowledge into any platform with one line of code.
+    </p>
+
+    <div class="integration-grid">
+      <div class="integ-card reveal">
+        <div class="integ-icon">⚛️</div>
+        <h4>Next.js</h4>
+        <p>App Router, metadata, route handlers, JSON-LD</p>
+      </div>
+      <div class="integ-card reveal">
+        <div class="integ-icon">📝</div>
+        <h4>WordPress</h4>
+        <p>One script tag — Shadow DOM isolated widget</p>
+      </div>
+      <div class="integ-card reveal">
+        <div class="integ-icon">🛍️</div>
+        <h4>Shopify</h4>
+        <p>Embed RAG chat in product pages</p>
+      </div>
+      <div class="integ-card reveal">
+        <div class="integ-icon">🌊</div>
+        <h4>Webflow</h4>
+        <p>Custom code block integration</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CTA ═══════════ -->
+<section class="cta-section" id="cta">
+  <div class="cta-glow"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <h2>Ready to <span class="text-gradient">Structure Your Knowledge?</span></h2>
+    <p>Get up and running in under 2 minutes. MIT licensed. Forever free.</p>
+    <div class="hero-actions" style="margin-bottom: 0;">
+      <a href="https://github.com/mormox2/GeoCore" class="btn-primary" target="_blank">
+        <span>🚀</span> Start Building
+      </a>
+      <a href="#cli" class="btn-secondary">
+        <span>📖</span> Read the Docs
+      </a>
+    </div>
+    <div class="cta-code">
+      <span class="dollar">$</span>
+      <span>git clone https://github.com/mormox2/GeoCore.git</span>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('git clone https://github.com/mormox2/GeoCore.git')">Copy</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ Footer ═══════════ -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-copy">
+      © 2024 GeoCore — MIT License. Built by <a href="https://github.com/mormox2" style="color:var(--accent-cyan);">Dr Mossaab Rtimi</a>
+    </div>
+    <ul class="footer-links">
+      <li><a href="https://github.com/mormox2/GeoCore">GitHub</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#cli">CLI</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
