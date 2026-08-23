@@ -9,6 +9,7 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "@geocore/studio",
+    "@geocore/site",
     "@geocore/example-nextjs-app",
     "@geocore/example-rtimidental",
     "@geocore/example-dawajinpro"

@@ -7,7 +7,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@mormox2/geocore": "file:../../packages/geocore",
-    "@mormox2/geocore-ai": "file:../../packages/geocore-ai"
+    "@mormox2/geocore": "^1.0.0",
+    "@mormox2/geocore-ai": "^1.0.0"
   }
 }

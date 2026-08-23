@@ -8,10 +8,10 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@mormox2/geocore": "file:../../packages/geocore",
-    "@mormox2/geocore-next": "file:../../packages/geocore-next",
-    "@mormox2/geocore-ai": "file:../../packages/geocore-ai",
-    "@mormox2/geocore-vector": "file:../../packages/geocore-vector"
+    "@mormox2/geocore": "^1.0.0",
+    "@mormox2/geocore-next": "^1.0.0",
+    "@mormox2/geocore-ai": "^1.0.0",
+    "@mormox2/geocore-vector": "^1.0.0"
   },
   "devDependencies": {
     "typescript": "^5.4.5",
