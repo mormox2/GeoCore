@@ -1,5 +1,6 @@
 {
   "name": "@geocore/studio",
+  "private": true,
   "version": "1.0.0",
   "description": "GeoCore Visual Knowledge Studio: interactive graph explorer, live validator, and RAG playground",
   "type": "module",

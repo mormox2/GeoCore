@@ -1,5 +1,6 @@
 {
   "name": "@geocore/example-nextjs-app",
+  "private": true,
   "version": "1.0.0",
   "description": "GeoCore Next.js 14+ App Router Reference Application with SEO Metadata, Universal Handlers, and RAG Chat",
   "type": "module",

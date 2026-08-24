@@ -1,5 +1,6 @@
 {
   "name": "@geocore/site",
+  "private": true,
   "version": "1.0.0",
   "description": "GeoCore Landing Page & Documentation Site",
   "type": "module",
