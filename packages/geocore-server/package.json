@@ -1,6 +1,6 @@
 {
   "name": "@mormox2/geocore-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GeoCore standalone HTTP REST API server with OpenAPI docs, auth middleware, and hybrid search endpoints",
   "type": "module",
   "main": "dist/index.js",
@@ -23,9 +23,9 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@mormox2/geocore": "^1.0.0",
-    "@mormox2/geocore-ai": "^1.0.0",
-    "@mormox2/geocore-vector": "^1.0.0",
+    "@mormox2/geocore": "^1.0.1",
+    "@mormox2/geocore-ai": "^1.0.1",
+    "@mormox2/geocore-vector": "^1.0.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
