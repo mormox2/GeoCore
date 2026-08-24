@@ -16,6 +16,8 @@ jobs:
   release:
     name: Release & Publish Packages
     runs-on: ubuntu-latest
+    env:
+      HAS_NPM_TOKEN: ${{ secrets.NPM_TOKEN != '' }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -37,8 +39,8 @@ jobs:
       - name: Run Tests
         run: npm test
 
-      - name: Create Release Pull Request or Publish to NPM
-        id: changesets
+      - name: Publish to NPM Registry
+        if: env.HAS_NPM_TOKEN == 'true'
         uses: changesets/action@v1
         with:
           publish: npm run release
@@ -46,5 +48,14 @@ jobs:
           commit: "chore(release): version and publish packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN || secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN || secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Version Packages (NPM Token Pending)
+        if: env.HAS_NPM_TOKEN != 'true'
+        uses: changesets/action@v1
+        with:
+          title: "chore(release): version packages"
+          commit: "chore(release): version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
