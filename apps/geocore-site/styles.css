@@ -278,12 +278,14 @@ button { cursor: pointer; font-family: inherit; }
   justify-content: center;
   text-align: center;
   overflow: hidden;
+  padding: 130px 0 80px;
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
   max-width: 800px;
+  margin: 0 auto;
 }
 
 .hero-badge {
