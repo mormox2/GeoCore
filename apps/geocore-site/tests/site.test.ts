@@ -36,6 +36,10 @@ describe("GeoCore Site — Landing Page Tests", () => {
     it("has llms.txt", () => {
       expect(existsSync(join(root, "llms.txt"))).toBe(true);
     });
+
+    it("has og-image.png social preview card", () => {
+      expect(existsSync(join(root, "og-image.png"))).toBe(true);
+    });
   });
 
   describe("HTML Content", () => {
