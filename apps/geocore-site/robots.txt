@@ -1,0 +1,30 @@
+# robots.txt for GeoCore — AI-Native Knowledge Operating System
+# https://geocore.vercel.app
+
+User-agent: *
+Allow: /
+
+# Canonical Sitemaps
+Sitemap: https://geocore.vercel.app/sitemap.xml
+
+# LLM Crawlers & Generative Engine Optimization (GEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /

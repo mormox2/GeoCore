@@ -16,7 +16,9 @@ const MIME = {
   ".jpg":  "image/jpeg",
   ".webp": "image/webp",
   ".woff2": "font/woff2",
-  ".ico":  "image/x-icon",
+  ".ico":   "image/x-icon",
+  ".xml":   "application/xml; charset=utf-8",
+  ".txt":   "text/plain; charset=utf-8",
 };
 
 const server = createServer(async (req, res) => {

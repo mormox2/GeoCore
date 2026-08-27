@@ -24,6 +24,18 @@ describe("GeoCore Site — Landing Page Tests", () => {
     it("has serve.js", () => {
       expect(existsSync(join(root, "serve.js"))).toBe(true);
     });
+
+    it("has robots.txt", () => {
+      expect(existsSync(join(root, "robots.txt"))).toBe(true);
+    });
+
+    it("has sitemap.xml", () => {
+      expect(existsSync(join(root, "sitemap.xml"))).toBe(true);
+    });
+
+    it("has llms.txt", () => {
+      expect(existsSync(join(root, "llms.txt"))).toBe(true);
+    });
   });
 
   describe("HTML Content", () => {
@@ -147,6 +159,59 @@ describe("GeoCore Site — Landing Page Tests", () => {
 
     it("loads defer insights script from /_vercel/insights/script.js", () => {
       expect(html).toContain('<script defer src="/_vercel/insights/script.js"></script>');
+    });
+  });
+
+  describe("SEO, Schema.org & Generative Engine Optimization (GEO)", () => {
+    const html = readFileSync(join(root, "index.html"), "utf-8");
+    const robots = readFileSync(join(root, "robots.txt"), "utf-8");
+    const sitemap = readFileSync(join(root, "sitemap.xml"), "utf-8");
+    const llms = readFileSync(join(root, "llms.txt"), "utf-8");
+
+    it("has canonical URL tag", () => {
+      expect(html).toContain('<link rel="canonical" href="https://geocore.vercel.app/"');
+    });
+
+    it("has complete Open Graph metadata with image and locale", () => {
+      expect(html).toContain('<meta property="og:url" content="https://geocore.vercel.app/"');
+      expect(html).toContain('<meta property="og:site_name" content="GeoCore"');
+      expect(html).toContain('<meta property="og:locale" content="en_US"');
+      expect(html).toContain('<meta property="og:image"');
+    });
+
+    it("has Twitter Cards metadata with creator attribution", () => {
+      expect(html).toContain('<meta name="twitter:card" content="summary_large_image"');
+      expect(html).toContain('<meta name="twitter:creator" content="@mormox2"');
+      expect(html).toContain('<meta name="twitter:title"');
+    });
+
+    it("has Schema.org JSON-LD Structured Data with valid author attribution", () => {
+      expect(html).toContain('<script type="application/ld+json">');
+      expect(html).toContain('"@type": "SoftwareApplication"');
+      expect(html).toContain("Dr. Mossaab Rtimi");
+      expect(html).toContain("Chirurgien-Dentiste / Doctor of Dental Surgery (DDS) & Software Developer (Développeur de logiciels)");
+      expect(html).toContain('"@type": "WebSite"');
+    });
+
+    it("robots.txt declares canonical sitemap and allows AI crawlers", () => {
+      expect(robots).toContain("Sitemap: https://geocore.vercel.app/sitemap.xml");
+      expect(robots).toContain("User-agent: GPTBot");
+      expect(robots).toContain("User-agent: PerplexityBot");
+      expect(robots).toContain("User-agent: ClaudeBot");
+    });
+
+    it("sitemap.xml defines XML schema and primary URLs", () => {
+      expect(sitemap).toContain("<urlset");
+      expect(sitemap).toContain("<loc>https://geocore.vercel.app/</loc>");
+      expect(sitemap).toContain("<loc>https://geocore.vercel.app/studio/</loc>");
+      expect(sitemap).toContain("<loc>https://geocore.vercel.app/llms.txt</loc>");
+    });
+
+    it("llms.txt adheres to llmstxt.org specification", () => {
+      expect(llms).toContain("# GeoCore — AI-Native Knowledge Operating System");
+      expect(llms).toContain("Dr. Mossaab Rtimi");
+      expect(llms).toContain("@mormox2/geocore");
+      expect(llms).toContain("Hybrid Search");
     });
   });
 });

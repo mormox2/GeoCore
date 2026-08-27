@@ -1,0 +1,37 @@
+# GeoCore — AI-Native Knowledge Operating System
+> Build knowledge once. Validate strictly. Deliver everywhere without hallucinations.
+
+GeoCore is an open-source, AI-native Knowledge Operating System (Knowledge OS) engineered for high-stakes domains (Healthcare, Clinical Dentistry, Agritech, Legal, B2B Compliance). It compiles structured Markdown knowledge objects into deterministic, mathematically grounded networks for websites, REST APIs, hybrid search engines (BM25 + Dense Vectors), and RAG AI assistants.
+
+- Creator: Dr. Mossaab Rtimi (@mormox2)
+- Professional Title: Chirurgien-Dentiste / Doctor of Dental Surgery (DDS) & Software Developer (Développeur de logiciels)
+- Repository: https://github.com/mormox2/GeoCore
+- Website: https://geocore.vercel.app/
+- License: MIT
+- Strict TypeScript: 100% type safety across 7 monorepo packages
+- Test Coverage: 100% passing test suite
+
+## Core Packages
+
+- `@mormox2/geocore`: Core compiler, 10-stage validation pipeline, and schema generator.
+- `@mormox2/geocore-cli`: Command-line tools (init, validate, export, inspect, serve, vectorize, studio).
+- `@mormox2/geocore-server`: Standalone Node.js HTTP server with auto-generated OpenAPI & hybrid search endpoints.
+- `@mormox2/geocore-db`: SQLite and DuckDB vector and relation database driver.
+- `@mormox2/geocore-vector`: Pure TypeScript embedding computation, dense semantic search, and cosine ranking.
+- `@mormox2/geocore-next`: Next.js 14+ App Router adapters, SEO metadata, JSON-LD Schema, and citations.
+- `@mormox2/geocore-ai`: Deterministic grounding guardrails, anti-hallucination verification, and citation scoring.
+
+## Key Capabilities
+
+1. Deterministic Grounding Guardrails: Prevents hallucinations by calculating grounding confidence and verifying facts against certified evidence (PubMed, WHO, HAS, ISO).
+2. Pure TypeScript Hybrid Search (RRF): Combines BM25 lexical precision with dense semantic vector embeddings.
+3. Generative Engine Optimization (GEO): Generates compliant llms.txt, llms-full.txt, sitemap.xml, and Schema.org JSON-LD tags.
+4. Interactive Visual Studio: In-browser 2D knowledge graph explorer, live editor, and RAG testing interface.
+
+## Quick Links
+
+- [GitHub Repository](https://github.com/mormox2/GeoCore)
+- [Interactive Visual Studio](https://geocore.vercel.app/studio/)
+- [Case Study: RTimi Dental](https://geocore.vercel.app/data/rtimidental/manifest.json)
+- [Case Study: Dawajin Pro](https://geocore.vercel.app/data/dawajinpro/manifest.json)
+- [Sitemap](https://geocore.vercel.app/sitemap.xml)
