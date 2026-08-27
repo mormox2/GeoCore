@@ -214,4 +214,34 @@ describe("GeoCore Site — Landing Page Tests", () => {
       expect(llms).toContain("Hybrid Search");
     });
   });
+
+  describe("Privacy & Zero Cookie Transparency", () => {
+    const html = readFileSync(join(root, "index.html"), "utf-8");
+    const js = readFileSync(join(root, "app.js"), "utf-8");
+    const css = readFileSync(join(root, "styles.css"), "utf-8");
+
+    it("has privacy link in footer", () => {
+      expect(html).toContain('id="privacyLink"');
+      expect(html).toContain("Privacy &amp; Cookies");
+    });
+
+    it("has privacy transparency modal with Zero Cookie badge", () => {
+      expect(html).toContain('id="privacyModal"');
+      expect(html).toContain("Zero Cookie • 100% Privacy by Design");
+      expect(html).toContain("Dr. Mossaab Rtimi");
+      expect(html).toContain("Chirurgien-Dentiste / Doctor of Dental Surgery");
+      expect(html).toContain("Développeur de logiciels / Software Developer");
+    });
+
+    it("initializes privacy modal controller in JavaScript", () => {
+      expect(js).toContain("initPrivacyModal");
+      expect(js).toContain("privacy_modal_open");
+    });
+
+    it("defines styles for privacy modal and badge", () => {
+      expect(css).toContain(".privacy-modal-backdrop");
+      expect(css).toContain(".privacy-modal-card");
+      expect(css).toContain(".privacy-badge");
+    });
+  });
 });

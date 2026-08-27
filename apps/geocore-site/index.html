@@ -626,9 +626,56 @@
       <li><a href="#features">Features</a></li>
       <li><a href="#architecture">Architecture</a></li>
       <li><a href="#cli">CLI</a></li>
+      <li><a href="#privacy" id="privacyLink" class="privacy-link">Privacy &amp; Cookies</a></li>
     </ul>
   </div>
 </footer>
+
+<!-- ═══════════ Privacy & Cookies Transparency Modal ═══════════ -->
+<div class="privacy-modal-backdrop" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle" hidden>
+  <div class="privacy-modal-card">
+    <button class="privacy-modal-close" id="privacyModalClose" aria-label="Close Privacy Modal">&times;</button>
+    <div class="privacy-modal-header">
+      <div class="privacy-badge">🛡️ Zero Cookie • 100% Privacy by Design</div>
+      <h3 id="privacyTitle">Privacy, Cookies &amp; Ethics Policy</h3>
+      <p class="privacy-lead">GeoCore is built with strict privacy standards for high-stakes domains.</p>
+    </div>
+    <div class="privacy-modal-body">
+      <div class="privacy-item">
+        <div class="privacy-item-icon">🍪</div>
+        <div>
+          <h4>Zero Cookie Guarantee</h4>
+          <p>This website does not store or read any cookies on your device. We do not use advertising cookies, tracking tokens, or third-party behavioral trackers.</p>
+        </div>
+      </div>
+      <div class="privacy-item">
+        <div class="privacy-item-icon">📊</div>
+        <div>
+          <h4>Privacy-Preserving Analytics</h4>
+          <p>We use cookieless Vercel Web Analytics. IP addresses and user-agents are hashed with a daily rotating salt to generate aggregated traffic stats without collecting personally identifiable information (PII). Fully compliant with GDPR / RGPD and ePrivacy without requiring cookie banners.</p>
+        </div>
+      </div>
+      <div class="privacy-item">
+        <div class="privacy-item-icon">🩺</div>
+        <div>
+          <h4>Clinical &amp; Domain Data Ethics</h4>
+          <p>Authored by <strong>Dr. Mossaab Rtimi</strong> (Chirurgien-Dentiste / Doctor of Dental Surgery &amp; Développeur de logiciels / Software Developer), GeoCore enforces strict zero-hallucination guardrails and data confidentiality for sensitive domains (healthcare, dental medicine, legal, compliance).</p>
+        </div>
+      </div>
+      <div class="privacy-item">
+        <div class="privacy-item-icon">⚖️</div>
+        <div>
+          <h4>Open Source &amp; Data Sovereignty</h4>
+          <p>GeoCore is 100% open-source under the MIT license. You have full sovereignty over your knowledge base: runs locally, in edge functions, or on your private servers without external data exfiltration.</p>
+        </div>
+      </div>
+    </div>
+    <div class="privacy-modal-footer">
+      <button class="btn-primary privacy-ok-btn" id="privacyModalOk">Understood</button>
+      <a href="https://github.com/mormox2/GeoCore" target="_blank" class="privacy-gh-link">Inspect Code on GitHub &rarr;</a>
+    </div>
+  </div>
+</div>
 
 <script src="app.js"></script>
 </body>

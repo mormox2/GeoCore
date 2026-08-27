@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initCliTabs();
   initCopyButton();
   initCtaTracking();
+  initPrivacyModal();
 });
 
 /* ─── Navbar background on scroll ──────────────────────────────────────────── */
@@ -139,4 +140,48 @@ function trackVercelEvent(eventName, data = {}) {
   if (typeof window !== "undefined" && typeof window.va === "function") {
     window.va("event", { name: eventName, data });
   }
+}
+
+/* ─── Privacy & Cookies Modal Controller ──────────────────────────────────── */
+
+function initPrivacyModal() {
+  const modal = document.getElementById("privacyModal");
+  const openLink = document.getElementById("privacyLink");
+  const closeBtn = document.getElementById("privacyModalClose");
+  const okBtn = document.getElementById("privacyModalOk");
+
+  if (!modal || !openLink) return;
+
+  const open = (e) => {
+    if (e) e.preventDefault();
+    modal.hidden = false;
+    void modal.offsetWidth; // Trigger reflow for animation
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+    trackVercelEvent("privacy_modal_open");
+  };
+
+  const close = () => {
+    modal.classList.remove("open");
+    setTimeout(() => {
+      modal.hidden = true;
+      document.body.style.overflow = "";
+    }, 250);
+  };
+
+  openLink.addEventListener("click", open);
+  if (closeBtn) closeBtn.addEventListener("click", close);
+  if (okBtn) okBtn.addEventListener("click", close);
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      close();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.hidden) {
+      close();
+    }
+  });
 }
