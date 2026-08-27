@@ -3,6 +3,7 @@ import { generateMetadata, default as KnowledgePage } from "../src/app/[lang]/[s
 import { GET } from "../src/app/api/geocore/[...route]/route.js";
 import { POST as ChatPost } from "../src/app/api/chat/route.js";
 import { formatChatWidgetResponse } from "../src/components/chat-widget.js";
+import { default as RootLayout, renderRootLayoutHtml, getVercelAnalyticsSnippet } from "../src/app/layout.js";
 
 describe("Next.js 14+ App Router Reference Application", () => {
   describe("Dynamic Knowledge Page & Metadata", () => {
@@ -114,6 +115,49 @@ describe("Next.js 14+ App Router Reference Application", () => {
       expect(html).toContain("Score d'ancrage : <strong>95%</strong>");
       expect(html).toContain("Risque: LOW");
       expect(html).toContain("OMS Rapport");
+    });
+  });
+
+  describe("Root Layout & Vercel Analytics Integration", () => {
+    it("renders root layout with Vercel Analytics snippet enabled by default", async () => {
+      const layout = await RootLayout({
+        params: { lang: "fr" },
+        children: "<div>Test Page Content</div>",
+      });
+
+      expect(layout.lang).toBe("fr");
+      expect(layout.hasAnalytics).toBe(true);
+      expect(layout.analyticsScript).toContain("window.va");
+      expect(layout.analyticsScript).toContain("/_vercel/insights/script.js");
+      expect(layout.children).toBe("<div>Test Page Content</div>");
+    });
+
+    it("generates complete HTML document with analytics tag", () => {
+      const html = renderRootLayoutHtml({
+        lang: "fr",
+        title: "RTimi Dental — GeoCore",
+        bodyContent: "<main>Hello World</main>",
+        includeAnalytics: true,
+      });
+
+      expect(html).toContain('<html lang="fr">');
+      expect(html).toContain("<title>RTimi Dental — GeoCore</title>");
+      expect(html).toContain("/_vercel/insights/script.js");
+      expect(html).toContain("<main>Hello World</main>");
+    });
+
+    it("allows disabling analytics for local or preview mode", () => {
+      const html = renderRootLayoutHtml({
+        includeAnalytics: false,
+      });
+
+      expect(html).not.toContain("/_vercel/insights/script.js");
+    });
+
+    it("provides the canonical Vercel Analytics snippet", () => {
+      const snippet = getVercelAnalyticsSnippet();
+      expect(snippet).toContain("window.va");
+      expect(snippet).toContain("/_vercel/insights/script.js");
     });
   });
 });

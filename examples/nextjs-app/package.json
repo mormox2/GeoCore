@@ -12,7 +12,8 @@
     "@mormox2/geocore": "^1.0.1",
     "@mormox2/geocore-next": "^1.0.1",
     "@mormox2/geocore-ai": "^1.0.1",
-    "@mormox2/geocore-vector": "^1.0.1"
+    "@mormox2/geocore-vector": "^1.0.1",
+    "@vercel/analytics": "^2.0.1"
   },
   "devDependencies": {
     "typescript": "^5.4.5",

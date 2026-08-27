@@ -125,5 +125,28 @@ describe("GeoCore Site — Landing Page Tests", () => {
     it("includes copy button handler", () => {
       expect(js).toContain("initCopyButton");
     });
+
+    it("initializes CTA tracking", () => {
+      expect(js).toContain("initCtaTracking");
+    });
+
+    it("dispatches Vercel Web Analytics events", () => {
+      expect(js).toContain("trackVercelEvent");
+      expect(js).toContain("cli_tab_select");
+      expect(js).toContain("copy_command");
+      expect(js).toContain("cta_click");
+    });
+  });
+
+  describe("Vercel Web Analytics Setup", () => {
+    const html = readFileSync(join(root, "index.html"), "utf-8");
+
+    it("embeds Vercel Analytics queue initialization snippet", () => {
+      expect(html).toContain("window.va = window.va || function ()");
+    });
+
+    it("loads defer insights script from /_vercel/insights/script.js", () => {
+      expect(html).toContain('<script defer src="/_vercel/insights/script.js"></script>');
+    });
   });
 });

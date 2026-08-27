@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initRevealOnScroll();
   initCliTabs();
   initCopyButton();
+  initCtaTracking();
 });
 
 /* ─── Navbar background on scroll ──────────────────────────────────────────── */
@@ -87,6 +88,8 @@ function initCliTabs() {
       tab.classList.add("active");
       const panel = document.getElementById(`cli-${target}`);
       if (panel) panel.classList.add("active");
+
+      trackVercelEvent("cli_tab_select", { command: target });
     });
   });
 }
@@ -96,6 +99,15 @@ function initCliTabs() {
 function initCopyButton() {
   document.querySelectorAll(".copy-btn").forEach(btn => {
     btn.addEventListener("click", () => {
+      const codeEl = btn.closest(".terminal-body")?.querySelector("code");
+      const commandText = codeEl ? codeEl.innerText.trim() : "";
+
+      if (commandText && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(commandText).catch(() => {});
+      }
+
+      trackVercelEvent("copy_command", { command: commandText || "cli" });
+
       const original = btn.textContent;
       btn.textContent = "Copied!";
       btn.style.color = "var(--accent-emerald)";
@@ -105,4 +117,26 @@ function initCopyButton() {
       }, 2000);
     });
   });
+}
+
+/* ─── Call to Action (CTA) Tracking ────────────────────────────────────────── */
+
+function initCtaTracking() {
+  document.querySelectorAll(".btn-primary, .btn-secondary, .nav-cta").forEach(link => {
+    link.addEventListener("click", () => {
+      const text = link.textContent.replace(/[^\w\s-]/gi, "").trim();
+      trackVercelEvent("cta_click", {
+        label: text || "action",
+        href: link.getAttribute("href") || "#",
+      });
+    });
+  });
+}
+
+/* ─── Vercel Web Analytics Event Dispatcher ────────────────────────────────── */
+
+function trackVercelEvent(eventName, data = {}) {
+  if (typeof window !== "undefined" && typeof window.va === "function") {
+    window.va("event", { name: eventName, data });
+  }
 }
