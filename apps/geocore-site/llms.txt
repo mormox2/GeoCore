@@ -6,7 +6,7 @@ GeoCore is an open-source, AI-native Knowledge Operating System (Knowledge OS) e
 - Creator: Dr. Mossaab Rtimi (@mormox2)
 - Professional Title: Chirurgien-Dentiste / Doctor of Dental Surgery (DDS) & Software Developer (Développeur de logiciels)
 - Repository: https://github.com/mormox2/GeoCore
-- Website: https://geocore.vercel.app/
+- Website: https://geocore-sable.vercel.app/
 - License: MIT
 - Strict TypeScript: 100% type safety across 7 monorepo packages
 - Test Coverage: 100% passing test suite
@@ -31,7 +31,7 @@ GeoCore is an open-source, AI-native Knowledge Operating System (Knowledge OS) e
 ## Quick Links
 
 - [GitHub Repository](https://github.com/mormox2/GeoCore)
-- [Interactive Visual Studio](https://geocore.vercel.app/studio/)
-- [Case Study: RTimi Dental](https://geocore.vercel.app/data/rtimidental/manifest.json)
-- [Case Study: Dawajin Pro](https://geocore.vercel.app/data/dawajinpro/manifest.json)
-- [Sitemap](https://geocore.vercel.app/sitemap.xml)
+- [Interactive Visual Studio](https://geocore-sable.vercel.app/studio/)
+- [Case Study: RTimi Dental](https://geocore-sable.vercel.app/data/rtimidental/manifest.json)
+- [Case Study: Dawajin Pro](https://geocore-sable.vercel.app/data/dawajinpro/manifest.json)
+- [Sitemap](https://geocore-sable.vercel.app/sitemap.xml)

@@ -173,20 +173,21 @@ describe("GeoCore Site — Landing Page Tests", () => {
     const llms = readFileSync(join(root, "llms.txt"), "utf-8");
 
     it("has canonical URL tag", () => {
-      expect(html).toContain('<link rel="canonical" href="https://geocore.vercel.app/"');
+      expect(html).toContain('<link rel="canonical" href="https://geocore-sable.vercel.app/"');
     });
 
     it("has complete Open Graph metadata with image and locale", () => {
-      expect(html).toContain('<meta property="og:url" content="https://geocore.vercel.app/"');
+      expect(html).toContain('<meta property="og:url" content="https://geocore-sable.vercel.app/"');
       expect(html).toContain('<meta property="og:site_name" content="GeoCore"');
       expect(html).toContain('<meta property="og:locale" content="en_US"');
-      expect(html).toContain('<meta property="og:image"');
+      expect(html).toContain('<meta property="og:image" content="https://geocore-sable.vercel.app/og-image.png"');
     });
 
     it("has Twitter Cards metadata with creator attribution", () => {
       expect(html).toContain('<meta name="twitter:card" content="summary_large_image"');
       expect(html).toContain('<meta name="twitter:creator" content="@mormox2"');
       expect(html).toContain('<meta name="twitter:title"');
+      expect(html).toContain('<meta name="twitter:image" content="https://geocore-sable.vercel.app/og-image.png"');
     });
 
     it("has Schema.org JSON-LD Structured Data with valid author attribution", () => {
@@ -198,7 +199,7 @@ describe("GeoCore Site — Landing Page Tests", () => {
     });
 
     it("robots.txt declares canonical sitemap and allows AI crawlers", () => {
-      expect(robots).toContain("Sitemap: https://geocore.vercel.app/sitemap.xml");
+      expect(robots).toContain("Sitemap: https://geocore-sable.vercel.app/sitemap.xml");
       expect(robots).toContain("User-agent: GPTBot");
       expect(robots).toContain("User-agent: PerplexityBot");
       expect(robots).toContain("User-agent: ClaudeBot");
@@ -206,9 +207,9 @@ describe("GeoCore Site — Landing Page Tests", () => {
 
     it("sitemap.xml defines XML schema and primary URLs", () => {
       expect(sitemap).toContain("<urlset");
-      expect(sitemap).toContain("<loc>https://geocore.vercel.app/</loc>");
-      expect(sitemap).toContain("<loc>https://geocore.vercel.app/studio/</loc>");
-      expect(sitemap).toContain("<loc>https://geocore.vercel.app/llms.txt</loc>");
+      expect(sitemap).toContain("<loc>https://geocore-sable.vercel.app/</loc>");
+      expect(sitemap).toContain("<loc>https://geocore-sable.vercel.app/studio/</loc>");
+      expect(sitemap).toContain("<loc>https://geocore-sable.vercel.app/llms.txt</loc>");
     });
 
     it("llms.txt adheres to llmstxt.org specification", () => {
