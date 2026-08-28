@@ -73,7 +73,7 @@ When a prospective enterprise user takes a call:
    - *"How do you currently ensure your AI answers never hallucinate domain-specific facts?"*
    - *"How are you handling exact keyword lookups vs natural language questions in your search?"*
 2. **Minutes 6-10 (Live GeoCore Demo)**:
-   - Run `npx @mormox2/geocore-cli studio` live.
+   - Run `npx @mormo_mossaab/geocore-cli studio` live.
    - Show the 2D interactive graph.
    - Run a query that tests the anti-hallucination guardrail (`verifyAnswerGrounding`).
 3. **Minutes 11-15 (Call to Action)**:

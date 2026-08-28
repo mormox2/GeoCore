@@ -43,8 +43,8 @@ The project is 100% open-source under MIT, fully typed, with 747 tests passing (
 - **GitHub**: https://github.com/mormox2/GeoCore
 - **CLI Quickstart**:
   ```bash
-  npx @mormox2/geocore-cli init my-kb
-  npx @mormox2/geocore-cli studio
+  npx @mormo_mossaab/geocore-cli init my-kb
+  npx @mormo_mossaab/geocore-cli studio
   ```
 
 Curious to hear your thoughts on purely TypeScript-based RAG architectures versus Python-centric pipelines!
@@ -64,13 +64,13 @@ Hi r/typescript!
 I wanted to share the architectural patterns behind **GeoCore** (https://github.com/mormox2/GeoCore), an AI-Native Knowledge Operating System monorepo built in 100% strict TypeScript.
 
 ### Monorepo Architecture:
-- `@mormox2/geocore`: Core domain, Zod schemas, 10-stage AST/graph validator, static exporter.
-- `@mormox2/geocore-cli`: CLI tooling (`init`, `validate`, `export`, `serve`, `vectorize`, `studio`).
-- `@mormox2/geocore-vector`: Pure TS cosine similarity, local/OpenAI embedding providers, RRF hybrid search.
-- `@mormox2/geocore-ai`: RAG context synthesizer, semantic chunking, and hallucination guardrails.
-- `@mormox2/geocore-server`: Standalone Node REST server with dynamic OpenAPI 3.1 specification generation.
-- `@mormox2/geocore-next`: Next.js 14/15 App Router dynamic metadata, JSON-LD, and route handler utilities.
-- `@mormox2/geocore-db`: Storage adapters (In-Memory + SQLite) with full dataset reconciliation.
+- `@mormo_mossaab/geocore`: Core domain, Zod schemas, 10-stage AST/graph validator, static exporter.
+- `@mormo_mossaab/geocore-cli`: CLI tooling (`init`, `validate`, `export`, `serve`, `vectorize`, `studio`).
+- `@mormo_mossaab/geocore-vector`: Pure TS cosine similarity, local/OpenAI embedding providers, RRF hybrid search.
+- `@mormo_mossaab/geocore-ai`: RAG context synthesizer, semantic chunking, and hallucination guardrails.
+- `@mormo_mossaab/geocore-server`: Standalone Node REST server with dynamic OpenAPI 3.1 specification generation.
+- `@mormo_mossaab/geocore-next`: Next.js 14/15 App Router dynamic metadata, JSON-LD, and route handler utilities.
+- `@mormo_mossaab/geocore-db`: Storage adapters (In-Memory + SQLite) with full dataset reconciliation.
 
 ### Highlights:
 - **Zero Circular Dependencies**: Enforced via clear domain-driven package boundaries.
@@ -96,11 +96,11 @@ With AI search engines (ChatGPT Search, Perplexity, Google AI Overviews) changin
 1. `llms.txt` and `llms-full.txt` (the emerging standard for LLM ingest).
 2. Deep `Schema.org` JSON-LD microdata (`MedicalWebPage`, `TechArticle`, `FAQPage`).
 
-We built an open-source integration for Next.js 14/15 App Router inside **GeoCore** (`@mormox2/geocore-next`):
+We built an open-source integration for Next.js 14/15 App Router inside **GeoCore** (`@mormo_mossaab/geocore-next`):
 
 ```typescript
 // app/api/geocore/[...route]/route.ts
-import { createGeoCoreRouteHandlers } from "@mormox2/geocore-next";
+import { createGeoCoreRouteHandlers } from "@mormo_mossaab/geocore-next";
 import { myDataset } from "@/lib/dataset";
 
 export const { GET, OPTIONS } = createGeoCoreRouteHandlers({

@@ -53,11 +53,11 @@ It takes your structured Markdown/YAML files and transforms them into an interco
 
 ```bash
 # 1. Initialize a new GeoCore Knowledge Base
-npx @mormox2/geocore-cli init my-knowledge-base
+npx @mormo_mossaab/geocore-cli init my-knowledge-base
 
 # 2. Launch the interactive Visual Studio (2D Graph + Editor + RAG Tester)
 cd my-knowledge-base
-npx @mormox2/geocore-cli studio
+npx @mormo_mossaab/geocore-cli studio
 ```
 
 ### Full Monorepo Setup (From Source)
@@ -94,7 +94,7 @@ graph LR
 GeoCore inspects synthesized LLM answers against verified source documents. If an answer asserts clinical claims unsupported by citations, GeoCore detects and flags the hallucination risk (`low`, `medium`, `high`) before it reaches patients or end-users.
 
 ```typescript
-import { verifyAnswerGrounding } from "@mormox2/geocore-ai";
+import { verifyAnswerGrounding } from "@mormo_mossaab/geocore-ai";
 
 const evaluation = verifyAnswerGrounding(
   "Fluoride varnish should be applied at 5% concentration (WHO guidelines).",
@@ -118,7 +118,7 @@ Turn your knowledge graph into an AI-crawlable, SEO-dominant digital presence wi
 
 ```typescript
 // app/api/geocore/[...route]/route.ts
-import { createGeoCoreRouteHandlers } from "@mormox2/geocore-next";
+import { createGeoCoreRouteHandlers } from "@mormo_mossaab/geocore-next";
 import { myDataset } from "@/lib/dataset";
 
 export const { GET, OPTIONS } = createGeoCoreRouteHandlers({
@@ -141,13 +141,13 @@ GeoCore is organized as an enterprise-grade, clean monorepo with 7 decoupled pac
 
 | Package | Version | Role | Key Technologies |
 |---|---|---|---|
-| [`@mormox2/geocore`](./packages/geocore) | `1.0.0` | Domain core, Zod schemas, 10-stage validator, graph & static export. | `zod` |
-| [`@mormox2/geocore-cli`](./packages/geocore-cli) | `1.0.0` | CLI tool (`init`, `validate`, `export`, `inspect`, `serve`, `studio`). | `zod`, `commander` |
-| [`@mormox2/geocore-vector`](./packages/geocore-vector) | `1.0.0` | Vector embeddings, in-memory cosine store & RRF hybrid search. | TypeScript, Cosine Math |
-| [`@mormox2/geocore-ai`](./packages/geocore-ai) | `1.0.0` | RAG context builder, semantic chunking & anti-hallucination guardrails. | Zod, Grounding Engine |
-| [`@mormox2/geocore-server`](./packages/geocore-server) | `1.0.0` | Standalone REST server with OpenAPI 3.1 & API key authentication. | Node HTTP, OpenAPI |
-| [`@mormox2/geocore-next`](./packages/geocore-next) | `1.0.0` | Next.js 14+/15+ App Router helpers, metadata & JSON-LD injectors. | Next.js, React |
-| [`@mormox2/geocore-db`](./packages/geocore-db) | `1.0.0` | Persistence repository layer with In-Memory & SQLite adapters. | SQLite, Memory DB |
+| [`@mormo_mossaab/geocore`](./packages/geocore) | `1.0.0` | Domain core, Zod schemas, 10-stage validator, graph & static export. | `zod` |
+| [`@mormo_mossaab/geocore-cli`](./packages/geocore-cli) | `1.0.0` | CLI tool (`init`, `validate`, `export`, `inspect`, `serve`, `studio`). | `zod`, `commander` |
+| [`@mormo_mossaab/geocore-vector`](./packages/geocore-vector) | `1.0.0` | Vector embeddings, in-memory cosine store & RRF hybrid search. | TypeScript, Cosine Math |
+| [`@mormo_mossaab/geocore-ai`](./packages/geocore-ai) | `1.0.0` | RAG context builder, semantic chunking & anti-hallucination guardrails. | Zod, Grounding Engine |
+| [`@mormo_mossaab/geocore-server`](./packages/geocore-server) | `1.0.0` | Standalone REST server with OpenAPI 3.1 & API key authentication. | Node HTTP, OpenAPI |
+| [`@mormo_mossaab/geocore-next`](./packages/geocore-next) | `1.0.0` | Next.js 14+/15+ App Router helpers, metadata & JSON-LD injectors. | Next.js, React |
+| [`@mormo_mossaab/geocore-db`](./packages/geocore-db) | `1.0.0` | Persistence repository layer with In-Memory & SQLite adapters. | SQLite, Memory DB |
 
 ---
 
@@ -171,13 +171,13 @@ Every Knowledge Object is checked against 10 strict validation gates before rele
 ## 🧪 Benchmark & Test Suite Status
 
 ```txt
-✓ @mormox2/geocore          (68 test files, 512 tests passed)
-✓ @mormox2/geocore-cli      (8 test files, 19 tests passed)
-✓ @mormox2/geocore-server   (1 test file, 14 tests passed)
-✓ @mormox2/geocore-db       (1 test file, 6 tests passed)
-✓ @mormox2/geocore-vector   (1 test file, 10 tests passed)
-✓ @mormox2/geocore-next     (2 test files, 13 tests passed)
-✓ @mormox2/geocore-ai       (1 test file, 6 tests passed)
+✓ @mormo_mossaab/geocore          (68 test files, 512 tests passed)
+✓ @mormo_mossaab/geocore-cli      (8 test files, 19 tests passed)
+✓ @mormo_mossaab/geocore-server   (1 test file, 14 tests passed)
+✓ @mormo_mossaab/geocore-db       (1 test file, 6 tests passed)
+✓ @mormo_mossaab/geocore-vector   (1 test file, 10 tests passed)
+✓ @mormo_mossaab/geocore-next     (2 test files, 13 tests passed)
+✓ @mormo_mossaab/geocore-ai       (1 test file, 6 tests passed)
 ─────────────────────────────────────────────────────────────
 Total: 105 test suites, 747 tests — 100% Passed (0 Failures)
 ```

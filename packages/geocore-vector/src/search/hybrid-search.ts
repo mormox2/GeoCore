@@ -1,5 +1,5 @@
-import type { KnowledgeDataset, SearchDocument } from "@mormox2/geocore";
-import { searchKnowledge } from "@mormox2/geocore";
+import type { KnowledgeDataset, SearchDocument } from "@mormo_mossaab/geocore";
+import { searchKnowledge } from "@mormo_mossaab/geocore";
 import type { EmbeddingProvider } from "../embedding/embedding-provider.js";
 import type { VectorStore, VectorSearchResult } from "../store/vector-store.js";
 

@@ -57,7 +57,7 @@ Where:
 Instead of orchestrating complex Python microservices or multi-cloud vector databases, we implemented the entire hybrid index in strict TypeScript:
 
 ```typescript
-import { createVectorStore, createDeterministicEmbeddingProvider } from "@mormox2/geocore-vector";
+import { createVectorStore, createDeterministicEmbeddingProvider } from "@mormo_mossaab/geocore-vector";
 
 // Initialize vector store
 const vectorStore = createVectorStore({
@@ -91,10 +91,10 @@ const results = await vectorStore.searchHybrid({
 
 Even with perfect retrieval, LLMs can still introduce hallucinations during synthesis.
 
-In GeoCore, we built `verifyAnswerGrounding` in `@mormox2/geocore-ai`:
+In GeoCore, we built `verifyAnswerGrounding` in `@mormo_mossaab/geocore-ai`:
 
 ```typescript
-import { verifyAnswerGrounding } from "@mormox2/geocore-ai";
+import { verifyAnswerGrounding } from "@mormo_mossaab/geocore-ai";
 
 const evaluation = verifyAnswerGrounding(
   llmAnswer,
@@ -121,9 +121,9 @@ GeoCore is 100% open source under the MIT License, structured as a clean 7-packa
 You can try the visual studio and RAG engine locally:
 
 ```bash
-npx @mormox2/geocore-cli init my-knowledge-base
+npx @mormo_mossaab/geocore-cli init my-knowledge-base
 cd my-knowledge-base
-npx @mormox2/geocore-cli studio
+npx @mormo_mossaab/geocore-cli studio
 ```
 
 ⭐ **Check out the repository on GitHub**: [https://github.com/mormox2/GeoCore](https://github.com/mormox2/GeoCore)

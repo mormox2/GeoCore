@@ -1,4 +1,4 @@
-import type { AiContextPackage } from "@mormox2/geocore";
+import type { AiContextPackage } from "@mormo_mossaab/geocore";
 export type FormatPromptContextOptions = {
     includeSystemPreamble?: boolean;
     includeCitations?: boolean;

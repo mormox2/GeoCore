@@ -4,7 +4,7 @@ import type {
   KnowledgeEntity,
   KnowledgeCitation,
   KnowledgeSource,
-} from "@mormox2/geocore";
+} from "@mormo_mossaab/geocore";
 
 export type FormatPromptContextOptions = {
   includeSystemPreamble?: boolean;

@@ -1,11 +1,11 @@
-import type { MediaAsset } from "@mormox2/geocore";
+import type { MediaAsset } from "@mormo_mossaab/geocore";
 import {
   formatImageHtml,
   formatVideoHtml,
   formatMediaAttribution,
   getMediaAltText,
   getMediaCaption,
-} from "@mormox2/geocore";
+} from "@mormo_mossaab/geocore";
 
 /**
  * Renders a full accessible media figure element containing the media and caption/attribution.

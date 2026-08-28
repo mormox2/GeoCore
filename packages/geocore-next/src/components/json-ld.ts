@@ -1,4 +1,4 @@
-import type { SchemaOutput } from "@mormox2/geocore";
+import type { SchemaOutput } from "@mormo_mossaab/geocore";
 
 /**
  * Generates a safe JSON string for embedding inside `<script type="application/ld+json">`.

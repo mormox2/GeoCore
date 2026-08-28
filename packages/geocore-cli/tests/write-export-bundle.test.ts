@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { writeExportBundle } from "../src/fs/write-export-bundle.js";
-import { StaticExportBundle } from "@mormox2/geocore";
+import { StaticExportBundle } from "@mormo_mossaab/geocore";
 import * as fs from "fs";
 import * as path from "path";
 

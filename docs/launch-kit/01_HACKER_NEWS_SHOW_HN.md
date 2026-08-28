@@ -36,13 +36,13 @@ To solve this, I built **GeoCore** (https://github.com/mormox2/GeoCore) — an o
 
 ### Quick Test in Terminal:
 ```bash
-npx @mormox2/geocore-cli init my-kb
+npx @mormo_mossaab/geocore-cli init my-kb
 cd my-kb
-npx @mormox2/geocore-cli studio
+npx @mormo_mossaab/geocore-cli studio
 ```
 
 ### Architecture & Stats:
-- Monorepo of 7 modular packages (`@mormox2/geocore`, `geocore-cli`, `geocore-server`, `geocore-vector`, `geocore-ai`, `geocore-next`, `geocore-db`).
+- Monorepo of 7 modular packages (`@mormo_mossaab/geocore`, `geocore-cli`, `geocore-server`, `geocore-vector`, `geocore-ai`, `geocore-next`, `geocore-db`).
 - 105 test suites, 747 tests passing (100% coverage across all core invariants).
 - MIT Licensed.
 

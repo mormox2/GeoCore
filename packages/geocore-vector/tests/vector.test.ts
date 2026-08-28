@@ -11,7 +11,7 @@ import {
   vectorizeDataset,
   searchHybrid,
 } from "../src/index.js";
-import { apiDatasetFixture, rtimidentalFixture } from "@mormox2/geocore";
+import { apiDatasetFixture, rtimidentalFixture } from "@mormo_mossaab/geocore";
 
 describe("GeoCore Vector & Hybrid Search Engine", () => {
   describe("Vector Math Operations", () => {

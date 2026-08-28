@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { KnowledgeDataset } from "@mormox2/geocore";
-import { type VectorStore, type EmbeddingProvider } from "@mormox2/geocore-vector";
+import type { KnowledgeDataset } from "@mormo_mossaab/geocore";
+import { type VectorStore, type EmbeddingProvider } from "@mormo_mossaab/geocore-vector";
 import { AuthOptions } from "../middleware/auth.js";
 export type RouterOptions = {
     dataset: KnowledgeDataset;

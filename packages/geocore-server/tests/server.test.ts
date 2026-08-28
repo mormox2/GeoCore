@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { createGeoCoreServer, GeoCoreServerInstance } from "../src/server/http-server.js";
-import { apiDatasetFixture } from "@mormox2/geocore";
+import { apiDatasetFixture } from "@mormo_mossaab/geocore";
 
 describe("GeoCore Standalone HTTP Server", () => {
   let serverInstance: GeoCoreServerInstance;

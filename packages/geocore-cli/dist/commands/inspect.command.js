@@ -2,7 +2,7 @@ import * as path from "path";
 import { loadConfig } from "../config/load-config.js";
 import { discoverKnowledgeFiles } from "../fs/discover-files.js";
 import { readKnowledgeFiles } from "../fs/read-knowledge-files.js";
-import { loadKnowledgeDataset } from "@mormox2/geocore";
+import { loadKnowledgeDataset } from "@mormo_mossaab/geocore";
 import { formatInspectOutput } from "../output/format-inspect-output.js";
 export async function inspectCommand(flags) {
     const config = loadConfig(flags.config, {

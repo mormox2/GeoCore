@@ -1,4 +1,4 @@
-import { generateNextMetadata, renderJsonLdTag, renderCitationBadgeHtml, renderMediaFigureHtml, } from "@mormox2/geocore-next";
+import { generateNextMetadata, renderJsonLdTag, renderCitationBadgeHtml, renderMediaFigureHtml, } from "@mormo_mossaab/geocore-next";
 import { appDataset } from "../../../data/dataset.js";
 /**
  * Next.js 14+ App Router Server Component metadata generator.

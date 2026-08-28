@@ -1,4 +1,4 @@
-import { formatImageHtml, formatVideoHtml, formatMediaAttribution, getMediaCaption, } from "@mormox2/geocore";
+import { formatImageHtml, formatVideoHtml, formatMediaAttribution, getMediaCaption, } from "@mormo_mossaab/geocore";
 /**
  * Renders a full accessible media figure element containing the media and caption/attribution.
  */

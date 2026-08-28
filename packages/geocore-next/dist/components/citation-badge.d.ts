@@ -1,4 +1,4 @@
-import type { KnowledgeCitation, KnowledgeSource } from "@mormox2/geocore";
+import type { KnowledgeCitation, KnowledgeSource } from "@mormo_mossaab/geocore";
 export type CitationBadgeData = {
     citation: KnowledgeCitation;
     source?: KnowledgeSource;

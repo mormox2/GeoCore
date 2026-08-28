@@ -1,7 +1,7 @@
 import * as http from "node:http";
 import type { IncomingMessage, ServerResponse, Server } from "node:http";
-import type { KnowledgeDataset } from "@mormox2/geocore";
-import type { VectorStore, EmbeddingProvider } from "@mormox2/geocore-vector";
+import type { KnowledgeDataset } from "@mormo_mossaab/geocore";
+import type { VectorStore, EmbeddingProvider } from "@mormo_mossaab/geocore-vector";
 import { handleCors, CorsOptions } from "../middleware/cors.js";
 import { routeRequest, RouterOptions } from "../routes/api-router.js";
 import { AuthOptions } from "../middleware/auth.js";

@@ -12,7 +12,7 @@ This playbook explains how to integrate **GeoCore** into any Next.js 14+ or Next
 ## 1. Installation
 
 ```bash
-npm install @mormox2/geocore @mormox2/geocore-next @mormox2/geocore-ai @mormox2/geocore-vector
+npm install @mormo_mossaab/geocore @mormo_mossaab/geocore-next @mormo_mossaab/geocore-ai @mormo_mossaab/geocore-vector
 ```
 
 ---
@@ -27,8 +27,8 @@ import {
   renderJsonLdTag,
   renderCitationBadgeHtml,
   renderMediaFigureHtml,
-} from "@mormox2/geocore-next";
-import { getKnowledgeObject, resolveMetadata } from "@mormox2/geocore";
+} from "@mormo_mossaab/geocore-next";
+import { getKnowledgeObject, resolveMetadata } from "@mormo_mossaab/geocore";
 import { dataset } from "@/data/dataset";
 
 type Props = {
@@ -94,7 +94,7 @@ import {
   handleSitemapXml,
   handleSearchApi,
   handleContextApi,
-} from "@mormox2/geocore-next";
+} from "@mormo_mossaab/geocore-next";
 import { dataset } from "@/data/dataset";
 
 export async function GET(req: Request, { params }: { params: { route: string[] } }) {
@@ -126,9 +126,9 @@ export async function GET(req: Request, { params }: { params: { route: string[] 
 ## 4. Conversational RAG Chat Handler (`src/app/api/chat/route.ts`)
 
 ```ts
-import { getAiContext } from "@mormox2/geocore";
-import { buildPromptContext, verifyAnswerGrounding } from "@mormox2/geocore-ai";
-import { searchHybrid, vectorizeDataset, MemoryVectorStore, DeterministicEmbeddingProvider } from "@mormox2/geocore-vector";
+import { getAiContext } from "@mormo_mossaab/geocore";
+import { buildPromptContext, verifyAnswerGrounding } from "@mormo_mossaab/geocore-ai";
+import { searchHybrid, vectorizeDataset, MemoryVectorStore, DeterministicEmbeddingProvider } from "@mormo_mossaab/geocore-vector";
 import { dataset } from "@/data/dataset";
 
 const store = new MemoryVectorStore();

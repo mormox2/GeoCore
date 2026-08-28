@@ -1,4 +1,4 @@
-import { resolveMetadata } from "@mormox2/geocore";
+import { resolveMetadata } from "@mormo_mossaab/geocore";
 /**
  * Generates a full Next.js App Router `Metadata` object from a KnowledgeObject
  * and its KnowledgeDataset.

@@ -3,7 +3,7 @@ import {
   renderJsonLdTag,
   renderCitationBadgeHtml,
   renderMediaFigureHtml,
-} from "@mormox2/geocore-next";
+} from "@mormo_mossaab/geocore-next";
 import { appDataset } from "../../../data/dataset.js";
 
 export type PageProps = {

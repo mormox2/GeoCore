@@ -1,5 +1,5 @@
 {
-  "name": "@mormox2/geocore-cli",
+  "name": "@mormo_mossaab/geocore-cli",
   "version": "1.0.1",
   "description": "GeoCore CLI tools to validate, export, inspect, serve, vectorize, and explore knowledge repositories",
   "type": "module",
@@ -27,10 +27,10 @@
     "geocore": "node dist/bin.js"
   },
   "dependencies": {
-    "@mormox2/geocore": "^1.0.1",
-    "@mormox2/geocore-ai": "^1.0.1",
-    "@mormox2/geocore-server": "^1.0.1",
-    "@mormox2/geocore-vector": "^1.0.1",
+    "@mormo_mossaab/geocore": "^1.0.1",
+    "@mormo_mossaab/geocore-ai": "^1.0.1",
+    "@mormo_mossaab/geocore-server": "^1.0.1",
+    "@mormo_mossaab/geocore-vector": "^1.0.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {

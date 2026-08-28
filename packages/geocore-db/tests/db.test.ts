@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { MemoryKnowledgeRepository } from "../src/adapters/memory-repository.js";
 import { syncDatasetToRepository } from "../src/sync/dataset-sync.js";
 import { GEOCORE_SQL_SCHEMA } from "../src/adapters/sqlite-repository.js";
-import { apiDatasetFixture, rtimidentalFixture } from "@mormox2/geocore";
+import { apiDatasetFixture, rtimidentalFixture } from "@mormo_mossaab/geocore";
 
 describe("GeoCore Persistence & Repository Layer", () => {
   describe("MemoryKnowledgeRepository", () => {

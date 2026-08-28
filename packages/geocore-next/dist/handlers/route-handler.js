@@ -1,4 +1,4 @@
-import { generateLlmsTxt, generateLlmsFullTxt, generateSitemap, searchKnowledge, getAiContext, } from "@mormox2/geocore";
+import { generateLlmsTxt, generateLlmsFullTxt, generateSitemap, searchKnowledge, getAiContext, } from "@mormo_mossaab/geocore";
 /**
  * Returns a Response object containing the llms.txt summary file for AI crawlers.
  */

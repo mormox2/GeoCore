@@ -1,4 +1,4 @@
-import type { KnowledgeDataset } from "@mormox2/geocore";
+import type { KnowledgeDataset } from "@mormo_mossaab/geocore";
 import type { KnowledgeRepository } from "../repository/repository-interface.js";
 export type SyncResult = {
     objectsAdded: number;

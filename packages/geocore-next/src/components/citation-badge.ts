@@ -1,5 +1,5 @@
-import type { KnowledgeCitation, KnowledgeSource } from "@mormox2/geocore";
-import { formatSourceTrustBadge, formatSourceInline } from "@mormox2/geocore";
+import type { KnowledgeCitation, KnowledgeSource } from "@mormo_mossaab/geocore";
+import { formatSourceTrustBadge, formatSourceInline } from "@mormo_mossaab/geocore";
 
 export type CitationBadgeData = {
   citation: KnowledgeCitation;

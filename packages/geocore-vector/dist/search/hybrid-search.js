@@ -1,4 +1,4 @@
-import { searchKnowledge } from "@mormox2/geocore";
+import { searchKnowledge } from "@mormo_mossaab/geocore";
 /**
  * Executes a hybrid search across a KnowledgeDataset combining BM25 keyword matching
  * and dense vector semantic search, blended with Reciprocal Rank Fusion (RRF).

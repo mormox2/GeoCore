@@ -1,4 +1,4 @@
-import { rtimidentalFixture, dawajinproFixture } from "@mormox2/geocore";
+import { rtimidentalFixture, dawajinproFixture } from "@mormo_mossaab/geocore";
 /**
  * Combined reference KnowledgeDataset for the Next.js sample application.
  */

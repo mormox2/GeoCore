@@ -1,5 +1,5 @@
 {
-  "name": "@mormox2/geocore-ai",
+  "name": "@mormo_mossaab/geocore-ai",
   "version": "1.0.1",
   "description": "GeoCore AI / RAG prompt context builder, semantic markdown chunking, and citation grounding verification",
   "type": "module",
@@ -23,7 +23,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@mormox2/geocore": "^1.0.1",
+    "@mormo_mossaab/geocore": "^1.0.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {

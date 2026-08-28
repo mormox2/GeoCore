@@ -1,5 +1,5 @@
 {
-  "name": "@mormox2/geocore",
+  "name": "@mormo_mossaab/geocore",
   "version": "1.0.1",
   "description": "GeoCore core domain logic, schemas, 10-stage validation, graph, renderers, citations, and in-process APIs",
   "type": "module",

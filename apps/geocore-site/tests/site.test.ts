@@ -63,13 +63,13 @@ describe("GeoCore Site — Landing Page Tests", () => {
     });
 
     it("references all 7 packages", () => {
-      expect(html).toContain("@mormox2/geocore");
-      expect(html).toContain("@mormox2/geocore-cli");
-      expect(html).toContain("@mormox2/geocore-server");
-      expect(html).toContain("@mormox2/geocore-db");
-      expect(html).toContain("@mormox2/geocore-vector");
-      expect(html).toContain("@mormox2/geocore-next");
-      expect(html).toContain("@mormox2/geocore-ai");
+      expect(html).toContain("@mormo_mossaab/geocore");
+      expect(html).toContain("@mormo_mossaab/geocore-cli");
+      expect(html).toContain("@mormo_mossaab/geocore-server");
+      expect(html).toContain("@mormo_mossaab/geocore-db");
+      expect(html).toContain("@mormo_mossaab/geocore-vector");
+      expect(html).toContain("@mormo_mossaab/geocore-next");
+      expect(html).toContain("@mormo_mossaab/geocore-ai");
     });
 
     it("mentions both case studies", () => {
@@ -215,7 +215,7 @@ describe("GeoCore Site — Landing Page Tests", () => {
     it("llms.txt adheres to llmstxt.org specification", () => {
       expect(llms).toContain("# GeoCore — AI-Native Knowledge Operating System");
       expect(llms).toContain("Dr. Mossaab Rtimi");
-      expect(llms).toContain("@mormox2/geocore");
+      expect(llms).toContain("@mormo_mossaab/geocore");
       expect(llms).toContain("Hybrid Search");
     });
   });

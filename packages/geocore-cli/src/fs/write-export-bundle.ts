@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { StaticExportBundle } from "@mormox2/geocore";
+import { StaticExportBundle } from "@mormo_mossaab/geocore";
 import { CliError } from "../utils/cli-error.js";
 
 export async function writeExportBundle(input: {

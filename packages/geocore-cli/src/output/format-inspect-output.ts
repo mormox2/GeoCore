@@ -1,4 +1,4 @@
-import { KnowledgeDataset } from "@mormox2/geocore";
+import { KnowledgeDataset } from "@mormo_mossaab/geocore";
 
 export function formatInspectOutput(dataset: KnowledgeDataset): string {
   const lines: string[] = [];

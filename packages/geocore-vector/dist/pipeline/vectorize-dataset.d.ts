@@ -1,4 +1,4 @@
-import type { KnowledgeDataset } from "@mormox2/geocore";
+import type { KnowledgeDataset } from "@mormo_mossaab/geocore";
 import type { EmbeddingProvider } from "../embedding/embedding-provider.js";
 import type { VectorStore } from "../store/vector-store.js";
 export type VectorizeDatasetOptions = {

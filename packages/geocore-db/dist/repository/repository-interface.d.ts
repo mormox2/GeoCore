@@ -1,4 +1,4 @@
-import type { KnowledgeObject, KnowledgeEntity, KnowledgeCitation, KnowledgeSource, MediaAsset, KnowledgeRelationship, KnowledgeDataset } from "@mormox2/geocore";
+import type { KnowledgeObject, KnowledgeEntity, KnowledgeCitation, KnowledgeSource, MediaAsset, KnowledgeRelationship, KnowledgeDataset } from "@mormo_mossaab/geocore";
 export type ObjectQueryFilter = {
     status?: string;
     visibility?: "public" | "internal";

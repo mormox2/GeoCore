@@ -59,6 +59,6 @@ gantt
 ## 📊 Key Traction Metrics to Track
 
 - ⭐ **GitHub Stars** (Target: 100+ in week 1)
-- 📦 **NPM Weekly Downloads** for `@mormox2/geocore-cli` and `@mormox2/geocore`
+- 📦 **NPM Weekly Downloads** for `@mormo_mossaab/geocore-cli` and `@mormo_mossaab/geocore`
 - 💬 **HN / Reddit Comments & Upvotes**
 - 🤝 **Inbound B2B Inquiries & Discovery Calls**

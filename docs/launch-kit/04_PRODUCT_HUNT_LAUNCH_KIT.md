@@ -44,8 +44,8 @@ GeoCore treats your domain knowledge as a first-class citizen with compile-time 
 
 ### Try it in 30 seconds:
 ```bash
-npx @mormox2/geocore-cli init my-knowledge
-npx @mormox2/geocore-cli studio
+npx @mormo_mossaab/geocore-cli init my-knowledge
+npx @mormo_mossaab/geocore-cli studio
 ```
 
 GeoCore is 100% open-source under MIT with 747 automated tests.

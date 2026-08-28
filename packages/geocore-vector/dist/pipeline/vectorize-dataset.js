@@ -1,4 +1,4 @@
-import { chunkKnowledgeObject } from "@mormox2/geocore-ai";
+import { chunkKnowledgeObject } from "@mormo_mossaab/geocore-ai";
 /**
  * Splits all published objects in a KnowledgeDataset into semantic chunks,
  * embeds them using the provided EmbeddingProvider, and indexes them into the VectorStore.

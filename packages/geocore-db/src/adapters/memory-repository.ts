@@ -6,7 +6,7 @@ import type {
   MediaAsset,
   KnowledgeRelationship,
   KnowledgeDataset,
-} from "@mormox2/geocore";
+} from "@mormo_mossaab/geocore";
 import type {
   KnowledgeRepository,
   ObjectQueryFilter,

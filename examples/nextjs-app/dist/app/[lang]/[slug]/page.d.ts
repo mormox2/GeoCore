@@ -7,7 +7,7 @@ export type PageProps = {
 /**
  * Next.js 14+ App Router Server Component metadata generator.
  */
-export declare function generateMetadata({ params }: PageProps): Promise<import("@mormox2/geocore-next").NextMetadata>;
+export declare function generateMetadata({ params }: PageProps): Promise<import("@mormo_mossaab/geocore-next").NextMetadata>;
 /**
  * Next.js 14+ Page component rendering Knowledge Object with SEO Schema, Citations & Media.
  */

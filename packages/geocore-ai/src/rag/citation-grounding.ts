@@ -1,4 +1,4 @@
-import type { AiContextPackage, KnowledgeSource, KnowledgeEntity } from "@mormox2/geocore";
+import type { AiContextPackage, KnowledgeSource, KnowledgeEntity } from "@mormo_mossaab/geocore";
 
 export type GroundingVerificationResult = {
   isGrounded: boolean;

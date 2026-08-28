@@ -1,4 +1,4 @@
-import type { KnowledgeObject, KnowledgeEntity, KnowledgeCitation, KnowledgeSource, MediaAsset, KnowledgeRelationship, KnowledgeDataset } from "@mormox2/geocore";
+import type { KnowledgeObject, KnowledgeEntity, KnowledgeCitation, KnowledgeSource, MediaAsset, KnowledgeRelationship, KnowledgeDataset } from "@mormo_mossaab/geocore";
 import type { KnowledgeRepository, ObjectQueryFilter, EntityQueryFilter, CitationQueryFilter, MediaAssetQueryFilter } from "../repository/repository-interface.js";
 /**
  * SQL Schema definition for GeoCore database engines (PostgreSQL / SQLite).

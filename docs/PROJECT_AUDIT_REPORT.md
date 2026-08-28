@@ -27,13 +27,13 @@ L'architecture est structurée en un monorepo NPM composé de **7 packages publi
 
 | Package | Version | Description & Rôle | Dépendances Clés |
 |---|---|---|---|
-| [`@mormox2/geocore`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore) | `1.0.0` | Cœur du domaine : schémas Zod, pipeline de validation 10 étapes, graphe de relations, citations, médias, et moteurs d'export statique. | `zod` |
-| [`@mormox2/geocore-cli`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore-cli) | `1.0.0` | CLI complète (`init`, `validate`, `export`, `inspect`, `serve`, `vectorize`, `studio`). | `@mormox2/geocore`, `zod` |
-| [`@mormox2/geocore-server`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore-server) | `1.0.0` | Serveur HTTP REST autonome, documentation interactive OpenAPI 3.1.0, authentification par clé API et endpoints de recherche hybride. | `@mormox2/geocore`, `@mormox2/geocore-vector` |
-| [`@mormox2/geocore-db`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore-db) | `1.0.0` | Couche de persistance universelle avec adaptateurs In-Memory et SQLite + réconciliateur de dataset. | `@mormox2/geocore`, `zod` |
-| [`@mormox2/geocore-vector`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore-vector) | `1.0.0` | Moteur vectoriel dense, providers d'embeddings (OpenAI, Déterministe local, Custom), store en mémoire et recherche hybride RRF. | `@mormox2/geocore`, `@mormox2/geocore-ai` |
-| [`@mormox2/geocore-next`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore-next) | `1.0.0` | Intégration Next.js 14+/15+ App Router : génération de métadonnées SEO dynamiques, balises JSON-LD, route handlers universels et composants UI. | `@mormox2/geocore`, `zod` |
-| [`@mormox2/geocore-ai`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore-ai) | `1.0.0` | Générateur de contextes RAG pour LLMs, découpage sémantique de markdown (chunker) et vérification d'ancrage anti-hallucination. | `@mormox2/geocore`, `zod` |
+| [`@mormo_mossaab/geocore`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore) | `1.0.0` | Cœur du domaine : schémas Zod, pipeline de validation 10 étapes, graphe de relations, citations, médias, et moteurs d'export statique. | `zod` |
+| [`@mormo_mossaab/geocore-cli`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore-cli) | `1.0.0` | CLI complète (`init`, `validate`, `export`, `inspect`, `serve`, `vectorize`, `studio`). | `@mormo_mossaab/geocore`, `zod` |
+| [`@mormo_mossaab/geocore-server`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore-server) | `1.0.0` | Serveur HTTP REST autonome, documentation interactive OpenAPI 3.1.0, authentification par clé API et endpoints de recherche hybride. | `@mormo_mossaab/geocore`, `@mormo_mossaab/geocore-vector` |
+| [`@mormo_mossaab/geocore-db`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore-db) | `1.0.0` | Couche de persistance universelle avec adaptateurs In-Memory et SQLite + réconciliateur de dataset. | `@mormo_mossaab/geocore`, `zod` |
+| [`@mormo_mossaab/geocore-vector`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore-vector) | `1.0.0` | Moteur vectoriel dense, providers d'embeddings (OpenAI, Déterministe local, Custom), store en mémoire et recherche hybride RRF. | `@mormo_mossaab/geocore`, `@mormo_mossaab/geocore-ai` |
+| [`@mormo_mossaab/geocore-next`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore-next) | `1.0.0` | Intégration Next.js 14+/15+ App Router : génération de métadonnées SEO dynamiques, balises JSON-LD, route handlers universels et composants UI. | `@mormo_mossaab/geocore`, `zod` |
+| [`@mormo_mossaab/geocore-ai`](file:///c:/Users/user/Documents/GitHub/GeoCore/packages/geocore-ai) | `1.0.0` | Générateur de contextes RAG pour LLMs, découpage sémantique de markdown (chunker) et vérification d'ancrage anti-hallucination. | `@mormo_mossaab/geocore`, `zod` |
 
 ---
 
@@ -91,13 +91,13 @@ La fonction `verifyAnswerGrounding` compare toute réponse synthétisée par un 
 
 | Workspace / Module | Fichiers de Tests | Tests Exécutés | Statut |
 |---|---|---|---|
-| `@mormox2/geocore` (Core Engine) | 68 fichiers | 512 tests | ✅ 100% Pass |
-| `@mormox2/geocore-cli` (CLI Tools) | 8 fichiers | 19 tests | ✅ 100% Pass |
-| `@mormox2/geocore-server` (HTTP REST) | 1 fichier | 14 tests | ✅ 100% Pass |
-| `@mormox2/geocore-db` (Database) | 1 fichier | 6 tests | ✅ 100% Pass |
-| `@mormox2/geocore-vector` (Vector Engine) | 1 fichier | 10 tests | ✅ 100% Pass |
-| `@mormox2/geocore-next` (Next.js Layer) | 2 fichiers | 13 tests | ✅ 100% Pass |
-| `@mormox2/geocore-ai` (RAG Context) | 1 fichier | 6 tests | ✅ 100% Pass |
+| `@mormo_mossaab/geocore` (Core Engine) | 68 fichiers | 512 tests | ✅ 100% Pass |
+| `@mormo_mossaab/geocore-cli` (CLI Tools) | 8 fichiers | 19 tests | ✅ 100% Pass |
+| `@mormo_mossaab/geocore-server` (HTTP REST) | 1 fichier | 14 tests | ✅ 100% Pass |
+| `@mormo_mossaab/geocore-db` (Database) | 1 fichier | 6 tests | ✅ 100% Pass |
+| `@mormo_mossaab/geocore-vector` (Vector Engine) | 1 fichier | 10 tests | ✅ 100% Pass |
+| `@mormo_mossaab/geocore-next` (Next.js Layer) | 2 fichiers | 13 tests | ✅ 100% Pass |
+| `@mormo_mossaab/geocore-ai` (RAG Context) | 1 fichier | 6 tests | ✅ 100% Pass |
 | `@geocore/studio` (Web Studio IDE) | 1 fichier | 3 tests | ✅ 100% Pass |
 | `examples/nextjs-app` (Reference App) | 1 fichier | 9 tests | ✅ 100% Pass |
 | `examples/rtimidental` (Domaine Dentaire) | 1 fichier | 6 tests | ✅ 100% Pass |

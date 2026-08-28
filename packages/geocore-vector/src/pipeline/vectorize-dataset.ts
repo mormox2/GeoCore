@@ -1,5 +1,5 @@
-import type { KnowledgeDataset } from "@mormox2/geocore";
-import { chunkKnowledgeObject } from "@mormox2/geocore-ai";
+import type { KnowledgeDataset } from "@mormo_mossaab/geocore";
+import { chunkKnowledgeObject } from "@mormo_mossaab/geocore-ai";
 import type { EmbeddingProvider } from "../embedding/embedding-provider.js";
 import type { VectorStore, VectorDocument } from "../store/vector-store.js";
 

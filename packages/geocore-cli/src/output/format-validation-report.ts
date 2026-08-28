@@ -1,4 +1,4 @@
-import { ValidationPipelineReport } from "@mormox2/geocore";
+import { ValidationPipelineReport } from "@mormo_mossaab/geocore";
 import { green, red, yellow } from "./terminal-colors.js";
 
 export function formatValidationReport(report: ValidationPipelineReport): string {

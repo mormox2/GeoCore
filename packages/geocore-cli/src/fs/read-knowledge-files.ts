@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { RawKnowledgeInput } from "@mormox2/geocore";
+import { RawKnowledgeInput } from "@mormo_mossaab/geocore";
 import { CliError } from "../utils/cli-error.js";
 
 export async function readKnowledgeFiles(files: string[]): Promise<RawKnowledgeInput[]> {

@@ -3,7 +3,7 @@ import { loadConfig } from "../config/load-config.js";
 import { discoverKnowledgeFiles } from "../fs/discover-files.js";
 import { readKnowledgeFiles } from "../fs/read-knowledge-files.js";
 import { writeExportBundle } from "../fs/write-export-bundle.js";
-import { loadKnowledgeDataset, runValidationPipeline, generateStaticExport } from "@mormox2/geocore";
+import { loadKnowledgeDataset, runValidationPipeline, generateStaticExport } from "@mormo_mossaab/geocore";
 import { formatExportSummary } from "../output/format-export-summary.js";
 import { CliError } from "../utils/cli-error.js";
 export async function exportCommand(flags) {

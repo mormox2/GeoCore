@@ -1,4 +1,4 @@
-import type { KnowledgeObject, KnowledgeDataset, ResolvedMetadata } from "@mormox2/geocore";
+import type { KnowledgeObject, KnowledgeDataset, ResolvedMetadata } from "@mormo_mossaab/geocore";
 /**
  * Next.js compatible Metadata interface (App Router).
  */

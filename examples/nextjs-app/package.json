@@ -9,10 +9,10 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@mormox2/geocore": "^1.0.1",
-    "@mormox2/geocore-next": "^1.0.1",
-    "@mormox2/geocore-ai": "^1.0.1",
-    "@mormox2/geocore-vector": "^1.0.1",
+    "@mormo_mossaab/geocore": "^1.0.1",
+    "@mormo_mossaab/geocore-next": "^1.0.1",
+    "@mormo_mossaab/geocore-ai": "^1.0.1",
+    "@mormo_mossaab/geocore-vector": "^1.0.1",
     "@vercel/analytics": "^2.0.1"
   },
   "devDependencies": {

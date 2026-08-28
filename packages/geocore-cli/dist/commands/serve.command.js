@@ -2,8 +2,8 @@ import * as path from "node:path";
 import { loadConfig } from "../config/load-config.js";
 import { discoverKnowledgeFiles } from "../fs/discover-files.js";
 import { readKnowledgeFiles } from "../fs/read-knowledge-files.js";
-import { loadKnowledgeDataset } from "@mormox2/geocore";
-import { createGeoCoreServer } from "@mormox2/geocore-server";
+import { loadKnowledgeDataset } from "@mormo_mossaab/geocore";
+import { createGeoCoreServer } from "@mormo_mossaab/geocore-server";
 export async function serveCommand(options = {}) {
     const config = loadConfig(options.config, {
         knowledgeDir: options.knowledgeDir,

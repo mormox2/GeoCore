@@ -1,4 +1,4 @@
-import { handleLlmsTxt, handleLlmsFullTxt, handleSitemapXml, handleSearchApi, handleContextApi, } from "@mormox2/geocore-next";
+import { handleLlmsTxt, handleLlmsFullTxt, handleSitemapXml, handleSearchApi, handleContextApi, } from "@mormo_mossaab/geocore-next";
 import { appDataset } from "../../../../data/dataset.js";
 /**
  * Universal Next.js 14+ App Router Catch-All Route Handler.

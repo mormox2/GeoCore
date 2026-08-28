@@ -1,6 +1,6 @@
-import { getAiContext } from "@mormox2/geocore";
-import { buildPromptContext, verifyAnswerGrounding } from "@mormox2/geocore-ai";
-import { searchHybrid, vectorizeDataset, MemoryVectorStore, DeterministicEmbeddingProvider, } from "@mormox2/geocore-vector";
+import { getAiContext } from "@mormo_mossaab/geocore";
+import { buildPromptContext, verifyAnswerGrounding } from "@mormo_mossaab/geocore-ai";
+import { searchHybrid, vectorizeDataset, MemoryVectorStore, DeterministicEmbeddingProvider, } from "@mormo_mossaab/geocore-vector";
 import { appDataset } from "../../../data/dataset.js";
 // Cached vector store for Next.js route handler
 const vectorStore = new MemoryVectorStore();

@@ -1,6 +1,6 @@
 # Playbook: Hybrid Vector Search & RAG Anti-Hallucination Guardrails
 
-This playbook details how GeoCore's **hybrid search engine** (`@mormox2/geocore-vector`) and **RAG verification layer** (`@mormox2/geocore-ai`) prevent AI hallucinations and deliver grounded answers in regulated medical and enterprise domains.
+This playbook details how GeoCore's **hybrid search engine** (`@mormo_mossaab/geocore-vector`) and **RAG verification layer** (`@mormo_mossaab/geocore-ai`) prevent AI hallucinations and deliver grounded answers in regulated medical and enterprise domains.
 
 ---
 
@@ -24,7 +24,7 @@ Where:
 
 ### A. OpenAI Embeddings (`text-embedding-3-small` / `text-embedding-3-large`)
 ```ts
-import { OpenAiEmbeddingProvider } from "@mormox2/geocore-vector";
+import { OpenAiEmbeddingProvider } from "@mormo_mossaab/geocore-vector";
 
 const provider = new OpenAiEmbeddingProvider({
   apiKey: process.env.OPENAI_API_KEY!,
@@ -34,14 +34,14 @@ const provider = new OpenAiEmbeddingProvider({
 
 ### B. Fast Local / Deterministic Provider (Offline / Testing)
 ```ts
-import { DeterministicEmbeddingProvider } from "@mormox2/geocore-vector";
+import { DeterministicEmbeddingProvider } from "@mormo_mossaab/geocore-vector";
 
 const provider = new DeterministicEmbeddingProvider(64);
 ```
 
 ### C. Custom Transformer / Local LLM (HuggingFace / Ollama)
 ```ts
-import { CustomEmbeddingProvider } from "@mormox2/geocore-vector";
+import { CustomEmbeddingProvider } from "@mormo_mossaab/geocore-vector";
 
 const provider = new CustomEmbeddingProvider(384, async (text) => {
   const embedding = await myLocalModel.embed(text);
@@ -56,7 +56,7 @@ const provider = new CustomEmbeddingProvider(384, async (text) => {
 GeoCore breaks knowledge objects into structured markdown chunks preserving heading context before generating vectors:
 
 ```ts
-import { vectorizeDataset, MemoryVectorStore } from "@mormox2/geocore-vector";
+import { vectorizeDataset, MemoryVectorStore } from "@mormo_mossaab/geocore-vector";
 import { dataset } from "./dataset";
 
 const store = new MemoryVectorStore();
@@ -73,7 +73,7 @@ console.log(`Indexed ${report.vectorsIndexed} semantic vectors in ${report.durat
 ## 4. Executing Hybrid Search
 
 ```ts
-import { searchHybrid } from "@mormox2/geocore-vector";
+import { searchHybrid } from "@mormo_mossaab/geocore-vector";
 
 const query = "comment enlever le tartre sans douleur";
 const response = await searchHybrid(query, dataset, store, provider, {
@@ -94,8 +94,8 @@ for (const hit of response.results) {
 Before returning any AI answer to a clinical patient or enterprise user, run `verifyAnswerGrounding`:
 
 ```ts
-import { getAiContext } from "@mormox2/geocore";
-import { verifyAnswerGrounding } from "@mormox2/geocore-ai";
+import { getAiContext } from "@mormo_mossaab/geocore";
+import { verifyAnswerGrounding } from "@mormo_mossaab/geocore-ai";
 
 const aiPackage = getAiContext(dataset, { objectId: "ko_detartrage_abime_dents" }).data!;
 const generatedAnswer = "Le détartrage n'abîme pas les dents selon les normes de l'OMS...";

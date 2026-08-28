@@ -1,4 +1,4 @@
-import { formatSourceTrustBadge, formatSourceInline } from "@mormox2/geocore";
+import { formatSourceTrustBadge, formatSourceInline } from "@mormo_mossaab/geocore";
 /**
  * Extracts and prepares citation badge data for UI components.
  */

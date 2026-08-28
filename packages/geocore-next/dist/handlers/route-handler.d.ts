@@ -1,4 +1,4 @@
-import type { KnowledgeDataset } from "@mormox2/geocore";
+import type { KnowledgeDataset } from "@mormo_mossaab/geocore";
 export type NextRouteHandlerOptions = {
     siteUrl?: string;
     siteName?: string;

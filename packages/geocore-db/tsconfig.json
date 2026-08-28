@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@mormox2/geocore": ["../geocore/dist/index.d.ts"]
+      "@mormo_mossaab/geocore": ["../geocore/dist/index.d.ts"]
     }
   },
   "include": ["src/**/*"]

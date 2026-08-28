@@ -2,14 +2,14 @@ import * as path from "node:path";
 import { loadConfig } from "../config/load-config.js";
 import { discoverKnowledgeFiles } from "../fs/discover-files.js";
 import { readKnowledgeFiles } from "../fs/read-knowledge-files.js";
-import { loadKnowledgeDataset } from "@mormox2/geocore";
+import { loadKnowledgeDataset } from "@mormo_mossaab/geocore";
 import {
   vectorizeDataset,
   MemoryVectorStore,
   DeterministicEmbeddingProvider,
   OpenAiEmbeddingProvider,
   EmbeddingProvider,
-} from "@mormox2/geocore-vector";
+} from "@mormo_mossaab/geocore-vector";
 
 export type VectorizeCommandOptions = {
   config?: string;

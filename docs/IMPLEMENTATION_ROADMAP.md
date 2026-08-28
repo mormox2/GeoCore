@@ -400,11 +400,11 @@ All phases and extensions have been implemented, tested, and validated:
 [COMPLETED] Sprint 19 — Build-Time In-Process Typed API
 [COMPLETED] Phase 2.1 — RTimi Dental website integration
 [COMPLETED] Phase 2.2 — Dawajin Pro website integration
-[COMPLETED] Phase 2.3 — Next.js adapter (@mormox2/geocore-next)
-[COMPLETED] Phase 2.4 — Standalone HTTP/REST Server (@mormox2/geocore-server)
+[COMPLETED] Phase 2.3 — Next.js adapter (@mormo_mossaab/geocore-next)
+[COMPLETED] Phase 2.4 — Standalone HTTP/REST Server (@mormo_mossaab/geocore-server)
 [COMPLETED] Phase 2.5 — GeoCore Visual Studio Web App (apps/geocore-studio)
-[COMPLETED] Phase 2.6 — AI/RAG engine & Grounding (@mormox2/geocore-ai)
-[COMPLETED] Phase 2.7 — Database persistence & Repository layer (@mormox2/geocore-db)
+[COMPLETED] Phase 2.6 — AI/RAG engine & Grounding (@mormo_mossaab/geocore-ai)
+[COMPLETED] Phase 2.7 — Database persistence & Repository layer (@mormo_mossaab/geocore-db)
 [COMPLETED] Phase 3.0 — CI/CD GitHub Actions & Automation
 ```
 

@@ -11,10 +11,10 @@
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
     "paths": {
-      "@mormox2/geocore": ["../../packages/geocore/dist/index.d.ts"],
-      "@mormox2/geocore-next": ["../../packages/geocore-next/dist/index.d.ts"],
-      "@mormox2/geocore-ai": ["../../packages/geocore-ai/dist/index.d.ts"],
-      "@mormox2/geocore-vector": ["../../packages/geocore-vector/dist/index.d.ts"]
+      "@mormo_mossaab/geocore": ["../../packages/geocore/dist/index.d.ts"],
+      "@mormo_mossaab/geocore-next": ["../../packages/geocore-next/dist/index.d.ts"],
+      "@mormo_mossaab/geocore-ai": ["../../packages/geocore-ai/dist/index.d.ts"],
+      "@mormo_mossaab/geocore-vector": ["../../packages/geocore-vector/dist/index.d.ts"]
     }
   },
   "include": ["src/**/*"]

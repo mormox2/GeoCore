@@ -8,7 +8,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@mormox2/geocore": "^1.0.1",
-    "@mormox2/geocore-ai": "^1.0.1"
+    "@mormo_mossaab/geocore": "^1.0.1",
+    "@mormo_mossaab/geocore-ai": "^1.0.1"
   }
 }

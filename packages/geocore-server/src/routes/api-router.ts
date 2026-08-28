@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { KnowledgeDataset } from "@mormox2/geocore";
+import type { KnowledgeDataset } from "@mormo_mossaab/geocore";
 import {
   getKnowledgeObject,
   listKnowledgeObjects,
@@ -17,8 +17,8 @@ import {
   generateLlmsFullTxt,
   generateSitemap,
   runValidationPipeline,
-} from "@mormox2/geocore";
-import { buildPromptContext } from "@mormox2/geocore-ai";
+} from "@mormo_mossaab/geocore";
+import { buildPromptContext } from "@mormo_mossaab/geocore-ai";
 import {
   searchHybrid,
   vectorizeDataset,
@@ -26,7 +26,7 @@ import {
   DeterministicEmbeddingProvider,
   type VectorStore,
   type EmbeddingProvider,
-} from "@mormox2/geocore-vector";
+} from "@mormo_mossaab/geocore-vector";
 import { generateOpenApiSpec } from "../openapi/openapi-generator.js";
 import { authenticateRequest, AuthOptions } from "../middleware/auth.js";
 

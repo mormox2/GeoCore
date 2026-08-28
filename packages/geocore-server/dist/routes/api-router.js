@@ -1,6 +1,6 @@
-import { getKnowledgeObject, listKnowledgeObjects, getEntity, listEntities, searchKnowledge, getAiContext, getMedia, listMedia, getSource, listSources, getCitation, listCitations, generateLlmsTxt, generateLlmsFullTxt, generateSitemap, runValidationPipeline, } from "@mormox2/geocore";
-import { buildPromptContext } from "@mormox2/geocore-ai";
-import { searchHybrid, vectorizeDataset, MemoryVectorStore, DeterministicEmbeddingProvider, } from "@mormox2/geocore-vector";
+import { getKnowledgeObject, listKnowledgeObjects, getEntity, listEntities, searchKnowledge, getAiContext, getMedia, listMedia, getSource, listSources, getCitation, listCitations, generateLlmsTxt, generateLlmsFullTxt, generateSitemap, runValidationPipeline, } from "@mormo_mossaab/geocore";
+import { buildPromptContext } from "@mormo_mossaab/geocore-ai";
+import { searchHybrid, vectorizeDataset, MemoryVectorStore, DeterministicEmbeddingProvider, } from "@mormo_mossaab/geocore-vector";
 import { generateOpenApiSpec } from "../openapi/openapi-generator.js";
 import { authenticateRequest } from "../middleware/auth.js";
 function sendJson(res, statusCode, data) {

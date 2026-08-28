@@ -13,13 +13,13 @@ GeoCore is an open-source, AI-native Knowledge Operating System (Knowledge OS) e
 
 ## Core Packages
 
-- `@mormox2/geocore`: Core compiler, 10-stage validation pipeline, and schema generator.
-- `@mormox2/geocore-cli`: Command-line tools (init, validate, export, inspect, serve, vectorize, studio).
-- `@mormox2/geocore-server`: Standalone Node.js HTTP server with auto-generated OpenAPI & hybrid search endpoints.
-- `@mormox2/geocore-db`: SQLite and DuckDB vector and relation database driver.
-- `@mormox2/geocore-vector`: Pure TypeScript embedding computation, dense semantic search, and cosine ranking.
-- `@mormox2/geocore-next`: Next.js 14+ App Router adapters, SEO metadata, JSON-LD Schema, and citations.
-- `@mormox2/geocore-ai`: Deterministic grounding guardrails, anti-hallucination verification, and citation scoring.
+- `@mormo_mossaab/geocore`: Core compiler, 10-stage validation pipeline, and schema generator.
+- `@mormo_mossaab/geocore-cli`: Command-line tools (init, validate, export, inspect, serve, vectorize, studio).
+- `@mormo_mossaab/geocore-server`: Standalone Node.js HTTP server with auto-generated OpenAPI & hybrid search endpoints.
+- `@mormo_mossaab/geocore-db`: SQLite and DuckDB vector and relation database driver.
+- `@mormo_mossaab/geocore-vector`: Pure TypeScript embedding computation, dense semantic search, and cosine ranking.
+- `@mormo_mossaab/geocore-next`: Next.js 14+ App Router adapters, SEO metadata, JSON-LD Schema, and citations.
+- `@mormo_mossaab/geocore-ai`: Deterministic grounding guardrails, anti-hallucination verification, and citation scoring.
 
 ## Key Capabilities
 

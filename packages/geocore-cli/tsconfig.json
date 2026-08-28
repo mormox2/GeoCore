@@ -10,10 +10,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@mormox2/geocore": ["../geocore/dist/index.d.ts"],
-      "@mormox2/geocore-ai": ["../geocore-ai/dist/index.d.ts"],
-      "@mormox2/geocore-server": ["../geocore-server/dist/index.d.ts"],
-      "@mormox2/geocore-vector": ["../geocore-vector/dist/index.d.ts"]
+      "@mormo_mossaab/geocore": ["../geocore/dist/index.d.ts"],
+      "@mormo_mossaab/geocore-ai": ["../geocore-ai/dist/index.d.ts"],
+      "@mormo_mossaab/geocore-server": ["../geocore-server/dist/index.d.ts"],
+      "@mormo_mossaab/geocore-vector": ["../geocore-vector/dist/index.d.ts"]
     }
   },
   "include": ["src/**/*"]

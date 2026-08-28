@@ -1,4 +1,4 @@
-import { StaticExportBundle } from "@mormox2/geocore";
+import { StaticExportBundle } from "@mormo_mossaab/geocore";
 export declare function formatExportSummary(input: {
     bundle: StaticExportBundle;
     writtenFiles?: string[];

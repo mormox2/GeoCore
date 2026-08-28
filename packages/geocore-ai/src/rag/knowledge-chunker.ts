@@ -1,4 +1,4 @@
-import type { KnowledgeObject, ResolvedMetadata } from "@mormox2/geocore";
+import type { KnowledgeObject, ResolvedMetadata } from "@mormo_mossaab/geocore";
 
 export type KnowledgeChunk = {
   id: string;

@@ -4,7 +4,7 @@ import {
   handleSitemapXml,
   handleSearchApi,
   handleContextApi,
-} from "@mormox2/geocore-next";
+} from "@mormo_mossaab/geocore-next";
 import { appDataset } from "../../../../data/dataset.js";
 
 export type RouteParams = {

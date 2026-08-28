@@ -9,22 +9,22 @@
 ```mermaid
 graph TD
     subgraph Core Domain & Schemas
-        GC["@mormox2/geocore<br/>(Core, Schemas, Graph, Validation, Renderers, Citations, Media)"]
+        GC["@mormo_mossaab/geocore<br/>(Core, Schemas, Graph, Validation, Renderers, Citations, Media)"]
     end
 
     subgraph AI & Vector Engine
-        AI["@mormox2/geocore-ai<br/>(RAG Context Builder, Semantic Chunking, Grounding Guardrails)"]
-        VEC["@mormox2/geocore-vector<br/>(Dense Embeddings, VectorStore, Hybrid Search RRF)"]
+        AI["@mormo_mossaab/geocore-ai<br/>(RAG Context Builder, Semantic Chunking, Grounding Guardrails)"]
+        VEC["@mormo_mossaab/geocore-vector<br/>(Dense Embeddings, VectorStore, Hybrid Search RRF)"]
     end
 
     subgraph Persistence & Serving
-        DB["@mormox2/geocore-db<br/>(Memory & SQLite Repository, Sync Engine)"]
-        SRV["@mormox2/geocore-server<br/>(Standalone HTTP REST Server, OpenAPI 3.1)"]
+        DB["@mormo_mossaab/geocore-db<br/>(Memory & SQLite Repository, Sync Engine)"]
+        SRV["@mormo_mossaab/geocore-server<br/>(Standalone HTTP REST Server, OpenAPI 3.1)"]
     end
 
     subgraph Adapters & Tooling
-        NEXT["@mormox2/geocore-next<br/>(Next.js 14+ App Router, SEO Metadata, Route Handlers)"]
-        CLI["@mormox2/geocore-cli<br/>(geocore init, validate, export, inspect, serve, vectorize, studio)"]
+        NEXT["@mormo_mossaab/geocore-next<br/>(Next.js 14+ App Router, SEO Metadata, Route Handlers)"]
+        CLI["@mormo_mossaab/geocore-cli<br/>(geocore init, validate, export, inspect, serve, vectorize, studio)"]
         STUDIO["@geocore/studio<br/>(Visual 2D Graph Explorer, Live Editor, RAG Playground)"]
     end
 
@@ -87,8 +87,8 @@ sequenceDiagram
     autonumber
     actor Author as Domain Author / Clinician
     participant CLI as GeoCore CLI
-    participant Engine as @mormox2/geocore
-    participant Vector as @mormox2/geocore-vector
+    participant Engine as @mormo_mossaab/geocore
+    participant Vector as @mormo_mossaab/geocore-vector
     participant Next as Next.js 14+ Site
     participant LLM as AI / RAG Chatbot
 

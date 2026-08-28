@@ -31,7 +31,7 @@ To fix this fundamental reliability gap, I created **GeoCore** — an open-sourc
 Today, GeoCore is 100% open-source under the MIT license, backed by 105 test suites and 747 automated tests.
 
 Try the interactive visual studio with one command:
-👉 `npx @mormox2/geocore-cli init my-kb && npx @mormox2/geocore-cli studio`
+👉 `npx @mormo_mossaab/geocore-cli init my-kb && npx @mormo_mossaab/geocore-cli studio`
 
 🔗 GitHub Repository: https://github.com/mormox2/GeoCore
 
@@ -130,13 +130,13 @@ export function computeRRF(
 
 What started as an internal tool to ensure 100% factual accuracy in medical and technical knowledge bases has evolved into a complete 7-package TypeScript monorepo:
 
-📦 @mormox2/geocore — Domain Core, Schemas & Static Exporters
-🛠️ @mormox2/geocore-cli — Command line toolkit & Interactive Studio
-⚡ @mormox2/geocore-vector — Pure TS Hybrid Search (RRF) & Embeddings
-🛡️ @mormox2/geocore-ai — RAG context generator & Hallucination Guardrails
-🌐 @mormox2/geocore-server — Standalone REST API with dynamic OpenAPI 3.1
-⚛️ @mormox2/geocore-next — Next.js 14/15 App Router SEO & llms.txt handlers
-💾 @mormox2/geocore-db — In-Memory & SQLite persistence layer
+📦 @mormo_mossaab/geocore — Domain Core, Schemas & Static Exporters
+🛠️ @mormo_mossaab/geocore-cli — Command line toolkit & Interactive Studio
+⚡ @mormo_mossaab/geocore-vector — Pure TS Hybrid Search (RRF) & Embeddings
+🛡️ @mormo_mossaab/geocore-ai — RAG context generator & Hallucination Guardrails
+🌐 @mormo_mossaab/geocore-server — Standalone REST API with dynamic OpenAPI 3.1
+⚛️ @mormo_mossaab/geocore-next — Next.js 14/15 App Router SEO & llms.txt handlers
+💾 @mormo_mossaab/geocore-db — In-Memory & SQLite persistence layer
 
 📊 Validated by 105 test suites and 747 automated tests (100% pass rate).
 
@@ -151,13 +151,13 @@ Explore the code, star the repo, and build your own hallucination-free knowledge
 
 ```mermaid
 graph TD
-    MD["📄 Markdown & YAML Domain Corpus"] --> CORE["🧠 @mormox2/geocore<br/>(10-Stage Validator & Schemas)"]
+    MD["📄 Markdown & YAML Domain Corpus"] --> CORE["🧠 @mormo_mossaab/geocore<br/>(10-Stage Validator & Schemas)"]
     CORE --> GRAPH["🕸️ Semantic Knowledge Graph<br/>(Entities, Objects, Verified Citations)"]
     
-    GRAPH --> VEC["⚡ @mormox2/geocore-vector<br/>(RRF Hybrid Search: BM25 + Embeddings)"]
-    GRAPH --> AI["🛡️ @mormox2/geocore-ai<br/>(RAG Contexts & Grounding Guardrails)"]
-    GRAPH --> NEXT["⚛️ @mormox2/geocore-next<br/>(Next.js 15 SEO, JSON-LD & llms.txt)"]
-    GRAPH --> SRV["🌐 @mormox2/geocore-server<br/>(REST API & OpenAPI 3.1)"]
+    GRAPH --> VEC["⚡ @mormo_mossaab/geocore-vector<br/>(RRF Hybrid Search: BM25 + Embeddings)"]
+    GRAPH --> AI["🛡️ @mormo_mossaab/geocore-ai<br/>(RAG Contexts & Grounding Guardrails)"]
+    GRAPH --> NEXT["⚛️ @mormo_mossaab/geocore-next<br/>(Next.js 15 SEO, JSON-LD & llms.txt)"]
+    GRAPH --> SRV["🌐 @mormo_mossaab/geocore-server<br/>(REST API & OpenAPI 3.1)"]
     
     VEC --> STUDIO["🎨 GeoCore Studio<br/>(2D Graph Explorer & Live Playground)"]
     AI --> STUDIO
