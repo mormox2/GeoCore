@@ -14,6 +14,63 @@ const MIME_TYPES: Record<string, string> = {
   ".ico": "image/x-icon",
 };
 
+/**
+ * Resolves a request URL to a file path inside rootDir.
+ * Returns null when the URL is malformed or escapes rootDir (path traversal).
+ */
+export function resolveStaticPath(rootDir: string, requestUrl: string): string | null {
+  let pathname: string;
+  try {
+    pathname = decodeURIComponent(requestUrl.split(/[?#]/)[0]);
+  } catch {
+    return null;
+  }
+  if (pathname.includes("\0") || pathname.split(/[\\/]/).includes("..")) return null;
+  if (pathname === "/" || pathname === "") pathname = "/index.html";
+
+  const root = path.resolve(rootDir);
+  const filePath = path.resolve(root, "." + path.posix.normalize("/" + pathname));
+  // Defence in depth: the resolved path must stay inside the studio directory.
+  return filePath.startsWith(root + path.sep) ? filePath : null;
+}
+
+function sendPlain(res: http.ServerResponse, statusCode: number, text: string): void {
+  if (!res.headersSent) {
+    res.statusCode = statusCode;
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+  }
+  res.end(text);
+}
+
+export async function serveStaticFile(rootDir: string, requestUrl: string, res: http.ServerResponse): Promise<void> {
+  const filePath = resolveStaticPath(rootDir, requestUrl);
+  if (!filePath) {
+    sendPlain(res, 400, "400 Bad Request");
+    return;
+  }
+
+  let stat: fs.Stats;
+  try {
+    stat = await fs.promises.stat(filePath);
+  } catch {
+    sendPlain(res, 404, "404 Not Found");
+    return;
+  }
+  if (!stat.isFile()) {
+    sendPlain(res, 404, "404 Not Found");
+    return;
+  }
+
+  const ext = path.extname(filePath).toLowerCase();
+  res.statusCode = 200;
+  res.setHeader("Content-Type", MIME_TYPES[ext] || "application/octet-stream");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+
+  const stream = fs.createReadStream(filePath);
+  stream.on("error", () => sendPlain(res, 500, "500 Internal Server Error"));
+  stream.pipe(res);
+}
+
 export type StudioCommandOptions = {
   port?: number;
   host?: string;
@@ -30,26 +87,7 @@ export async function studioCommand(options: StudioCommandOptions = {}): Promise
   const targetDir = fs.existsSync(studioDir) ? studioDir : fallbackDir;
 
   const server = http.createServer((req, res) => {
-    let reqPath = (req.url || "/").split("?")[0];
-    if (reqPath === "/" || reqPath === "") {
-      reqPath = "/index.html";
-    }
-
-    const filePath = path.join(targetDir, reqPath);
-
-    if (!fs.existsSync(filePath)) {
-      res.statusCode = 404;
-      res.setHeader("Content-Type", "text/plain; charset=utf-8");
-      res.end("404 Not Found");
-      return;
-    }
-
-    const ext = path.extname(filePath).toLowerCase();
-    const contentType = MIME_TYPES[ext] || "application/octet-stream";
-
-    res.statusCode = 200;
-    res.setHeader("Content-Type", contentType);
-    fs.createReadStream(filePath).pipe(res);
+    void serveStaticFile(targetDir, req.url || "/", res);
   });
 
   await new Promise<void>((resolve) => {
