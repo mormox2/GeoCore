@@ -3,9 +3,14 @@
  * Plug-and-play semantic search and RAG assistant for WordPress, Shopify, Webflow, and HTML sites.
  */
 
+import { escapeHtml, sanitizeUrl } from "../renderer/html-safety.js";
+
 export interface GeoCoreWidgetConfig {
+  /** Base URL of a GeoCore API (geocore serve), e.g. "https://api.example.com/api". Default "/api". */
   apiUrl?: string;
   datasetId?: string;
+  /** Restricts answers to one language (e.g. "fr"). */
+  language?: string;
   title?: string;
   subtitle?: string;
   placeholder?: string;
@@ -13,6 +18,114 @@ export interface GeoCoreWidgetConfig {
   primaryColor?: string;
   position?: "bottom-right" | "bottom-left";
   autoOpen?: boolean;
+}
+
+export type WidgetAnswerSource = {
+  id: string;
+  title: string;
+  url?: string;
+  publisher?: string;
+  trustLevel: string;
+};
+
+export type WidgetAnswerGrounding = {
+  score: number;
+  hallucinationRisk: "low" | "medium" | "high";
+  isGrounded: boolean;
+  unsupportedClaims: string[];
+  matchedEntities: string[];
+};
+
+export type WidgetAnswer = {
+  query: string;
+  answer: string;
+  objectId: string;
+  title: string;
+  slug?: string;
+  language?: string;
+  grounding: WidgetAnswerGrounding;
+  sources: WidgetAnswerSource[];
+};
+
+export type WidgetAnswerResult =
+  | { kind: "answer"; data: WidgetAnswer }
+  | { kind: "no-answer"; message: string }
+  | { kind: "error"; message: string };
+
+export type FetchWidgetAnswerOptions = {
+  language?: string;
+  timeoutMs?: number;
+  fetchImpl?: typeof fetch;
+};
+
+const NO_ANSWER_MESSAGE =
+  "Je n'ai pas trouvé de réponse vérifiée dans la base de connaissances pour cette question.";
+const ERROR_MESSAGE = "Le service de connaissances est momentanément indisponible. Veuillez réessayer.";
+
+/** Builds the /answer endpoint URL for a GeoCore API base URL (absolute or relative). */
+export function buildAnswerUrl(apiUrl: string, question: string, language?: string): string {
+  const params = new URLSearchParams({ q: question });
+  if (language) params.set("language", language);
+  return `${apiUrl.replace(/\/+$/, "")}/answer?${params.toString()}`;
+}
+
+function isWidgetAnswer(value: unknown): value is WidgetAnswer {
+  if (!value || typeof value !== "object") return false;
+  const v = value as Record<string, unknown>;
+  const grounding = v.grounding as Record<string, unknown> | undefined;
+  return (
+    typeof v.answer === "string" &&
+    typeof v.objectId === "string" &&
+    typeof v.title === "string" &&
+    Array.isArray(v.sources) &&
+    !!grounding &&
+    typeof grounding.score === "number" &&
+    typeof grounding.isGrounded === "boolean"
+  );
+}
+
+/**
+ * Asks a GeoCore API for a grounded answer. Never throws: network failures, timeouts and
+ * malformed responses are returned as { kind: "error" }, and an answer is only accepted
+ * when the server reports it as grounded.
+ */
+export async function fetchWidgetAnswer(
+  apiUrl: string,
+  question: string,
+  options: FetchWidgetAnswerOptions = {}
+): Promise<WidgetAnswerResult> {
+  const fetchImpl = options.fetchImpl ?? (typeof fetch === "function" ? fetch : undefined);
+  if (!fetchImpl) return { kind: "error", message: ERROR_MESSAGE };
+
+  const controller = typeof AbortController === "function" ? new AbortController() : undefined;
+  const timer = controller ? setTimeout(() => controller.abort(), options.timeoutMs ?? 15000) : undefined;
+
+  try {
+    const res = await fetchImpl(buildAnswerUrl(apiUrl, question, options.language), {
+      headers: { Accept: "application/json" },
+      signal: controller?.signal,
+    });
+    if (!res.ok) return { kind: "error", message: ERROR_MESSAGE };
+
+    const body = (await res.json()) as { status?: string; data?: unknown };
+    if (body.status === "ok" && isWidgetAnswer(body.data) && body.data.grounding.isGrounded) {
+      return { kind: "answer", data: body.data };
+    }
+    if (body.status === "no-answer" || body.status === "ok") {
+      return { kind: "no-answer", message: NO_ANSWER_MESSAGE };
+    }
+    return { kind: "error", message: ERROR_MESSAGE };
+  } catch {
+    return { kind: "error", message: ERROR_MESSAGE };
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
+/** Human-readable grounding badge, computed from the server's verification result only. */
+export function formatGroundingLabel(grounding: WidgetAnswerGrounding): string {
+  const risk = { low: "faible", medium: "moyen", high: "élevé" }[grounding.hallucinationRisk];
+  return `🛡️ Ancrage ${Math.round(grounding.score * 100)}% — risque ${risk}`;
 }
 
 export function createWidgetStyles(theme: "dark" | "light" = "dark", primaryColor = "#38bdf8"): string {
@@ -202,6 +315,34 @@ export function createWidgetStyles(theme: "dark" | "light" = "dark", primaryColo
     }
 
     /* Input Footer */
+    .gc-guardrail-tag.risk-medium {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+    }
+
+    .gc-answer-title {
+      font-size: 11px;
+      color: ${textMuted};
+      margin-bottom: 4px;
+    }
+
+    .gc-sources {
+      margin-top: 6px;
+      padding-left: 16px;
+      font-size: 11px;
+      color: ${textMuted};
+    }
+
+    .gc-sources a {
+      color: ${primaryColor};
+    }
+
+    .gc-msg.bot.error .gc-bubble,
+    .gc-msg.bot.pending .gc-bubble {
+      color: ${textMuted};
+      font-style: italic;
+    }
+
     .gc-footer {
       padding: 12px 16px;
       background: ${cardBg};
@@ -264,6 +405,7 @@ export class GeoCoreWidgetElement extends CustomElementBase {
     this.config = {
       apiUrl: this.getAttribute("data-api-url") || "/api",
       datasetId: this.getAttribute("data-dataset") || "default",
+      language: this.getAttribute("data-language") || undefined,
       title: this.getAttribute("data-title") || "GeoCore Assistant",
       subtitle: this.getAttribute("data-subtitle") || "Knowledge OS & RAG",
       placeholder: this.getAttribute("data-placeholder") || "Posez une question...",
@@ -341,38 +483,95 @@ export class GeoCoreWidgetElement extends CustomElementBase {
       windowEl?.classList.remove("open");
     });
 
-    const handleSend = () => {
-      if (!input || !input.value.trim() || !messagesBox) return;
-      const text = input.value.trim();
+    let pending = false;
 
-      // Add user message
+    const handleSend = async () => {
+      if (pending || !input || !input.value.trim() || !messagesBox) return;
+      const text = input.value.trim();
+      pending = true;
+
       const userMsg = document.createElement("div");
       userMsg.className = "gc-msg user";
-      userMsg.innerHTML = `<div class="gc-bubble">${escapeHtml(text)}</div>`;
+      const userBubble = document.createElement("div");
+      userBubble.className = "gc-bubble";
+      userBubble.textContent = text;
+      userMsg.appendChild(userBubble);
       messagesBox.appendChild(userMsg);
       input.value = "";
+
+      const botMsg = document.createElement("div");
+      botMsg.className = "gc-msg bot pending";
+      const botBubble = document.createElement("div");
+      botBubble.className = "gc-bubble";
+      botBubble.textContent = "Recherche dans la base de connaissances…";
+      botMsg.appendChild(botBubble);
+      messagesBox.appendChild(botMsg);
       messagesBox.scrollTop = messagesBox.scrollHeight;
 
-      // Simulate bot answer
-      setTimeout(() => {
-        const botMsg = document.createElement("div");
-        botMsg.className = "gc-msg bot";
-        botMsg.innerHTML = `
-          <div class="gc-bubble">
-            <p>D'après les documents officiels et vérifiés de notre base de connaissances : "${escapeHtml(text)}" est pris en charge avec rigueur scientifique.</p>
-            <div class="gc-guardrail-tag">🛡️ Ancrage 94% — Source Certifiée</div>
-          </div>
-        `;
-        messagesBox.appendChild(botMsg);
+      try {
+        const result = await fetchWidgetAnswer(this.config.apiUrl || "/api", text, {
+          language: this.config.language,
+        });
+        botMsg.className = result.kind === "error" ? "gc-msg bot error" : "gc-msg bot";
+        botBubble.replaceChildren(...renderAnswerNodes(result));
+      } finally {
+        pending = false;
         messagesBox.scrollTop = messagesBox.scrollHeight;
-      }, 400);
+      }
     };
 
-    sendBtn?.addEventListener("click", handleSend);
+    sendBtn?.addEventListener("click", () => void handleSend());
     input?.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") handleSend();
+      if (e.key === "Enter") void handleSend();
     });
   }
+}
+
+/** Builds the bot bubble content with DOM APIs only (no innerHTML), so server data cannot inject markup. */
+function renderAnswerNodes(result: WidgetAnswerResult): Node[] {
+  if (result.kind !== "answer") {
+    return [document.createTextNode(result.message)];
+  }
+
+  const { data } = result;
+  const nodes: Node[] = [];
+
+  const title = document.createElement("div");
+  title.className = "gc-answer-title";
+  title.textContent = `📄 ${data.title}`;
+  nodes.push(title);
+
+  const answer = document.createElement("p");
+  answer.textContent = data.answer;
+  nodes.push(answer);
+
+  if (data.sources.length > 0) {
+    const list = document.createElement("ul");
+    list.className = "gc-sources";
+    for (const source of data.sources) {
+      const item = document.createElement("li");
+      const url = sanitizeUrl(source.url);
+      if (url) {
+        const link = document.createElement("a");
+        link.href = url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = source.title;
+        item.appendChild(link);
+      } else {
+        item.textContent = source.title;
+      }
+      list.appendChild(item);
+    }
+    nodes.push(list);
+  }
+
+  const badge = document.createElement("div");
+  badge.className = `gc-guardrail-tag risk-${data.grounding.hallucinationRisk}`;
+  badge.textContent = formatGroundingLabel(data.grounding);
+  nodes.push(badge);
+
+  return nodes;
 }
 
 // Auto-register custom element in browser environment
@@ -389,13 +588,4 @@ export function initGeoCoreWidget(config: GeoCoreWidgetConfig = {}): GeoCoreWidg
   }
   widget.setConfig(config);
   return widget;
-}
-
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
 }

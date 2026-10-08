@@ -1,24 +1,5 @@
-import { getAiContext } from "@mormo_mossaab/geocore";
-import { buildPromptContext, verifyAnswerGrounding } from "@mormo_mossaab/geocore-ai";
-import {
-  searchHybrid,
-  vectorizeDataset,
-  MemoryVectorStore,
-  DeterministicEmbeddingProvider,
-} from "@mormo_mossaab/geocore-vector";
-import { appDataset } from "../../../data/dataset.js";
-
-// Cached vector store for Next.js route handler
-const vectorStore = new MemoryVectorStore();
-const embeddingProvider = new DeterministicEmbeddingProvider(64);
-let isVectorized = false;
-
-async function ensureVectorized(): Promise<void> {
-  if (!isVectorized) {
-    await vectorizeDataset(appDataset, vectorStore, embeddingProvider);
-    isVectorized = true;
-  }
-}
+import { buildPromptContext } from "@mormo_mossaab/geocore-ai";
+import { answerFromObject, answerQuestion } from "../../../data/answer.js";
 
 export type ChatRequestBody = {
   message: string;
@@ -41,17 +22,6 @@ export type ChatResponsePayload = {
   promptContextPreview: string;
 };
 
-/** Strips Markdown headings and emphasis so certified body text can be shown as an answer. */
-function toPlainText(markdown: string): string {
-  return markdown
-    .split("\n")
-    .filter((line) => !/^\s*#/.test(line))
-    .join(" ")
-    .replace(/[*_`]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
 /**
  * Next.js 14+ POST handler for AI / RAG conversational queries with Hybrid Semantic Search.
  */
@@ -60,49 +30,22 @@ export async function POST(req: Request): Promise<Response> {
     const body = (await req.json()) as ChatRequestBody;
     const query = body.message || "";
 
-    await ensureVectorized();
+    // 1. Answer from the requested object, or find the best one via hybrid search (RRF).
+    //    Answers are extracted from certified content and must pass the grounding check.
+    const result = body.objectId ? answerFromObject(query, body.objectId) : await answerQuestion(query);
 
-    // 1. Resolve relevant Knowledge Object via Hybrid Semantic Search (RRF) or explicit ID
-    let targetObjectId = body.objectId;
-    let matchType: "both" | "lexical-only" | "semantic-only" | undefined;
-    let combinedScore: number | undefined;
-
-    if (!targetObjectId && query) {
-      const hybridRes = await searchHybrid(query, appDataset, vectorStore, embeddingProvider, { limit: 1 });
-      if (hybridRes.results.length > 0) {
-        targetObjectId = hybridRes.results[0].objectId;
-        matchType = hybridRes.results[0].matchType;
-        combinedScore = hybridRes.results[0].combinedScore;
-      }
-    }
-
-    if (!targetObjectId) {
+    if (!result) {
       return new Response(
         JSON.stringify({ error: "No relevant authoritative knowledge context found." }),
         { status: 404, headers: { "Content-Type": "application/json" } }
       );
     }
 
-    // 2. Fetch authoritative AI Context Package
-    const contextRes = getAiContext(appDataset, { objectId: targetObjectId, visibility: "public" });
-    if (contextRes.status !== "ok" || !contextRes.data) {
-      return new Response(
-        JSON.stringify({ error: "No relevant authoritative knowledge context found." }),
-        { status: 404, headers: { "Content-Type": "application/json" } }
-      );
-    }
+    const { answer, context: aiPackage, grounding, matchType, combinedScore } = result;
+    const targetObjectId = aiPackage.object.id;
 
-    const aiPackage = contextRes.data;
-
-    // 3. Build formatted LLM Prompt Context with citation guardrails
+    // 2. Formatted LLM prompt context, ready to hand to a model in a production app.
     const promptContext = buildPromptContext(aiPackage);
-
-    // 4. Answer extractively from the certified knowledge object. A production app would
-    //    send promptContext to an LLM here; the grounding check below applies either way.
-    const answer = toPlainText(aiPackage.object.body);
-
-    // 5. Verify Grounding & Guardrails
-    const grounding = verifyAnswerGrounding(answer, aiPackage);
 
     const payload: ChatResponsePayload = {
       answer,

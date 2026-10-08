@@ -3,6 +3,7 @@ import { generateMetadata, default as KnowledgePage } from "../src/app/[lang]/[s
 import { GET } from "../src/app/api/geocore/[...route]/route.js";
 import { POST as ChatPost } from "../src/app/api/chat/route.js";
 import { formatChatWidgetResponse } from "../src/components/chat-widget.js";
+import { fetchWidgetAnswer } from "@mormo_mossaab/geocore";
 import { default as RootLayout, renderRootLayoutHtml, getVercelAnalyticsSnippet } from "../src/app/layout.js";
 
 describe("Next.js 14+ App Router Reference Application", () => {
@@ -67,6 +68,25 @@ describe("Next.js 14+ App Router Reference Application", () => {
       const data = await res.json();
       expect(data.status).toBe("ok");
       expect(data.data.length).toBeGreaterThan(0);
+    });
+
+    it("serves grounded answers to the embeddable widget on /api/geocore/answer", async () => {
+      // Route the widget's fetch calls straight into the catch-all handler.
+      const fetchImpl = (async (input: string | URL | Request) => {
+        const url = new URL(String(input), "https://rtimidental.tn");
+        const route = url.pathname.replace("/api/geocore/", "").split("/");
+        return GET(new Request(url), { params: { route } });
+      }) as typeof fetch;
+
+      const answer = await fetchWidgetAnswer("/api/geocore", "Le détartrage abîme-t-il les dents ?", { fetchImpl });
+      expect(answer.kind).toBe("answer");
+      if (answer.kind === "answer") {
+        expect(answer.data.objectId).toBe("ko_detartrage_abime_dents");
+        expect(answer.data.grounding.isGrounded).toBe(true);
+      }
+
+      const unrelated = await fetchWidgetAnswer("/api/geocore", "Quelle est la capitale de la France ?", { fetchImpl });
+      expect(unrelated.kind).toBe("no-answer");
     });
 
     it("handles /api/geocore/context/:id", async () => {
