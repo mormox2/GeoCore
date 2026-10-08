@@ -107,12 +107,29 @@ export function generateOpenApiSpec(info: OpenApiInfo = {}): object {
           },
         },
       },
+      "/api/answer": {
+        get: {
+          summary: "Grounded Answer (Widget Endpoint)",
+          description:
+            "Finds the most relevant published knowledge object with hybrid search and answers with sentences extracted verbatim from it. An answer is only returned when it passes the grounding check; otherwise status is 'no-answer'.",
+          parameters: [
+            { name: "q", in: "query", required: true, schema: { type: "string", maxLength: 500 } },
+            { name: "language", in: "query", schema: { type: "string" } },
+          ],
+          responses: {
+            "200": { description: "Grounded answer with sources and grounding score, or status 'no-answer'" },
+            "400": { description: "Missing or too long query" },
+          },
+        },
+      },
       "/api/vectorize": {
         post: {
           summary: "Index Dataset into Vector Store",
-          description: "Generates semantic chunk embeddings for all published knowledge objects in the dataset.",
+          description: "Generates semantic chunk embeddings for all published knowledge objects in the dataset. Requires an admin API key (X-Api-Key or Authorization: Bearer).",
           responses: {
             "200": { description: "Vectorization report" },
+            "401": { description: "No valid API key provided" },
+            "403": { description: "API key is not an admin key" },
           },
         },
       },
@@ -176,6 +193,19 @@ export function generateOpenApiSpec(info: OpenApiInfo = {}): object {
               description: "Full llms-full.txt corpus",
               content: { "text/plain": { schema: { type: "string" } } },
             },
+          },
+        },
+      },
+      "/api/validate": {
+        get: {
+          summary: "Validation Pipeline Report",
+          description: "Runs the 10-stage validation pipeline. Requires an API key because the report covers draft objects.",
+          parameters: [
+            { name: "mode", in: "query", schema: { type: "string", enum: ["public", "internal"], default: "public" } },
+          ],
+          responses: {
+            "200": { description: "Validation pipeline report" },
+            "401": { description: "No valid API key provided" },
           },
         },
       },

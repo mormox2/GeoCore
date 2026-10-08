@@ -154,4 +154,30 @@ describe("GeoCore Vector & Hybrid Search Engine", () => {
       expect(topHit.matchType).toBe("both"); // Matched in both lexical and semantic channels
     });
   });
+
+  describe("Visibility", () => {
+    const internalTwin = {
+      ...rtimidentalFixture,
+      id: "ko_internal_twin",
+      slug: "internal-twin",
+      visibility: "internal" as const,
+    };
+    const dataset = { ...apiDatasetFixture, objects: [rtimidentalFixture, internalTwin] };
+
+    it("never vectorizes objects that declare a non-public visibility", async () => {
+      const store = new MemoryVectorStore();
+      const report = await vectorizeDataset(dataset, store, new DeterministicEmbeddingProvider(32));
+      expect(report.objectsProcessed).toBe(1);
+    });
+
+    it("drops non-public objects from vector hits even when the store contains them", async () => {
+      const provider = new DeterministicEmbeddingProvider(32);
+      const store = new MemoryVectorStore();
+      // Simulate a stale store indexed before the object was made internal.
+      await vectorizeDataset({ ...dataset, objects: [rtimidentalFixture, { ...internalTwin, visibility: undefined }] }, store, provider);
+
+      const res = await searchHybrid("détartrage émail", dataset, store, provider, { limit: 5 });
+      expect(res.results.map((r) => r.objectId)).not.toContain("ko_internal_twin");
+    });
+  });
 });

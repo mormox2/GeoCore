@@ -157,6 +157,10 @@ export async function POST(req: Request) {
 
   // 4. Validate Grounding & Guardrails
   const grounding = verifyAnswerGrounding(generatedAnswer, aiPackage);
+  if (!grounding.isGrounded) {
+    // Never return claims that the certified context does not support.
+    return Response.json({ status: "no-answer", unsupportedClaims: grounding.unsupportedClaims }, { status: 422 });
+  }
 
   return Response.json({
     answer: generatedAnswer,

@@ -18,7 +18,7 @@ import {
   generateSitemap,
   runValidationPipeline,
 } from "@mormo_mossaab/geocore";
-import { buildPromptContext } from "@mormo_mossaab/geocore-ai";
+import { buildPromptContext, buildExtractiveAnswer, verifyAnswerGrounding } from "@mormo_mossaab/geocore-ai";
 import {
   searchHybrid,
   vectorizeDataset,
@@ -51,9 +51,52 @@ function sendText(res: ServerResponse, statusCode: number, text: string, content
   res.end(text);
 }
 
-// Internal default vector store and embedding provider for server instance
-let defaultStore: VectorStore | null = null;
-let defaultProvider: EmbeddingProvider | null = null;
+/**
+ * Parses an optional non-negative integer query parameter.
+ * Returns undefined when absent and null when present but invalid.
+ */
+function parseNonNegativeInt(value: string | null): number | undefined | null {
+  if (value === null || value === "") return undefined;
+  if (!/^\d+$/.test(value)) return null;
+  const n = Number(value);
+  return Number.isSafeInteger(n) ? n : null;
+}
+
+function sendBadParam(res: ServerResponse, name: string): void {
+  sendJson(res, 400, { status: "error", error: `Query parameter '${name}' must be a non-negative integer.` });
+}
+
+const MAX_ANSWER_QUERY_LENGTH = 500;
+
+// Fallback vector stores are scoped to their dataset so that two datasets served
+// from the same process can never read each other's vectors.
+const fallbackStores = new WeakMap<KnowledgeDataset, { store: VectorStore; provider: EmbeddingProvider }>();
+const pendingVectorizations = new WeakMap<VectorStore, Promise<unknown>>();
+
+function resolveVectorBackend(options: RouterOptions): { store: VectorStore; provider: EmbeddingProvider } {
+  if (options.vectorStore && options.embeddingProvider) {
+    return { store: options.vectorStore, provider: options.embeddingProvider };
+  }
+  let fallback = fallbackStores.get(options.dataset);
+  if (!fallback) {
+    fallback = { store: new MemoryVectorStore(), provider: new DeterministicEmbeddingProvider(64) };
+    fallbackStores.set(options.dataset, fallback);
+  }
+  return {
+    store: options.vectorStore ?? fallback.store,
+    provider: options.embeddingProvider ?? fallback.provider,
+  };
+}
+
+async function ensureVectorized(dataset: KnowledgeDataset, store: VectorStore, provider: EmbeddingProvider): Promise<void> {
+  if ((await store.count()) > 0) return;
+  let pending = pendingVectorizations.get(store);
+  if (!pending) {
+    pending = vectorizeDataset(dataset, store, provider).finally(() => pendingVectorizations.delete(store));
+    pendingVectorizations.set(store, pending);
+  }
+  await pending;
+}
 
 /**
  * Main request router for GeoCore HTTP server.
@@ -69,8 +112,7 @@ export async function routeRequest(
   const pathname = parsedUrl.pathname;
   const query = parsedUrl.searchParams;
 
-  const store = options.vectorStore ?? (defaultStore ??= new MemoryVectorStore());
-  const provider = options.embeddingProvider ?? (defaultProvider ??= new DeterministicEmbeddingProvider(64));
+  const { store, provider } = resolveVectorBackend(options);
 
   // 1. Health check
   if (pathname === "/api/health" || pathname === "/health") {
@@ -125,14 +167,15 @@ export async function routeRequest(
 
   // 5. Auth validation for internal/protected routes
   const authContext = authenticateRequest(req, auth);
-  const requestedVisibility = (query.get("visibility") as "public" | "internal") || "public";
+  const requestedVisibility = query.get("visibility") === "internal" ? "internal" : "public";
   const effectiveVisibility = authContext.authenticated ? requestedVisibility : "public";
 
   // 6. Search API: /api/search?q=...
   if (pathname === "/api/search") {
     const q = query.get("q") || query.get("query") || "";
     const language = query.get("language") || undefined;
-    const limit = query.get("limit") ? parseInt(query.get("limit")!, 10) : undefined;
+    const limit = parseNonNegativeInt(query.get("limit"));
+    if (limit === null) return sendBadParam(res, "limit");
 
     const result = searchKnowledge(dataset, {
       query: q,
@@ -147,12 +190,11 @@ export async function routeRequest(
   if (pathname === "/api/search/hybrid") {
     const q = query.get("q") || query.get("query") || "";
     const language = query.get("language") || undefined;
-    const limit = query.get("limit") ? parseInt(query.get("limit")!, 10) : undefined;
+    const limit = parseNonNegativeInt(query.get("limit"));
+    if (limit === null) return sendBadParam(res, "limit");
 
-    // If vector store is empty, vectorize automatically
-    if ((await store.count()) === 0) {
-      await vectorizeDataset(dataset, store, provider);
-    }
+    // If vector store is empty, vectorize automatically (once, even under concurrent requests)
+    await ensureVectorized(dataset, store, provider);
 
     const result = await searchHybrid(q, dataset, store, provider, {
       language,
@@ -161,8 +203,79 @@ export async function routeRequest(
     return sendJson(res, 200, { status: "ok", data: result.results, totalHits: result.totalHits, tookMs: result.tookMs });
   }
 
+  // 7b. Grounded Answer API: /api/answer?q=... (used by the embeddable widget)
+  if (pathname === "/api/answer") {
+    const q = (query.get("q") || query.get("query") || "").trim();
+    const language = query.get("language") || undefined;
+    if (!q) {
+      return sendJson(res, 400, { status: "error", error: "Query parameter 'q' is required." });
+    }
+    if (q.length > MAX_ANSWER_QUERY_LENGTH) {
+      return sendJson(res, 400, {
+        status: "error",
+        error: `Query parameter 'q' must be at most ${MAX_ANSWER_QUERY_LENGTH} characters.`,
+      });
+    }
+
+    await ensureVectorized(dataset, store, provider);
+    const hits = await searchHybrid(q, dataset, store, provider, { language, limit: 3 });
+
+    // Answer from the best-ranked object that actually shares terms with the question,
+    // and only when the extracted answer passes the grounding check.
+    for (const hit of hits.results) {
+      const contextRes = getAiContext(dataset, { objectId: hit.objectId, visibility: effectiveVisibility });
+      if (contextRes.status !== "ok" || !contextRes.data) continue;
+
+      const context = contextRes.data;
+      const extracted = buildExtractiveAnswer(q, context);
+      if (extracted.matchedQueryTerms === 0 || !extracted.answer) continue;
+
+      const grounding = verifyAnswerGrounding(extracted.answer, context);
+      if (!grounding.isGrounded) continue;
+
+      return sendJson(res, 200, {
+        status: "ok",
+        data: {
+          query: q,
+          answer: extracted.answer,
+          objectId: context.object.id,
+          title: context.object.title,
+          slug: context.object.slug,
+          language: context.object.language,
+          matchType: hit.matchType,
+          grounding: {
+            score: grounding.score,
+            hallucinationRisk: grounding.hallucinationRisk,
+            isGrounded: grounding.isGrounded,
+            unsupportedClaims: grounding.unsupportedClaims,
+            matchedEntities: grounding.matchedEntities,
+          },
+          sources: context.sources.map((s) => ({
+            id: s.id,
+            title: s.title,
+            url: s.url,
+            publisher: s.publisher,
+            trustLevel: s.trustLevel ?? "unknown",
+          })),
+        },
+      });
+    }
+
+    return sendJson(res, 200, {
+      status: "no-answer",
+      data: null,
+      message: "No verified answer was found in the knowledge base for this question.",
+    });
+  }
+
   // 8. Vectorize Dataset: POST /api/vectorize
   if (pathname === "/api/vectorize" && req.method === "POST") {
+    if (!authContext.isAdmin) {
+      return sendJson(res, authContext.authenticated ? 403 : 401, {
+        status: "error",
+        error: "Re-indexing the vector store requires an admin API key.",
+      });
+    }
     const report = await vectorizeDataset(dataset, store, provider);
     return sendJson(res, 200, { status: "ok", report });
   }
@@ -171,8 +284,10 @@ export async function routeRequest(
   if (pathname === "/api/objects") {
     const language = query.get("language") || undefined;
     const status = query.get("status") || undefined;
-    const limit = query.get("limit") ? parseInt(query.get("limit")!, 10) : undefined;
-    const offset = query.get("offset") ? parseInt(query.get("offset")!, 10) : undefined;
+    const limit = parseNonNegativeInt(query.get("limit"));
+    if (limit === null) return sendBadParam(res, "limit");
+    const offset = parseNonNegativeInt(query.get("offset"));
+    if (offset === null) return sendBadParam(res, "offset");
 
     const result = listKnowledgeObjects(dataset, {
       visibility: effectiveVisibility,
@@ -195,8 +310,10 @@ export async function routeRequest(
   // 10. Entities: /api/entities and /api/entities/:id
   if (pathname === "/api/entities") {
     const language = query.get("language") || undefined;
-    const limit = query.get("limit") ? parseInt(query.get("limit")!, 10) : undefined;
-    const offset = query.get("offset") ? parseInt(query.get("offset")!, 10) : undefined;
+    const limit = parseNonNegativeInt(query.get("limit"));
+    if (limit === null) return sendBadParam(res, "limit");
+    const offset = parseNonNegativeInt(query.get("offset"));
+    if (offset === null) return sendBadParam(res, "offset");
 
     const result = listEntities(dataset, {
       visibility: effectiveVisibility,
@@ -279,7 +396,11 @@ export async function routeRequest(
 
   // 16. Validation report: /api/validate
   if (pathname === "/api/validate") {
-    const mode = (query.get("mode") as "public" | "internal") || "public";
+    // Validation reports list every object, including drafts, so they are never public.
+    if (!authContext.authenticated) {
+      return sendJson(res, 401, { status: "error", error: "The validation report requires an API key." });
+    }
+    const mode = query.get("mode") === "internal" ? "internal" : "public";
     const report = runValidationPipeline({ dataset, config: { mode } });
     return sendJson(res, 200, report);
   }

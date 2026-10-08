@@ -38,7 +38,7 @@ We built a deterministic evaluator that scores synthesized LLM answers against v
 #### 3. Automatic `llms.txt` & Schema.org Export
 Markdown knowledge bases are validated across 10 stages (broken graph relations, orphan concepts, missing sources) and exported to standard `llms.txt` formats so Perplexity and AI engines can accurately crawl them.
 
-The project is 100% open-source under MIT, fully typed, with 747 tests passing (100% coverage).
+The project is 100% open-source under MIT, fully typed, with 848 tests passing.
 
 - **GitHub**: https://github.com/mormox2/GeoCore
 - **CLI Quickstart**:
@@ -55,7 +55,7 @@ Curious to hear your thoughts on purely TypeScript-based RAG architectures versu
 ## 📌 Post 2: For `r/typescript`
 
 **Post Title**:  
-`I built an open-source AI Knowledge OS monorepo with 7 strictly-typed packages and 747 automated tests`
+`I built an open-source AI Knowledge OS monorepo with 7 strictly-typed packages and 848 automated tests`
 
 **Post Body**:
 ```markdown
@@ -75,7 +75,7 @@ I wanted to share the architectural patterns behind **GeoCore** (https://github.
 ### Highlights:
 - **Zero Circular Dependencies**: Enforced via clear domain-driven package boundaries.
 - **Strict Zod & Invariant Validation**: Every knowledge object is validated at compile-time and runtime.
-- **105 Test Suites / 747 Tests**: 100% pass rate using Vitest.
+- **112 Test Files / 848 Tests**: 100% pass rate using Vitest.
 
 Check out the code here: https://github.com/mormox2/GeoCore
 Feedback and contributions are very welcome!

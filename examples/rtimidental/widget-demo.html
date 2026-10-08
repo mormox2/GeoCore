@@ -32,30 +32,36 @@
   <div class="container">
     <span class="badge">🏥 Intégration Externe Démo</span>
     <h1>Site Web Cabinet Dentaire RTimi Dental</h1>
-    <p>Ce site web simule un site WordPress, Shopify ou Webflow existant sur lequel le **Widget Web GeoCore** est injecté via une simple balise <code>&lt;script&gt;</code>.</p>
+    <p>Ce site web simule un site WordPress, Shopify ou Webflow existant sur lequel le <strong>Widget Web GeoCore</strong> est injecté via une balise <code>&lt;script type="module"&gt;</code> et un élément <code>&lt;geocore-widget&gt;</code>.</p>
     
     <hr style="margin: 24px 0; border: none; border-top: 1px solid #e2e8f0;">
 
     <h3>Code d'intégration 1-Clic à coller dans votre site :</h3>
     <pre>&lt;!-- GeoCore Universal AI Widget --&gt;
-&lt;script
-  src="https://cdn.jsdelivr.net/npm/@mormo_mossaab/geocore@1.0.0/dist/widget/geocore-widget.js"
-  data-api-url="https://api.geocore.rtimi.com"
+&lt;script type="module"
+  src="https://cdn.jsdelivr.net/npm/@mormo_mossaab/geocore/dist/widget/geocore-widget.js"&gt;&lt;/script&gt;
+
+&lt;geocore-widget
+  data-api-url="https://votre-serveur-geocore.example/api"
+  data-language="fr"
   data-title="Assistant RTimi Dental"
-  data-subtitle="Conseil Clinique & Hygiène"
+  data-subtitle="Conseil Clinique &amp; Hygiène"
   data-placeholder="Posez votre question dentaire..."
   data-theme="dark"
-  data-primary-color="#0284c7"
-  defer&gt;
-&lt;/script&gt;</pre>
+  data-primary-color="#0284c7"&gt;
+&lt;/geocore-widget&gt;</pre>
 
-    <p style="margin-top: 20px;">👉 <em>Regardez en bas à droite de l'écran : le bouton flottant (FAB) 💬 est actif. Cliquez dessus pour ouvrir l'assistant IA avec garde-fous cliniques.</em></p>
+    <p>Le widget interroge l'endpoint <code>/answer</code> de l'API GeoCore (<code>geocore serve</code>) : chaque réponse est extraite d'un objet de connaissance publié et n'est affichée que si elle passe la vérification d'ancrage. Sinon, le widget indique qu'aucune réponse vérifiée n'a été trouvée.</p>
+
+    <p style="margin-top: 20px;">👉 <em>Pour cette démo, lancez d'abord l'API locale avec <code>npm run serve:rtimidental</code> (http://localhost:3000), puis cliquez sur le bouton 💬 en bas à droite.</em></p>
   </div>
 
   <!-- Intégration directe du Custom Element GeoCore pour la démo -->
   <geocore-widget
+    data-api-url="http://localhost:3000/api"
+    data-language="fr"
     data-title="Assistant RTimi Dental"
-    data-subtitle="Conseils cliniques vérifiés OMS"
+    data-subtitle="Réponses issues de la base de connaissances"
     data-placeholder="Posez une question (ex: détartrage)..."
     data-theme="dark"
     data-primary-color="#0284c7">

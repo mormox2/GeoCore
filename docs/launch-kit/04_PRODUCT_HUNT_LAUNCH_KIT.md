@@ -48,7 +48,7 @@ npx @mormo_mossaab/geocore-cli init my-knowledge
 npx @mormo_mossaab/geocore-cli studio
 ```
 
-GeoCore is 100% open-source under MIT with 747 automated tests.
+GeoCore is 100% open-source under MIT with 848 automated tests.
 
 I’d love to hear your feedback, feature requests, and thoughts on how you currently organize knowledge for AI systems! 🚀
 ```
@@ -62,4 +62,4 @@ I’d love to hear your feedback, feature requests, and thoughts on how you curr
 3. **Slide 2 (Feature)**: Hallucination Guardrail in action (showing the risk score & citation match).
 4. **Slide 3 (Feature)**: Pure TypeScript Hybrid Search (BM25 + Vectors = RRF).
 5. **Slide 4 (Integration)**: Next.js 15 App Router route handler & automatic `llms.txt` generation.
-6. **Slide 5 (Quality)**: 105 Test Suites, 747 tests passing (100% pass rate).
+6. **Slide 5 (Quality)**: 112 Test Files, 848 tests passing (100% pass rate).

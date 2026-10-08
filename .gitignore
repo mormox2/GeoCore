@@ -1,6 +1,10 @@
 node_modules/
 **/node_modules/
 dist/
+# Build output is never committed (CI, release and Vercel build it); the example
+# exports below are published on purpose as reference output.
+!examples/rtimidental/dist/
+!examples/dawajinpro/dist/
 .vite/
 **/.vite/
 .DS_Store
@@ -9,3 +13,6 @@ Thumbs.db
 
 .vercel
 **/temp-*/
+
+# Studio copy bundled into the CLI package at build time
+packages/geocore-cli/studio/

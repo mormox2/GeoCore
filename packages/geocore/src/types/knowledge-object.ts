@@ -1,5 +1,7 @@
 import { KnowledgeStatus, GeoCoreMetadata } from "./metadata.js";
 
+export type KnowledgeObjectVisibility = "public" | "internal" | "private" | "hidden";
+
 export type KnowledgeObject = {
   id: string;
   slug: string;
@@ -14,6 +16,8 @@ export type KnowledgeObject = {
   author: string;
 
   // Optional Properties
+  /** Restricts exposure of a published object; omitted means public once published. */
+  visibility?: KnowledgeObjectVisibility;
   metadata?: Partial<GeoCoreMetadata>;
   aliases?: string[];
   tags?: string[];

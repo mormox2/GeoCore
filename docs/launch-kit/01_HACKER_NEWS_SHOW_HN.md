@@ -43,7 +43,7 @@ npx @mormo_mossaab/geocore-cli studio
 
 ### Architecture & Stats:
 - Monorepo of 7 modular packages (`@mormo_mossaab/geocore`, `geocore-cli`, `geocore-server`, `geocore-vector`, `geocore-ai`, `geocore-next`, `geocore-db`).
-- 105 test suites, 747 tests passing (100% coverage across all core invariants).
+- 112 test files, 848 tests passing.
 - MIT Licensed.
 
 Repository: https://github.com/mormox2/GeoCore

@@ -25,4 +25,4 @@ Ce contenu est informatif et ne remplace pas un examen clinique personnalisé.
 - Version: 1.0.0
 - Status: published
 - Author: author_dr_mossaab_rtimi
-- Last Updated: 2026-08-20T22:47:26.698Z
+- Last Updated: 2026-06-27T00:25:12Z

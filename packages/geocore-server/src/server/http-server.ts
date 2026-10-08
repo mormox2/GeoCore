@@ -5,6 +5,7 @@ import type { VectorStore, EmbeddingProvider } from "@mormo_mossaab/geocore-vect
 import { handleCors, CorsOptions } from "../middleware/cors.js";
 import { routeRequest, RouterOptions } from "../routes/api-router.js";
 import { AuthOptions } from "../middleware/auth.js";
+import { MemoryVectorStore, DeterministicEmbeddingProvider } from "@mormo_mossaab/geocore-vector";
 
 export type GeoCoreServerOptions = {
   dataset: KnowledgeDataset;
@@ -27,7 +28,10 @@ export type GeoCoreServerInstance = {
  * Creates a standalone HTTP server instance for GeoCore.
  */
 export function createGeoCoreServer(options: GeoCoreServerOptions): GeoCoreServerInstance {
-  const { dataset, port = 3000, host = "0.0.0.0", siteUrl, cors, auth, vectorStore, embeddingProvider } = options;
+  const { dataset, port = 3000, host = "0.0.0.0", siteUrl, cors, auth } = options;
+  // Each server instance owns its vector index unless one is injected.
+  const vectorStore = options.vectorStore ?? new MemoryVectorStore();
+  const embeddingProvider = options.embeddingProvider ?? new DeterministicEmbeddingProvider(64);
 
   const server = http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
     // 1. Handle CORS
@@ -40,10 +44,13 @@ export function createGeoCoreServer(options: GeoCoreServerOptions): GeoCoreServe
     try {
       await routeRequest(req, res, { dataset, siteUrl, auth, vectorStore, embeddingProvider });
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Internal Server Error";
-      res.statusCode = 500;
-      res.setHeader("Content-Type", "application/json; charset=utf-8");
-      res.end(JSON.stringify({ status: "error", error: message }));
+      // Internal error details stay in the server logs, never in the response body.
+      console.error("[geocore-server] Unhandled request error:", err);
+      if (!res.headersSent) {
+        res.statusCode = 500;
+        res.setHeader("Content-Type", "application/json; charset=utf-8");
+      }
+      res.end(JSON.stringify({ status: "error", error: "Internal Server Error" }));
     }
   });
 

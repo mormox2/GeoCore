@@ -8,6 +8,7 @@ import { MediaAsset } from "../types/media.js";
 import { SearchDocument } from "../types/search-document.js";
 import { SearchDocumentVisibility } from "../types/search.js";
 import { createSearchDocumentId, dedupeSearchValues } from "./search-utils.js";
+import { isNeverExposedObject, isPublicKnowledgeObject, readObjectVisibility } from "../metadata/object-visibility.js";
 import { extractSearchText } from "./search-text-extractor.js";
 
 export type CreateSearchDocumentInput = {
@@ -44,8 +45,14 @@ export function createSearchDocumentFromKnowledgeObject(
   const id = createSearchDocumentId(sourceType, sourceId);
 
   // 1. Determine visibility
-  // default visibility to public only when status is published, otherwise internal.
-  const visibility = inputVisibility || (object.status === "published" ? "public" : "internal");
+  // default visibility to public only for published, public objects; keep private/hidden declarations.
+  const visibility =
+    inputVisibility ||
+    (isPublicKnowledgeObject(object)
+      ? "public"
+      : isNeverExposedObject(object)
+        ? (readObjectVisibility(object) as SearchDocumentVisibility)
+        : "internal");
 
   // 2. Gather entities from metadata, input, and graph relationships
   const entityIds: string[] = [];

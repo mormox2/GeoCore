@@ -156,6 +156,23 @@ export function loadKnowledgeObject(input: RawKnowledgeInput): {
 
   const now = createIsoTimestamp();
 
+  // Missing dates fall back to load time, which makes sitemap <lastmod> and JSON-LD
+  // dateModified change on every export; tell the author instead of hiding it.
+  const missingDates = (["createdAt", "updatedAt"] as const).filter((field) => !content[field]);
+  if (missingDates.length > 0) {
+    diagnostics.push(
+      createLoaderDiagnostic({
+        severity: "warning",
+        code: codes.GC_LOADER_TIMESTAMP_DEFAULTED,
+        message: `Missing ${missingDates.join(" and ")}; using the load time, so sitemap lastmod and dateModified will change on every export.`,
+        sourcePath: input.sourcePath,
+        inputId: inputId,
+        field: missingDates[0],
+        recommendation: "Add createdAt and updatedAt (ISO 8601) to the frontmatter.",
+      })
+    );
+  }
+
   // Construct the object with defaults
   const obj: KnowledgeObject = {
     ...(content as any),

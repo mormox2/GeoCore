@@ -23,4 +23,4 @@ Les exemples publics ne doivent pas afficher de données réelles d’entreprise
 - Version: 1.0.0
 - Status: published
 - Author: author_dawajin_team
-- Last Updated: 2026-08-20T22:47:27.417Z
+- Last Updated: 2026-06-27T17:22:08Z

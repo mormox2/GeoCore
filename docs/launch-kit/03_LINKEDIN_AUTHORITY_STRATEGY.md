@@ -28,7 +28,7 @@ To fix this fundamental reliability gap, I created **GeoCore** — an open-sourc
 3️⃣ **10-Stage Knowledge Validation**: Compiles raw Markdown & YAML files into a connected, type-safe knowledge graph.
 4️⃣ **Omnichannel AI Distribution**: Automatically generates static web pages, Schema.org microdata, and standard `llms.txt` files for AI search engines like Perplexity and ChatGPT Search.
 
-Today, GeoCore is 100% open-source under the MIT license, backed by 105 test suites and 747 automated tests.
+Today, GeoCore is 100% open-source under the MIT license, backed by 112 test files and 848 automated tests.
 
 Try the interactive visual studio with one command:
 👉 `npx @mormo_mossaab/geocore-cli init my-kb && npx @mormo_mossaab/geocore-cli studio`
@@ -138,7 +138,7 @@ What started as an internal tool to ensure 100% factual accuracy in medical and 
 ⚛️ @mormo_mossaab/geocore-next — Next.js 14/15 App Router SEO & llms.txt handlers
 💾 @mormo_mossaab/geocore-db — In-Memory & SQLite persistence layer
 
-📊 Validated by 105 test suites and 747 automated tests (100% pass rate).
+📊 Validated by 112 test files and 848 automated tests (100% pass rate).
 
 Explore the code, star the repo, and build your own hallucination-free knowledge base:
 ⭐ https://github.com/mormox2/GeoCore

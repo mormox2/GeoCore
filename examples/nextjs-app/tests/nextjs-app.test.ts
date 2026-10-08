@@ -3,6 +3,7 @@ import { generateMetadata, default as KnowledgePage } from "../src/app/[lang]/[s
 import { GET } from "../src/app/api/geocore/[...route]/route.js";
 import { POST as ChatPost } from "../src/app/api/chat/route.js";
 import { formatChatWidgetResponse } from "../src/components/chat-widget.js";
+import { fetchWidgetAnswer } from "@mormo_mossaab/geocore";
 import { default as RootLayout, renderRootLayoutHtml, getVercelAnalyticsSnippet } from "../src/app/layout.js";
 
 describe("Next.js 14+ App Router Reference Application", () => {
@@ -69,6 +70,25 @@ describe("Next.js 14+ App Router Reference Application", () => {
       expect(data.data.length).toBeGreaterThan(0);
     });
 
+    it("serves grounded answers to the embeddable widget on /api/geocore/answer", async () => {
+      // Route the widget's fetch calls straight into the catch-all handler.
+      const fetchImpl = (async (input: string | URL | Request) => {
+        const url = new URL(String(input), "https://rtimidental.tn");
+        const route = url.pathname.replace("/api/geocore/", "").split("/");
+        return GET(new Request(url), { params: { route } });
+      }) as typeof fetch;
+
+      const answer = await fetchWidgetAnswer("/api/geocore", "Le détartrage abîme-t-il les dents ?", { fetchImpl });
+      expect(answer.kind).toBe("answer");
+      if (answer.kind === "answer") {
+        expect(answer.data.objectId).toBe("ko_detartrage_abime_dents");
+        expect(answer.data.grounding.isGrounded).toBe(true);
+      }
+
+      const unrelated = await fetchWidgetAnswer("/api/geocore", "Quelle est la capitale de la France ?", { fetchImpl });
+      expect(unrelated.kind).toBe("no-answer");
+    });
+
     it("handles /api/geocore/context/:id", async () => {
       const req = new Request("https://rtimidental.tn/api/geocore/context/ko_detartrage_abime_dents");
       const res = await GET(req, { params: { route: ["context", "ko_detartrage_abime_dents"] } });
@@ -94,11 +114,37 @@ describe("Next.js 14+ App Router Reference Application", () => {
       expect(res.status).toBe(200);
       const data = await res.json();
 
-      expect(data.answer).toContain("n'abîme en aucun cas l'émail dentaire");
+      // The answer is taken from the certified knowledge object, never invented.
+      expect(data.answer).toContain("le détartrage n'abîme pas les dents");
       expect(data.groundingScore).toBeGreaterThanOrEqual(0.7);
       expect(data.hallucinationRisk).toBe("low");
       expect(data.sourcesCited.length).toBeGreaterThan(0);
       expect(data.sourcesCited[0].title).toContain("World Health Organization");
+    });
+
+    it("POST /api/chat does not fall back to an unrelated canned answer", async () => {
+      const req = new Request("https://rtimidental.tn/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: "" }),
+      });
+      const res = await ChatPost(req);
+      expect(res.status).toBe(404);
+    });
+
+    it("escapes answers and source links in the chat widget", () => {
+      const html = formatChatWidgetResponse({
+        answer: "<img src=x onerror=alert(1)>",
+        matchedObjectId: "x",
+        groundingScore: 0.5,
+        hallucinationRisk: "medium",
+        groundedEntities: [],
+        sourcesCited: [{ title: "<b>t</b>", trustLevel: "unknown", url: "javascript:alert(1)" }],
+        promptContextPreview: "...",
+      });
+      expect(html).not.toContain("<img");
+      expect(html).not.toContain("javascript:");
+      expect(html).not.toContain("<b>t</b>");
     });
 
     it("formats chat widget response bubble with HTML and trust badges", () => {

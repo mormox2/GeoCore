@@ -17,6 +17,8 @@ describe("Dataset Validation Tests", () => {
           body: "Body text",
           language: "en",
           author: "author_test",
+          createdAt: "2026-01-01T00:00:00Z",
+          updatedAt: "2026-01-01T00:00:00Z",
         },
       },
     ],

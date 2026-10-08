@@ -6,8 +6,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![TypeScript Strict](https://img.shields.io/badge/TypeScript-Strict_100%25-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Tests Passing](https://img.shields.io/badge/Tests-747%20Passed%20(100%25)-brightgreen?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev/)
-[![Node.js Version](https://img.shields.io/badge/Node.js-%3E%3D18.0.0-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Tests Passing](https://img.shields.io/badge/Tests-848%20Passed-brightgreen?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev/)
+[![Node.js Version](https://img.shields.io/badge/Node.js-%3E%3D22.12-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Search](https://img.shields.io/badge/Search-Hybrid_RRF_(BM25_%2B_Dense)-orange?style=flat-square)](https://github.com/mormox2/GeoCore)
 [![AI Engine](https://img.shields.io/badge/AI_Ready-llms.txt_%2B_Schema.org-purple?style=flat-square)](https://llmstxt.org)
 
@@ -52,26 +52,26 @@ It takes your structured Markdown/YAML files and transforms them into an interco
 ### Try in 30 Seconds with CLI
 
 ```bash
-# 1. Initialize a new GeoCore Knowledge Base
-npx @mormo_mossaab/geocore-cli init my-knowledge-base
+# 1. Initialize a new GeoCore Knowledge Base in the current directory
+mkdir my-knowledge-base && cd my-knowledge-base
+npx @mormo_mossaab/geocore-cli init
 
 # 2. Launch the interactive Visual Studio (2D Graph + Editor + RAG Tester)
-cd my-knowledge-base
 npx @mormo_mossaab/geocore-cli studio
 ```
 
 ### Full Monorepo Setup (From Source)
 
 ```bash
-# Clone and install dependencies
+# Clone and install dependencies (Node.js >= 22.12)
 git clone https://github.com/mormox2/GeoCore.git
 cd GeoCore
-npm install
+npm ci
 
-# Build all 7 packages
+# Build all packages in dependency order
 npm run build
 
-# Run the full QA test suite (747 tests, 100% passing)
+# Run the full QA test suite
 npm test
 ```
 
@@ -91,19 +91,24 @@ graph LR
 ```
 
 ### 1. 🛡️ Zero-Hallucination & Clinical Grounding
-GeoCore inspects synthesized LLM answers against verified source documents. If an answer asserts clinical claims unsupported by citations, GeoCore detects and flags the hallucination risk (`low`, `medium`, `high`) before it reaches patients or end-users.
+GeoCore checks every sentence of an answer against the certified evidence of the AI context package (object, entities, citations, sources). Sentences whose content is not supported by that evidence are returned in `unsupportedClaims`, and an answer containing any of them is not considered grounded.
 
 ```typescript
-import { verifyAnswerGrounding } from "@mormo_mossaab/geocore-ai";
+import { getAiContext } from "@mormo_mossaab/geocore";
+import { verifyAnswerGrounding, buildExtractiveAnswer } from "@mormo_mossaab/geocore-ai";
 
-const evaluation = verifyAnswerGrounding(
-  "Fluoride varnish should be applied at 5% concentration (WHO guidelines).",
-  ragContext
-);
+const context = getAiContext(dataset, { objectId: "ko_detartrage_abime_dents" }).data!;
 
-console.log(evaluation.hallucinationRisk); // "low"
-console.log(evaluation.isGrounded);        // true
+const evaluation = verifyAnswerGrounding(llmAnswer, context);
+evaluation.isGrounded;        // false as soon as one claim is unsupported
+evaluation.unsupportedClaims; // e.g. ["Le détartrage blanchit définitivement les dents."]
+evaluation.hallucinationRisk; // "low" | "medium" | "high"
+
+// Or answer only with sentences copied from the certified object:
+const { answer } = buildExtractiveAnswer("Le détartrage abîme-t-il l'émail ?", context);
 ```
+
+The check is lexical: it detects claims whose words are absent from the evidence, not subtle contradictions using the same words, so keep a human review for high-stakes content.
 
 ### 2. ⚡ Pure TypeScript Hybrid Search (Reciprocal Rank Fusion)
 Eliminates search misses by fusing keyword exact-matches (BM25) and dense semantic vectors (64D local or 1536D OpenAI):
@@ -118,20 +123,37 @@ Turn your knowledge graph into an AI-crawlable, SEO-dominant digital presence wi
 
 ```typescript
 // app/api/geocore/[...route]/route.ts
-import { createGeoCoreRouteHandlers } from "@mormo_mossaab/geocore-next";
+import { handleLlmsTxt, handleSitemapXml, handleSearchApi, handleContextApi } from "@mormo_mossaab/geocore-next";
 import { myDataset } from "@/lib/dataset";
 
-export const { GET, OPTIONS } = createGeoCoreRouteHandlers({
-  dataset: myDataset,
-  siteUrl: "https://yourdomain.com",
-});
+export async function GET(req: Request, { params }: { params: { route?: string[] } }) {
+  const [first, second] = params.route ?? [];
+  if (first === "llms.txt") return handleLlmsTxt(myDataset, { siteUrl: "https://yourdomain.com" });
+  if (first === "sitemap.xml") return handleSitemapXml(myDataset, { siteUrl: "https://yourdomain.com" });
+  if (first === "search") return handleSearchApi(myDataset, new URL(req.url).searchParams.get("q") ?? "");
+  if (first === "context" && second) return handleContextApi(myDataset, second);
+  return new Response("Not found", { status: 404 });
+}
 ```
+
+See [`examples/nextjs-app`](./examples/nextjs-app) for the complete route, including the grounded `answer` endpoint used by the widget.
 
 ### 4. 🎨 Interactive Visual Studio
 A lightweight, built-in development studio featuring:
 - **Interactive 2D Knowledge Graph Explorer**
 - **Live Markdown & YAML Frontmatter Editor** with real-time diagnostic linting
 - **RAG Playground** to test vector similarity and hybrid search queries live
+
+### 5. 💬 Embeddable Widget
+Add a grounded assistant to any site. The widget calls the `/answer` endpoint of `geocore serve` (or of your Next.js route), shows answers extracted from your published knowledge with their sources and grounding score, and says so when no verified answer exists:
+
+```html
+<script type="module" src="https://cdn.jsdelivr.net/npm/@mormo_mossaab/geocore/dist/widget/geocore-widget.js"></script>
+<geocore-widget data-api-url="https://your-geocore-server.example/api" data-language="fr"></geocore-widget>
+```
+
+### 6. 🔐 Standalone API Server
+`geocore serve` exposes the dataset over REST (OpenAPI at `/api/openapi.json`). Public routes only return published, public content; `?visibility=internal` and `/api/validate` require an API key, and `POST /api/vectorize` requires an admin key (`X-Api-Key` or `Authorization: Bearer`).
 
 ---
 
@@ -141,13 +163,13 @@ GeoCore is organized as an enterprise-grade, clean monorepo with 7 decoupled pac
 
 | Package | Version | Role | Key Technologies |
 |---|---|---|---|
-| [`@mormo_mossaab/geocore`](./packages/geocore) | `1.0.0` | Domain core, Zod schemas, 10-stage validator, graph & static export. | `zod` |
-| [`@mormo_mossaab/geocore-cli`](./packages/geocore-cli) | `1.0.0` | CLI tool (`init`, `validate`, `export`, `inspect`, `serve`, `studio`). | `zod`, `commander` |
-| [`@mormo_mossaab/geocore-vector`](./packages/geocore-vector) | `1.0.0` | Vector embeddings, in-memory cosine store & RRF hybrid search. | TypeScript, Cosine Math |
-| [`@mormo_mossaab/geocore-ai`](./packages/geocore-ai) | `1.0.0` | RAG context builder, semantic chunking & anti-hallucination guardrails. | Zod, Grounding Engine |
-| [`@mormo_mossaab/geocore-server`](./packages/geocore-server) | `1.0.0` | Standalone REST server with OpenAPI 3.1 & API key authentication. | Node HTTP, OpenAPI |
-| [`@mormo_mossaab/geocore-next`](./packages/geocore-next) | `1.0.0` | Next.js 14+/15+ App Router helpers, metadata & JSON-LD injectors. | Next.js, React |
-| [`@mormo_mossaab/geocore-db`](./packages/geocore-db) | `1.0.0` | Persistence repository layer with In-Memory & SQLite adapters. | SQLite, Memory DB |
+| [`@mormo_mossaab/geocore`](./packages/geocore) | `1.0.1` | Domain core, Zod schemas, 10-stage validator, graph & static export. | `zod` |
+| [`@mormo_mossaab/geocore-cli`](./packages/geocore-cli) | `1.0.1` | CLI tool (`init`, `validate`, `export`, `inspect`, `serve`, `vectorize`, `studio`). | Node.js, bundled Studio |
+| [`@mormo_mossaab/geocore-vector`](./packages/geocore-vector) | `1.0.1` | Vector embeddings, in-memory cosine store & RRF hybrid search. | TypeScript, Cosine Math |
+| [`@mormo_mossaab/geocore-ai`](./packages/geocore-ai) | `1.0.1` | RAG context builder, semantic chunking, extractive answers & claim-level grounding checks. | Grounding Engine |
+| [`@mormo_mossaab/geocore-server`](./packages/geocore-server) | `1.0.1` | Standalone REST server with OpenAPI 3.1, grounded `/api/answer` & API key authentication. | Node HTTP, OpenAPI |
+| [`@mormo_mossaab/geocore-next`](./packages/geocore-next) | `1.0.1` | Next.js 14+/15+ App Router helpers, metadata & JSON-LD injectors. | Next.js |
+| [`@mormo_mossaab/geocore-db`](./packages/geocore-db) | `1.0.1` | Persistence repository layer with In-Memory & SQLite adapters. | SQLite, Memory DB |
 
 ---
 
@@ -171,15 +193,16 @@ Every Knowledge Object is checked against 10 strict validation gates before rele
 ## 🧪 Benchmark & Test Suite Status
 
 ```txt
-✓ @mormo_mossaab/geocore          (68 test files, 512 tests passed)
-✓ @mormo_mossaab/geocore-cli      (8 test files, 19 tests passed)
-✓ @mormo_mossaab/geocore-server   (1 test file, 14 tests passed)
-✓ @mormo_mossaab/geocore-db       (1 test file, 6 tests passed)
-✓ @mormo_mossaab/geocore-vector   (1 test file, 10 tests passed)
-✓ @mormo_mossaab/geocore-next     (2 test files, 13 tests passed)
-✓ @mormo_mossaab/geocore-ai       (1 test file, 6 tests passed)
+✓ @mormo_mossaab/geocore          (91 test files, 672 tests)
+✓ @mormo_mossaab/geocore-ai       (1 test file, 13 tests)
+✓ @mormo_mossaab/geocore-cli      (9 test files, 25 tests)
+✓ @mormo_mossaab/geocore-db       (2 test files, 9 tests)
+✓ @mormo_mossaab/geocore-next     (2 test files, 15 tests)
+✓ @mormo_mossaab/geocore-server   (1 test file, 25 tests)
+✓ @mormo_mossaab/geocore-vector   (1 test file, 12 tests)
+✓ examples + site + studio        (5 test files, 77 tests)
 ─────────────────────────────────────────────────────────────
-Total: 105 test suites, 747 tests — 100% Passed (0 Failures)
+Total: 112 test files, 848 tests (October 2026)
 ```
 
 ---

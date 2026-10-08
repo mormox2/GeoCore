@@ -102,8 +102,16 @@ const generatedAnswer = "Le détartrage n'abîme pas les dents selon les normes 
 
 const result = verifyAnswerGrounding(generatedAnswer, aiPackage);
 
-console.log(`Score d'ancrage: ${result.score}%`);
+console.log(`Score d'ancrage: ${Math.round(result.score * 100)}%`); // score ∈ [0, 1]
 console.log(`Risque d'hallucination: ${result.hallucinationRisk}`); // 'low' | 'medium' | 'high'
 console.log(`Entités vérifiées: ${result.matchedEntities.join(", ")}`);
 console.log(`Sources citées: ${result.matchedSources.join(", ")}`);
+console.log(`Affirmations non étayées: ${result.unsupportedClaims.join(" | ")}`);
+
+// Chaque phrase de la réponse est une affirmation qui doit être présente dans la preuve
+// (objet, entités, citations, sources). Une seule affirmation non étayée => isGrounded = false.
+if (!result.isGrounded) {
+  // Ne pas afficher la réponse ; proposer à la place un extrait certifié :
+  // buildExtractiveAnswer(question, aiPackage).answer
+}
 ```

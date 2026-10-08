@@ -14,6 +14,8 @@ language: en
 status: published
 version: 1.0.0
 author: author_md
+createdAt: 2026-01-01T00:00:00Z
+updatedAt: 2026-01-01T00:00:00Z
 ---
 Markdown body content here.`,
     };

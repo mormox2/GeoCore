@@ -1,5 +1,5 @@
 import type { KnowledgeDataset, SearchDocument } from "@mormo_mossaab/geocore";
-import { searchKnowledge } from "@mormo_mossaab/geocore";
+import { searchKnowledge, isPublicKnowledgeObject } from "@mormo_mossaab/geocore";
 import type { EmbeddingProvider } from "../embedding/embedding-provider.js";
 import type { VectorStore, VectorSearchResult } from "../store/vector-store.js";
 
@@ -62,10 +62,12 @@ export async function searchHybrid(
 
   // 2. Execute Vector Semantic Search
   const queryVector = await provider.embedText(query);
-  const vectorHits = await store.search(queryVector, {
-    limit: limit * 2,
-    minScore: options.minVectorScore ?? 0.1,
-  });
+  const vectorHits = (
+    await store.search(queryVector, {
+      limit: limit * 2,
+      minScore: options.minVectorScore ?? 0.1,
+    })
+  ).filter((hit) => !options.language || hit.document.metadata?.language === options.language);
 
   // 3. Compute Reciprocal Rank Fusion (RRF) Scores
   const itemMap = new Map<
@@ -113,9 +115,13 @@ export async function searchHybrid(
     }
   }
 
-  // Vector ranks
-  for (let i = 0; i < vectorHits.length; i++) {
-    const hit = vectorHits[i];
+  // Vector ranks (a shared or stale store must never surface non-public objects)
+  const publicVectorHits = vectorHits.filter((hit) => {
+    const obj = objMap.get(hit.document.objectId);
+    return obj !== undefined && isPublicKnowledgeObject(obj);
+  });
+  for (let i = 0; i < publicVectorHits.length; i++) {
+    const hit = publicVectorHits[i];
     const rank = i + 1;
     const rrfContribution = wVec / (k + rank);
     const objectId = hit.document.objectId;

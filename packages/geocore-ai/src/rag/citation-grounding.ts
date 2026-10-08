@@ -1,4 +1,5 @@
-import type { AiContextPackage, KnowledgeSource, KnowledgeEntity } from "@mormo_mossaab/geocore";
+import type { AiContextPackage } from "@mormo_mossaab/geocore";
+import { contentTokens, normalizeText } from "./text-tokens.js";
 
 export type GroundingVerificationResult = {
   isGrounded: boolean;
@@ -10,80 +11,100 @@ export type GroundingVerificationResult = {
   checkedAt: string;
 };
 
+export type GroundingOptions = {
+  /** Minimum share of a claim's content words that must appear in the evidence (default 0.5). */
+  claimSupportThreshold?: number;
+};
+
+function splitClaims(text: string): string[] {
+  return text
+    .split(/(?<=[.!?])\s+|\n+/)
+    .map((s) => s.trim())
+    .filter((s) => contentTokens(s).length > 0);
+}
+
+function includesPhrase(normalizedText: string, phrase: string | undefined): boolean {
+  if (!phrase) return false;
+  const p = normalizeText(phrase).trim();
+  return p.length > 0 && normalizedText.includes(p);
+}
+
 /**
  * Evaluates whether an AI generated answer is grounded in the provided AiContextPackage.
+ *
+ * Every sentence of the answer is treated as a claim and must be supported by the evidence
+ * (object, entities, citations, sources). A claim whose content words are mostly absent from
+ * the evidence is reported in `unsupportedClaims`, and any unsupported claim prevents the
+ * answer from being considered grounded.
  */
 export function verifyAnswerGrounding(
   generatedText: string,
-  context: AiContextPackage
+  context: AiContextPackage,
+  options: GroundingOptions = {}
 ): GroundingVerificationResult {
   const checkedAt = new Date().toISOString();
-  const normalizedText = generatedText.toLowerCase();
+  const threshold = options.claimSupportThreshold ?? 0.5;
+  const normalizedText = normalizeText(generatedText);
 
   // 1. Match known sources
-  const matchedSources: string[] = [];
-  for (const src of context.sources) {
-    if (
-      normalizedText.includes(src.title.toLowerCase()) ||
-      (src.publisher && normalizedText.includes(src.publisher.toLowerCase())) ||
-      (src.authors && src.authors.some((a: string) => normalizedText.includes(a.toLowerCase())))
-    ) {
-      matchedSources.push(src.id);
-    }
-  }
+  const matchedSources = context.sources
+    .filter(
+      (src) =>
+        includesPhrase(normalizedText, src.title) ||
+        includesPhrase(normalizedText, src.publisher) ||
+        (src.authors ?? []).some((a: string) => includesPhrase(normalizedText, a))
+    )
+    .map((src) => src.id);
 
   // 2. Match known entities
-  const matchedEntities: string[] = [];
-  for (const ent of context.entities) {
-    if (
-      normalizedText.includes(ent.canonicalName.toLowerCase()) ||
-      (ent.aliases && ent.aliases.some((a: string) => normalizedText.includes(a.toLowerCase())))
-    ) {
-      matchedEntities.push(ent.id);
-    }
-  }
+  const matchedEntities = context.entities
+    .filter(
+      (ent) =>
+        includesPhrase(normalizedText, ent.canonicalName) ||
+        (ent.aliases ?? []).some((a: string) => includesPhrase(normalizedText, a))
+    )
+    .map((ent) => ent.id);
 
-  // 3. Keyword / Key sentence overlap with main object body
-  const bodySentences = context.object.body
-    .split(/[.!?]+/)
-    .map((s: string) => s.trim().toLowerCase())
-    .filter((s: string) => s.length > 15);
+  // 3. Build the evidence vocabulary from everything the context certifies
+  const evidenceTexts: string[] = [
+    context.object.title,
+    context.object.summary,
+    context.object.body,
+    ...context.entities.flatMap((e) => [e.canonicalName, e.definition, ...(e.aliases ?? [])]),
+    ...context.citations.flatMap((c) => [c.quote ?? "", c.paraphrase ?? ""]),
+    ...context.sources.flatMap((s) => [s.title, s.publisher ?? "", ...(s.authors ?? [])]),
+  ];
+  const evidence = new Set(evidenceTexts.flatMap((t) => (t ? contentTokens(t) : [])));
 
-  let overlappingSentences = 0;
-  for (const sentence of bodySentences) {
-    const words = sentence.split(/\s+/).filter((w: string) => w.length > 4);
-    const matchCount = words.filter((w: string) => normalizedText.includes(w)).length;
-    if (words.length > 0 && matchCount / words.length >= 0.5) {
-      overlappingSentences++;
-    }
-  }
+  // 4. Check every claim of the answer against the evidence
+  const claims = splitClaims(generatedText);
+  const unsupportedClaims = claims.filter((claim) => {
+    const tokens = contentTokens(claim);
+    const supported = tokens.filter((t) => evidence.has(t)).length;
+    return supported / tokens.length < threshold;
+  });
 
-  const sentenceRatio = bodySentences.length > 0 ? overlappingSentences / bodySentences.length : 1;
-  const entityRatio = context.entities.length > 0 ? matchedEntities.length / context.entities.length : 1;
+  const supportRatio = claims.length > 0 ? (claims.length - unsupportedClaims.length) / claims.length : 0;
+  const entityRatio =
+    context.entities.length > 0 ? matchedEntities.length / context.entities.length : supportRatio;
 
-  // Composite Grounding Score
-  const score = Math.min(
-    1.0,
-    Math.max(0.0, 0.4 * sentenceRatio + 0.4 * entityRatio + 0.2 * (matchedSources.length > 0 ? 1 : 0.5))
-  );
+  const score = Math.min(1.0, Math.max(0.0, 0.8 * supportRatio + 0.2 * entityRatio));
 
   let hallucinationRisk: "low" | "medium" | "high";
-  if (score >= 0.6) {
-    hallucinationRisk = "low";
-  } else if (score >= 0.3) {
+  if (supportRatio < 0.5 || score < 0.3) {
+    hallucinationRisk = "high";
+  } else if (unsupportedClaims.length > 0 || score < 0.6) {
     hallucinationRisk = "medium";
   } else {
-    hallucinationRisk = "high";
+    hallucinationRisk = "low";
   }
 
-  const isGrounded = hallucinationRisk !== "high";
-
   return {
-    isGrounded,
+    isGrounded: hallucinationRisk !== "high" && unsupportedClaims.length === 0,
     score: Math.round(score * 100) / 100,
     matchedSources,
     matchedEntities,
-    unsupportedClaims: [],
+    unsupportedClaims,
     hallucinationRisk,
     checkedAt,
   };

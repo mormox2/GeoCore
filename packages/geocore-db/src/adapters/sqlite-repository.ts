@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS geocore_objects (
   author TEXT,
   metadata_json TEXT,
   tags_json TEXT,
+  data_json TEXT,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );
@@ -91,6 +92,7 @@ CREATE TABLE IF NOT EXISTS geocore_relationships (
   target_id TEXT NOT NULL,
   type TEXT NOT NULL,
   strength TEXT NOT NULL,
+  data_json TEXT,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );
@@ -101,6 +103,53 @@ CREATE INDEX IF NOT EXISTS idx_citations_target ON geocore_citations(target_id);
 CREATE INDEX IF NOT EXISTS idx_relationships_source ON geocore_relationships(source_id);
 CREATE INDEX IF NOT EXISTS idx_relationships_target ON geocore_relationships(target_id);
 `;
+
+/**
+ * Columns added after the first release. Databases created by earlier versions are
+ * migrated in init(); data_json holds the full record so no field is lost on round-trip.
+ */
+const ADDED_COLUMNS: Array<{ table: string; column: string }> = [
+  { table: "geocore_objects", column: "data_json" },
+  { table: "geocore_relationships", column: "data_json" },
+];
+
+function isDuplicateColumnError(err: unknown): boolean {
+  const message = err instanceof Error ? err.message : String(err);
+  return /duplicate column|already exists/i.test(message);
+}
+
+function rowToObject(row: any): KnowledgeObject {
+  if (row.data_json) return JSON.parse(row.data_json) as KnowledgeObject;
+  // Rows written before data_json existed only carry the indexed columns.
+  return {
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    summary: row.summary,
+    body: row.body,
+    language: row.language,
+    status: row.status,
+    version: row.version,
+    author: row.author,
+    metadata: row.metadata_json ? JSON.parse(row.metadata_json) : undefined,
+    tags: row.tags_json ? JSON.parse(row.tags_json) : undefined,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
+}
+
+function rowToRelationship(row: any): KnowledgeRelationship {
+  if (row.data_json) return JSON.parse(row.data_json) as KnowledgeRelationship;
+  return {
+    id: row.id,
+    sourceId: row.source_id,
+    targetId: row.target_id,
+    type: row.type,
+    strength: row.strength,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
+}
 
 export interface SqlDatabaseDriver {
   exec(sql: string): Promise<void>;
@@ -120,6 +169,13 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
 
   async init(): Promise<void> {
     await this.driver.exec(GEOCORE_SQL_SCHEMA);
+    for (const { table, column } of ADDED_COLUMNS) {
+      try {
+        await this.driver.exec(`ALTER TABLE ${table} ADD COLUMN ${column} TEXT`);
+      } catch (err) {
+        if (!isDuplicateColumnError(err)) throw err;
+      }
+    }
   }
 
   // Objects
@@ -129,25 +185,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
       [id]
     );
     if (!rows || rows.length === 0) return null;
-    const row = rows[0];
-    const metadata = row.metadata_json ? JSON.parse(row.metadata_json) : undefined;
-    const tags = row.tags_json ? JSON.parse(row.tags_json) : undefined;
-
-    return {
-      id: row.id,
-      slug: row.slug,
-      title: row.title,
-      summary: row.summary,
-      body: row.body,
-      language: row.language,
-      status: row.status,
-      version: row.version,
-      author: row.author,
-      metadata,
-      tags,
-      createdAt: row.created_at,
-      updatedAt: row.updated_at,
-    };
+    return rowToObject(rows[0]);
   }
 
   async listObjects(filter?: ObjectQueryFilter): Promise<KnowledgeObject[]> {
@@ -162,6 +200,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
       sql += " AND language = ?";
       params.push(filter.language);
     }
+    sql += " ORDER BY id";
     if (filter?.limit) {
       sql += " LIMIT ?";
       params.push(filter.limit);
@@ -172,28 +211,17 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
     }
 
     const rows = await this.driver.query<any>(sql, params);
-    return rows.map((row) => ({
-      id: row.id,
-      slug: row.slug,
-      title: row.title,
-      summary: row.summary,
-      body: row.body,
-      language: row.language,
-      status: row.status,
-      version: row.version,
-      author: row.author,
-      metadata: row.metadata_json ? JSON.parse(row.metadata_json) : undefined,
-      tags: row.tags_json ? JSON.parse(row.tags_json) : undefined,
-      createdAt: row.created_at,
-      updatedAt: row.updated_at,
-    }));
+    // OFFSET without LIMIT is not portable across SQL dialects, so apply it here.
+    const pageRows = !filter?.limit && filter?.offset ? rows.slice(filter.offset) : rows;
+    return pageRows.map(rowToObject);
+
   }
 
   async saveObject(object: KnowledgeObject): Promise<void> {
     await this.driver.run(
       `INSERT OR REPLACE INTO geocore_objects 
-       (id, slug, title, summary, body, language, status, version, author, metadata_json, tags_json, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       (id, slug, title, summary, body, language, status, version, author, metadata_json, tags_json, data_json, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         object.id,
         object.slug,
@@ -206,6 +234,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
         object.author,
         object.metadata ? JSON.stringify(object.metadata) : null,
         object.tags ? JSON.stringify(object.tags) : null,
+        JSON.stringify(object),
         object.createdAt,
         object.updatedAt,
       ]
@@ -427,27 +456,21 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
       params.push(nodeId, nodeId);
     }
     const rows = await this.driver.query<any>(sql, params);
-    return rows.map((r) => ({
-      id: r.id,
-      sourceId: r.source_id,
-      targetId: r.target_id,
-      type: r.type,
-      strength: r.strength,
-      createdAt: r.created_at,
-      updatedAt: r.updated_at,
-    }));
+    return rows.map(rowToRelationship);
+
   }
 
   async saveRelationship(relationship: KnowledgeRelationship): Promise<void> {
     await this.driver.run(
-      `INSERT OR REPLACE INTO geocore_relationships (id, source_id, target_id, type, strength, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT OR REPLACE INTO geocore_relationships (id, source_id, target_id, type, strength, data_json, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         relationship.id,
         relationship.sourceId,
         relationship.targetId,
         relationship.type,
         relationship.strength,
+        JSON.stringify(relationship),
         relationship.createdAt,
         relationship.updatedAt,
       ]

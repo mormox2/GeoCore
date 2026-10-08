@@ -90,4 +90,26 @@ describe("Next.js Components Helpers", () => {
     expect(html).toContain("<img");
     expect(html).toContain("<figcaption>");
   });
+
+  it("renderCitationBadgeHtml escapes source text and drops javascript: links", () => {
+    const html = renderCitationBadgeHtml(scalingCitation, {
+      ...whoOralHealthSource,
+      url: "javascript:alert(1)",
+      title: "<img src=x onerror=alert(1)>",
+    });
+    expect(html).not.toContain("javascript:");
+    expect(html).not.toContain("<img");
+    expect(html).toContain("&lt;img src=x onerror=alert(1)&gt;");
+  });
+
+  it("renderMediaFigureHtml escapes captions and attributes", () => {
+    const html = renderMediaFigureHtml({
+      ...scalingBeforeAfterMedia,
+      canonicalUrl: undefined,
+      source: '" onerror="alert(1)',
+      caption: "<script>alert(1)</script>",
+    });
+    expect(html).not.toContain("<script>");
+    expect(html).not.toContain('" onerror="');
+  });
 });
