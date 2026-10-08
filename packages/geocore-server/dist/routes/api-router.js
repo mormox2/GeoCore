@@ -14,9 +14,49 @@ function sendText(res, statusCode, text, contentType = "text/plain; charset=utf-
     res.setHeader("Content-Type", contentType);
     res.end(text);
 }
-// Internal default vector store and embedding provider for server instance
-let defaultStore = null;
-let defaultProvider = null;
+/**
+ * Parses an optional non-negative integer query parameter.
+ * Returns undefined when absent and null when present but invalid.
+ */
+function parseNonNegativeInt(value) {
+    if (value === null || value === "")
+        return undefined;
+    if (!/^\d+$/.test(value))
+        return null;
+    const n = Number(value);
+    return Number.isSafeInteger(n) ? n : null;
+}
+function sendBadParam(res, name) {
+    sendJson(res, 400, { status: "error", error: `Query parameter '${name}' must be a non-negative integer.` });
+}
+// Fallback vector stores are scoped to their dataset so that two datasets served
+// from the same process can never read each other's vectors.
+const fallbackStores = new WeakMap();
+const pendingVectorizations = new WeakMap();
+function resolveVectorBackend(options) {
+    if (options.vectorStore && options.embeddingProvider) {
+        return { store: options.vectorStore, provider: options.embeddingProvider };
+    }
+    let fallback = fallbackStores.get(options.dataset);
+    if (!fallback) {
+        fallback = { store: new MemoryVectorStore(), provider: new DeterministicEmbeddingProvider(64) };
+        fallbackStores.set(options.dataset, fallback);
+    }
+    return {
+        store: options.vectorStore ?? fallback.store,
+        provider: options.embeddingProvider ?? fallback.provider,
+    };
+}
+async function ensureVectorized(dataset, store, provider) {
+    if ((await store.count()) > 0)
+        return;
+    let pending = pendingVectorizations.get(store);
+    if (!pending) {
+        pending = vectorizeDataset(dataset, store, provider).finally(() => pendingVectorizations.delete(store));
+        pendingVectorizations.set(store, pending);
+    }
+    await pending;
+}
 /**
  * Main request router for GeoCore HTTP server.
  */
@@ -26,8 +66,7 @@ export async function routeRequest(req, res, options) {
     const parsedUrl = new URL(rawUrl, "http://localhost");
     const pathname = parsedUrl.pathname;
     const query = parsedUrl.searchParams;
-    const store = options.vectorStore ?? (defaultStore ??= new MemoryVectorStore());
-    const provider = options.embeddingProvider ?? (defaultProvider ??= new DeterministicEmbeddingProvider(64));
+    const { store, provider } = resolveVectorBackend(options);
     // 1. Health check
     if (pathname === "/api/health" || pathname === "/health") {
         const vectorCount = await store.count();
@@ -76,13 +115,15 @@ export async function routeRequest(req, res, options) {
     }
     // 5. Auth validation for internal/protected routes
     const authContext = authenticateRequest(req, auth);
-    const requestedVisibility = query.get("visibility") || "public";
+    const requestedVisibility = query.get("visibility") === "internal" ? "internal" : "public";
     const effectiveVisibility = authContext.authenticated ? requestedVisibility : "public";
     // 6. Search API: /api/search?q=...
     if (pathname === "/api/search") {
         const q = query.get("q") || query.get("query") || "";
         const language = query.get("language") || undefined;
-        const limit = query.get("limit") ? parseInt(query.get("limit"), 10) : undefined;
+        const limit = parseNonNegativeInt(query.get("limit"));
+        if (limit === null)
+            return sendBadParam(res, "limit");
         const result = searchKnowledge(dataset, {
             query: q,
             language,
@@ -95,11 +136,11 @@ export async function routeRequest(req, res, options) {
     if (pathname === "/api/search/hybrid") {
         const q = query.get("q") || query.get("query") || "";
         const language = query.get("language") || undefined;
-        const limit = query.get("limit") ? parseInt(query.get("limit"), 10) : undefined;
-        // If vector store is empty, vectorize automatically
-        if ((await store.count()) === 0) {
-            await vectorizeDataset(dataset, store, provider);
-        }
+        const limit = parseNonNegativeInt(query.get("limit"));
+        if (limit === null)
+            return sendBadParam(res, "limit");
+        // If vector store is empty, vectorize automatically (once, even under concurrent requests)
+        await ensureVectorized(dataset, store, provider);
         const result = await searchHybrid(q, dataset, store, provider, {
             language,
             limit,
@@ -108,6 +149,12 @@ export async function routeRequest(req, res, options) {
     }
     // 8. Vectorize Dataset: POST /api/vectorize
     if (pathname === "/api/vectorize" && req.method === "POST") {
+        if (!authContext.isAdmin) {
+            return sendJson(res, authContext.authenticated ? 403 : 401, {
+                status: "error",
+                error: "Re-indexing the vector store requires an admin API key.",
+            });
+        }
         const report = await vectorizeDataset(dataset, store, provider);
         return sendJson(res, 200, { status: "ok", report });
     }
@@ -115,8 +162,12 @@ export async function routeRequest(req, res, options) {
     if (pathname === "/api/objects") {
         const language = query.get("language") || undefined;
         const status = query.get("status") || undefined;
-        const limit = query.get("limit") ? parseInt(query.get("limit"), 10) : undefined;
-        const offset = query.get("offset") ? parseInt(query.get("offset"), 10) : undefined;
+        const limit = parseNonNegativeInt(query.get("limit"));
+        if (limit === null)
+            return sendBadParam(res, "limit");
+        const offset = parseNonNegativeInt(query.get("offset"));
+        if (offset === null)
+            return sendBadParam(res, "offset");
         const result = listKnowledgeObjects(dataset, {
             visibility: effectiveVisibility,
             language,
@@ -136,8 +187,12 @@ export async function routeRequest(req, res, options) {
     // 10. Entities: /api/entities and /api/entities/:id
     if (pathname === "/api/entities") {
         const language = query.get("language") || undefined;
-        const limit = query.get("limit") ? parseInt(query.get("limit"), 10) : undefined;
-        const offset = query.get("offset") ? parseInt(query.get("offset"), 10) : undefined;
+        const limit = parseNonNegativeInt(query.get("limit"));
+        if (limit === null)
+            return sendBadParam(res, "limit");
+        const offset = parseNonNegativeInt(query.get("offset"));
+        if (offset === null)
+            return sendBadParam(res, "offset");
         const result = listEntities(dataset, {
             visibility: effectiveVisibility,
             language,
@@ -209,7 +264,11 @@ export async function routeRequest(req, res, options) {
     }
     // 16. Validation report: /api/validate
     if (pathname === "/api/validate") {
-        const mode = query.get("mode") || "public";
+        // Validation reports list every object, including drafts, so they are never public.
+        if (!authContext.authenticated) {
+            return sendJson(res, 401, { status: "error", error: "The validation report requires an API key." });
+        }
+        const mode = query.get("mode") === "internal" ? "internal" : "public";
         const report = runValidationPipeline({ dataset, config: { mode } });
         return sendJson(res, 200, report);
     }

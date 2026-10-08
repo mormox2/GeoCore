@@ -1,5 +1,11 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 export type CorsOptions = {
+    /**
+     * - `"*"` or a single origin string: sent as-is.
+     * - `string[]`: the request origin is echoed back only when it is in the list.
+     * - `true`: the request origin is echoed back.
+     * - `false`: no CORS headers are sent.
+     */
     origin?: string | string[] | boolean;
     methods?: string[];
     allowedHeaders?: string[];

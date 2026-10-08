@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "node:crypto";
 /**
  * Extracts and validates API key from incoming request headers or URL query params.
  */
@@ -28,11 +29,25 @@ export function authenticateRequest(req, options = {}) {
     if (!key) {
         return { authenticated: false, isAdmin: false };
     }
-    const isAdmin = adminKeys.includes(key);
-    const isValid = isAdmin || apiKeys.includes(key);
+    const isAdmin = containsKey(adminKeys, key);
+    const isValid = isAdmin || containsKey(apiKeys, key);
     return {
         authenticated: isValid,
         isAdmin,
         apiKey: key,
     };
+}
+function safeEqual(a, b) {
+    const bufA = Buffer.from(a);
+    const bufB = Buffer.from(b);
+    return bufA.length === bufB.length && timingSafeEqual(bufA, bufB);
+}
+/** Constant-time membership check so response timing does not reveal key prefixes. */
+function containsKey(keys, candidate) {
+    let found = false;
+    for (const k of keys) {
+        if (safeEqual(k, candidate))
+            found = true;
+    }
+    return found;
 }
