@@ -23,4 +23,4 @@ Cette documentation décrit le principe fonctionnel général et ne doit pas exp
 - Version: 1.0.0
 - Status: published
 - Author: author_dawajin_team
-- Last Updated: 2026-08-20T22:47:27.418Z
+- Last Updated: 2026-06-27T17:22:08Z

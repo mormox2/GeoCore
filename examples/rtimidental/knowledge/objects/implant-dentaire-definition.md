@@ -6,6 +6,8 @@ summary: Définition simple d’un implant dentaire pour les patients.
 language: fr
 status: published
 version: 1.0.0
+createdAt: 2026-06-27T00:25:12Z
+updatedAt: 2026-06-27T00:25:12Z
 author: author_dr_mossaab_rtimi
 reviewer: author_dr_mossaab_rtimi
 trustLevel: medical

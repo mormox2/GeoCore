@@ -6,6 +6,8 @@ summary: Comprendre le suivi du stock pour la volaille et les plateaux d’œufs
 language: fr
 status: published
 version: 1.0.0
+createdAt: 2026-06-27T17:22:08Z
+updatedAt: 2026-06-27T17:22:08Z
 author: author_dawajin_team
 reviewer: author_dawajin_team
 trustLevel: product-critical
