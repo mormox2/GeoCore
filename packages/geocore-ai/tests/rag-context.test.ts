@@ -79,5 +79,39 @@ describe("GeoCore AI Engine", () => {
       expect(result.isGrounded).toBe(false);
       expect(result.score).toBeLessThan(0.3);
     });
+
+    it("reports a fabricated claim appended to faithful text instead of rating it low risk", () => {
+      const answer =
+        contextPackage.object.body +
+        " Par ailleurs, le détartrage guérit définitivement le cancer et remplace les antibiotiques.";
+
+      const result = verifyAnswerGrounding(answer, contextPackage);
+      expect(result.unsupportedClaims).toEqual([
+        "Par ailleurs, le détartrage guérit définitivement le cancer et remplace les antibiotiques.",
+      ]);
+      expect(result.isGrounded).toBe(false);
+      expect(result.hallucinationRisk).not.toBe("low");
+    });
+
+    it("never grounds an answer against an empty context", () => {
+      const emptyContext = {
+        ...contextPackage,
+        object: { ...contextPackage.object, title: "", summary: "", body: "" },
+        entities: [],
+        citations: [],
+        sources: [],
+      };
+
+      const result = verifyAnswerGrounding("La lune est entièrement faite de fromage.", emptyContext);
+      expect(result.isGrounded).toBe(false);
+      expect(result.hallucinationRisk).toBe("high");
+      expect(result.score).toBe(0);
+    });
+
+    it("treats an empty answer as ungrounded", () => {
+      const result = verifyAnswerGrounding("", contextPackage);
+      expect(result.isGrounded).toBe(false);
+      expect(result.hallucinationRisk).toBe("high");
+    });
   });
 });
