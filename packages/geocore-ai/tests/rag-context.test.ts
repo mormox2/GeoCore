@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { buildPromptContext } from "../src/rag/context-builder.js";
 import { chunkKnowledgeObject } from "../src/rag/knowledge-chunker.js";
 import { verifyAnswerGrounding } from "../src/rag/citation-grounding.js";
+import { buildExtractiveAnswer, markdownToPlainText } from "../src/rag/extractive-answer.js";
 import { apiDatasetFixture, getAiContext } from "../../geocore/src/index.js";
 
 describe("GeoCore AI Engine", () => {
@@ -112,6 +113,42 @@ describe("GeoCore AI Engine", () => {
       const result = verifyAnswerGrounding("", contextPackage);
       expect(result.isGrounded).toBe(false);
       expect(result.hallucinationRisk).toBe("high");
+    });
+  });
+
+  describe("buildExtractiveAnswer", () => {
+    it("answers only with sentences from the certified object, so the answer is grounded", () => {
+      const { answer, matchedQueryTerms } = buildExtractiveAnswer(
+        "Est-ce que le détartrage abîme les dents ?",
+        contextPackage
+      );
+      expect(contextPackage.object.body).toContain(answer.split(". ")[0]);
+      expect(matchedQueryTerms).toBeGreaterThan(0);
+
+      const grounding = verifyAnswerGrounding(answer, contextPackage);
+      expect(grounding.isGrounded).toBe(true);
+      expect(grounding.unsupportedClaims).toEqual([]);
+    });
+
+    it("reports zero matched terms for an unrelated question", () => {
+      const { matchedQueryTerms } = buildExtractiveAnswer("Quel est le prix des fusées spatiales ?", contextPackage);
+      expect(matchedQueryTerms).toBe(0);
+    });
+
+    it("keeps the most relevant sentences within maxLength, in document order", () => {
+      const ctx = {
+        ...contextPackage,
+        object: {
+          ...contextPackage.object,
+          body: "## Titre\n\nPremière phrase générale sur la santé. Le tartre se forme sur les dents. Les implants remplacent une dent. Le tartre favorise la gingivite.",
+        },
+      };
+      const { answer } = buildExtractiveAnswer("Comment se forme le tartre ?", ctx, { maxLength: 90 });
+      expect(answer).toBe("Le tartre se forme sur les dents. Le tartre favorise la gingivite.");
+    });
+
+    it("converts markdown to plain prose", () => {
+      expect(markdownToPlainText("# H\n\n- **Gras** et [lien](https://x.y)\n1. Item")).toBe("Gras et lien Item");
     });
   });
 });

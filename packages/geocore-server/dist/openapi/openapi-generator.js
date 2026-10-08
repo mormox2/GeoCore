@@ -99,6 +99,20 @@ export function generateOpenApiSpec(info = {}) {
                     },
                 },
             },
+            "/api/answer": {
+                get: {
+                    summary: "Grounded Answer (Widget Endpoint)",
+                    description: "Finds the most relevant published knowledge object with hybrid search and answers with sentences extracted verbatim from it. An answer is only returned when it passes the grounding check; otherwise status is 'no-answer'.",
+                    parameters: [
+                        { name: "q", in: "query", required: true, schema: { type: "string", maxLength: 500 } },
+                        { name: "language", in: "query", schema: { type: "string" } },
+                    ],
+                    responses: {
+                        "200": { description: "Grounded answer with sources and grounding score, or status 'no-answer'" },
+                        "400": { description: "Missing or too long query" },
+                    },
+                },
+            },
             "/api/vectorize": {
                 post: {
                     summary: "Index Dataset into Vector Store",

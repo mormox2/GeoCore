@@ -2,6 +2,7 @@ import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
 import { createGeoCoreServer, GeoCoreServerInstance } from "../src/server/http-server.js";
 import { routeRequest } from "../src/routes/api-router.js";
 import type { KnowledgeDataset } from "@mormo_mossaab/geocore";
+import { fetchWidgetAnswer } from "@mormo_mossaab/geocore";
 import { apiDatasetFixture } from "@mormo_mossaab/geocore";
 
 describe("GeoCore Standalone HTTP Server", () => {
@@ -188,6 +189,50 @@ describe("GeoCore Standalone HTTP Server", () => {
     const ok = await fetch(`${baseUrl}/api/objects?limit=1`);
     expect(ok.status).toBe(200);
     expect((await ok.json()).data.length).toBe(1);
+  });
+});
+
+describe("GET /api/answer (widget endpoint)", () => {
+  let instance: GeoCoreServerInstance;
+  let apiUrl: string;
+
+  beforeAll(async () => {
+    instance = createGeoCoreServer({ dataset: apiDatasetFixture });
+    apiUrl = `${(await instance.listen(0, "127.0.0.1")).url}/api`;
+  });
+
+  afterAll(async () => {
+    await instance.close();
+  });
+
+  it("answers with grounded sentences extracted from the published object", async () => {
+    const result = await fetchWidgetAnswer(apiUrl, "Est-ce que le détartrage abîme l'émail ?");
+    expect(result.kind).toBe("answer");
+    if (result.kind !== "answer") return;
+
+    const object = apiDatasetFixture.objects.find((o) => o.id === result.data.objectId)!;
+    expect(object.status).toBe("published");
+    expect(object.body).toContain(result.data.answer);
+    expect(result.data.grounding.isGrounded).toBe(true);
+    expect(result.data.grounding.unsupportedClaims).toEqual([]);
+    expect(result.data.sources.length).toBeGreaterThan(0);
+  });
+
+  it("returns no-answer for unrelated questions instead of guessing", async () => {
+    const result = await fetchWidgetAnswer(apiUrl, "Quelle est la capitale de la France ?");
+    expect(result.kind).toBe("no-answer");
+  });
+
+  it("never answers from draft objects", async () => {
+    const draft = apiDatasetFixture.objects.find((o) => o.status !== "published")!;
+    const res = await fetch(`${apiUrl}/answer?q=${encodeURIComponent(draft.title)}`);
+    const body = await res.json();
+    expect(body.data?.objectId).not.toBe(draft.id);
+  });
+
+  it("validates the q parameter", async () => {
+    expect((await fetch(`${apiUrl}/answer`)).status).toBe(400);
+    expect((await fetch(`${apiUrl}/answer?q=${"a".repeat(501)}`)).status).toBe(400);
   });
 });
 

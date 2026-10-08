@@ -62,10 +62,12 @@ export async function searchHybrid(
 
   // 2. Execute Vector Semantic Search
   const queryVector = await provider.embedText(query);
-  const vectorHits = await store.search(queryVector, {
-    limit: limit * 2,
-    minScore: options.minVectorScore ?? 0.1,
-  });
+  const vectorHits = (
+    await store.search(queryVector, {
+      limit: limit * 2,
+      minScore: options.minVectorScore ?? 0.1,
+    })
+  ).filter((hit) => !options.language || hit.document.metadata?.language === options.language);
 
   // 3. Compute Reciprocal Rank Fusion (RRF) Scores
   const itemMap = new Map<
