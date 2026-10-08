@@ -1,4 +1,5 @@
 import type { MediaAsset } from "../types/media.js";
+import { escapeHtml, sanitizeUrl } from "../renderer/html-safety.js";
 
 /**
  * Returns a plain-text alt text string for a media asset.
@@ -21,11 +22,11 @@ export function getMediaCaption(asset: MediaAsset): string {
  * Only valid for image-type media.
  */
 export function formatImageHtml(asset: MediaAsset): string {
-  const src = asset.canonicalUrl ?? asset.source;
+  const src = sanitizeUrl(asset.canonicalUrl ?? asset.source) ?? "";
   const alt = getMediaAltText(asset);
-  const width = asset.width ? ` width="${asset.width}"` : "";
-  const height = asset.height ? ` height="${asset.height}"` : "";
-  return `<img src="${src}" alt="${alt}"${width}${height} loading="lazy">`;
+  const width = asset.width ? ` width="${escapeHtml(asset.width)}"` : "";
+  const height = asset.height ? ` height="${escapeHtml(asset.height)}"` : "";
+  return `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}"${width}${height} loading="lazy">`;
 }
 
 /**
@@ -43,12 +44,13 @@ export function formatImageMarkdown(asset: MediaAsset): string {
  * Only valid for video-type media.
  */
 export function formatVideoHtml(asset: MediaAsset): string {
-  const src = asset.canonicalUrl ?? asset.source;
+  const src = sanitizeUrl(asset.canonicalUrl ?? asset.source) ?? "";
   const mimeType = asset.mimeType ?? "video/mp4";
-  const width = asset.width ? ` width="${asset.width}"` : "";
-  const height = asset.height ? ` height="${asset.height}"` : "";
-  const poster = asset.thumbnailId ? ` poster="${asset.thumbnailId}"` : "";
-  return `<video${width}${height}${poster} controls>\n  <source src="${src}" type="${mimeType}">\n</video>`;
+  const width = asset.width ? ` width="${escapeHtml(asset.width)}"` : "";
+  const height = asset.height ? ` height="${escapeHtml(asset.height)}"` : "";
+  const posterUrl = sanitizeUrl(asset.thumbnailId);
+  const poster = posterUrl ? ` poster="${escapeHtml(posterUrl)}"` : "";
+  return `<video${width}${height}${poster} controls>\n  <source src="${escapeHtml(src)}" type="${escapeHtml(mimeType)}">\n</video>`;
 }
 
 /**

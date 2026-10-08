@@ -5,6 +5,7 @@ import {
   formatMediaAttribution,
   getMediaAltText,
   getMediaCaption,
+  escapeHtml,
 } from "@mormo_mossaab/geocore";
 
 /**
@@ -18,14 +19,14 @@ export function renderMediaFigureHtml(media: MediaAsset): string {
   const attribution = formatMediaAttribution(media);
 
   const captionParts: string[] = [];
-  if (caption) captionParts.push(`<span class="geocore-caption-text">${caption}</span>`);
-  if (attribution) captionParts.push(`<span class="geocore-attribution-text">${attribution}</span>`);
+  if (caption) captionParts.push(`<span class="geocore-caption-text">${escapeHtml(caption)}</span>`);
+  if (attribution) captionParts.push(`<span class="geocore-attribution-text">${escapeHtml(attribution)}</span>`);
 
   const figcaption =
     captionParts.length > 0 ? `  <figcaption>${captionParts.join(" — ")}</figcaption>\n` : "";
 
   return (
-    `<figure class="geocore-media-figure" data-media-type="${media.type}">\n` +
+    `<figure class="geocore-media-figure" data-media-type="${escapeHtml(media.type)}">\n` +
     `  ${mediaElement}\n` +
     figcaption +
     `</figure>`

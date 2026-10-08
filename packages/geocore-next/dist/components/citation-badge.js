@@ -1,4 +1,4 @@
-import { formatSourceTrustBadge, formatSourceInline } from "@mormo_mossaab/geocore";
+import { formatSourceTrustBadge, formatSourceInline, escapeHtml, sanitizeUrl } from "@mormo_mossaab/geocore";
 /**
  * Extracts and prepares citation badge data for UI components.
  */
@@ -21,10 +21,13 @@ export function createCitationBadgeData(citation, source) {
  */
 export function renderCitationBadgeHtml(citation, source) {
     const data = createCitationBadgeData(citation, source);
-    const linkStart = data.url ? `<a href="${data.url}" target="_blank" rel="noopener noreferrer" class="geocore-citation-link">` : "";
-    const linkEnd = data.url ? "</a>" : "";
-    return (`<span class="geocore-citation-badge" data-purpose="${citation.purpose}" data-trust="${data.trustLevel || "unknown"}">` +
-        `${linkStart}<span class="geocore-badge-icon">${data.badgeLabel}</span> ` +
-        `<span class="geocore-badge-text">${data.sourceText}</span>${linkEnd}` +
+    const url = sanitizeUrl(data.url);
+    const linkStart = url
+        ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="geocore-citation-link">`
+        : "";
+    const linkEnd = url ? "</a>" : "";
+    return (`<span class="geocore-citation-badge" data-purpose="${escapeHtml(citation.purpose)}" data-trust="${escapeHtml(data.trustLevel || "unknown")}">` +
+        `${linkStart}<span class="geocore-badge-icon">${escapeHtml(data.badgeLabel)}</span> ` +
+        `<span class="geocore-badge-text">${escapeHtml(data.sourceText)}</span>${linkEnd}` +
         `</span>`);
 }

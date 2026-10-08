@@ -36,6 +36,7 @@ export * from "./metadata/validate-metadata.js";
 export * from "./renderer/renderer-types.js";
 export * from "./renderer/renderer-interface.js";
 export * from "./renderer/renderer-registry.js";
+export * from "./renderer/html-safety.js";
 export * from "./renderer/renderer-utils.js";
 export * from "./renderer/create-renderer-output.js";
 export * from "./renderer/validate-renderer-input.js";

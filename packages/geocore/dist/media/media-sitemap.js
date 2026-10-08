@@ -35,7 +35,7 @@ export function generateMediaSitemapXmlExtension(images, videos) {
     const lines = [];
     for (const img of images) {
         lines.push(`  <image:image>`);
-        lines.push(`    <image:loc>${img.url}</image:loc>`);
+        lines.push(`    <image:loc>${escapeXml(img.url)}</image:loc>`);
         lines.push(`    <image:title>${escapeXml(img.title)}</image:title>`);
         if (img.caption) {
             lines.push(`    <image:caption>${escapeXml(img.caption)}</image:caption>`);
@@ -48,13 +48,13 @@ export function generateMediaSitemapXmlExtension(images, videos) {
     for (const vid of videos) {
         lines.push(`  <video:video>`);
         if (vid.thumbnailUrl) {
-            lines.push(`    <video:thumbnail_loc>${vid.thumbnailUrl}</video:thumbnail_loc>`);
+            lines.push(`    <video:thumbnail_loc>${escapeXml(vid.thumbnailUrl)}</video:thumbnail_loc>`);
         }
         lines.push(`    <video:title>${escapeXml(vid.title)}</video:title>`);
         if (vid.description) {
             lines.push(`    <video:description>${escapeXml(vid.description)}</video:description>`);
         }
-        lines.push(`    <video:content_loc>${vid.contentUrl}</video:content_loc>`);
+        lines.push(`    <video:content_loc>${escapeXml(vid.contentUrl)}</video:content_loc>`);
         if (vid.duration !== undefined) {
             lines.push(`    <video:duration>${vid.duration}</video:duration>`);
         }

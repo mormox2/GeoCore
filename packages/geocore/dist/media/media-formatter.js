@@ -1,3 +1,4 @@
+import { escapeHtml, sanitizeUrl } from "../renderer/html-safety.js";
 /**
  * Returns a plain-text alt text string for a media asset.
  * Falls back to the title if no altText is set.
@@ -17,11 +18,11 @@ export function getMediaCaption(asset) {
  * Only valid for image-type media.
  */
 export function formatImageHtml(asset) {
-    const src = asset.canonicalUrl ?? asset.source;
+    const src = sanitizeUrl(asset.canonicalUrl ?? asset.source) ?? "";
     const alt = getMediaAltText(asset);
-    const width = asset.width ? ` width="${asset.width}"` : "";
-    const height = asset.height ? ` height="${asset.height}"` : "";
-    return `<img src="${src}" alt="${alt}"${width}${height} loading="lazy">`;
+    const width = asset.width ? ` width="${escapeHtml(asset.width)}"` : "";
+    const height = asset.height ? ` height="${escapeHtml(asset.height)}"` : "";
+    return `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}"${width}${height} loading="lazy">`;
 }
 /**
  * Formats a media asset as a Markdown image string.
@@ -37,12 +38,13 @@ export function formatImageMarkdown(asset) {
  * Only valid for video-type media.
  */
 export function formatVideoHtml(asset) {
-    const src = asset.canonicalUrl ?? asset.source;
+    const src = sanitizeUrl(asset.canonicalUrl ?? asset.source) ?? "";
     const mimeType = asset.mimeType ?? "video/mp4";
-    const width = asset.width ? ` width="${asset.width}"` : "";
-    const height = asset.height ? ` height="${asset.height}"` : "";
-    const poster = asset.thumbnailId ? ` poster="${asset.thumbnailId}"` : "";
-    return `<video${width}${height}${poster} controls>\n  <source src="${src}" type="${mimeType}">\n</video>`;
+    const width = asset.width ? ` width="${escapeHtml(asset.width)}"` : "";
+    const height = asset.height ? ` height="${escapeHtml(asset.height)}"` : "";
+    const posterUrl = sanitizeUrl(asset.thumbnailId);
+    const poster = posterUrl ? ` poster="${escapeHtml(posterUrl)}"` : "";
+    return `<video${width}${height}${poster} controls>\n  <source src="${escapeHtml(src)}" type="${escapeHtml(mimeType)}">\n</video>`;
 }
 /**
  * Formats a media asset attribution line.

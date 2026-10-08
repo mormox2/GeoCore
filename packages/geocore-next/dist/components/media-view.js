@@ -1,4 +1,4 @@
-import { formatImageHtml, formatVideoHtml, formatMediaAttribution, getMediaCaption, } from "@mormo_mossaab/geocore";
+import { formatImageHtml, formatVideoHtml, formatMediaAttribution, getMediaCaption, escapeHtml, } from "@mormo_mossaab/geocore";
 /**
  * Renders a full accessible media figure element containing the media and caption/attribution.
  */
@@ -9,11 +9,11 @@ export function renderMediaFigureHtml(media) {
     const attribution = formatMediaAttribution(media);
     const captionParts = [];
     if (caption)
-        captionParts.push(`<span class="geocore-caption-text">${caption}</span>`);
+        captionParts.push(`<span class="geocore-caption-text">${escapeHtml(caption)}</span>`);
     if (attribution)
-        captionParts.push(`<span class="geocore-attribution-text">${attribution}</span>`);
+        captionParts.push(`<span class="geocore-attribution-text">${escapeHtml(attribution)}</span>`);
     const figcaption = captionParts.length > 0 ? `  <figcaption>${captionParts.join(" — ")}</figcaption>\n` : "";
-    return (`<figure class="geocore-media-figure" data-media-type="${media.type}">\n` +
+    return (`<figure class="geocore-media-figure" data-media-type="${escapeHtml(media.type)}">\n` +
         `  ${mediaElement}\n` +
         figcaption +
         `</figure>`);
