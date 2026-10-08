@@ -1,3 +1,4 @@
+import { escapeHtml, sanitizeUrl } from "@mormo_mossaab/geocore";
 import type { ChatResponsePayload } from "../app/api/chat/route.js";
 
 /**
@@ -14,19 +15,19 @@ export function formatChatWidgetResponse(payload: ChatResponsePayload): string {
   const sourcesList = payload.sourcesCited
     .map(
       (s) =>
-        `<li><a href="${s.url || '#'}" target="_blank" rel="noopener">📄 ${s.title}</a> <span style="font-size:0.75rem; color:#38bdf8;">[Trust: ${s.trustLevel}]</span></li>`
+        `<li><a href="${escapeHtml(sanitizeUrl(s.url) ?? "#")}" target="_blank" rel="noopener">📄 ${escapeHtml(s.title)}</a> <span style="font-size:0.75rem; color:#38bdf8;">[Trust: ${escapeHtml(s.trustLevel)}]</span></li>`
     )
     .join("\n");
 
   return `
 <div class="geocore-chat-bubble" style="background:#1e293b; border-radius:12px; padding:16px; color:#f8fafc; font-family:sans-serif;">
   <div class="chat-answer" style="font-size:0.95rem; line-height:1.6; margin-bottom:12px;">
-    ${payload.answer}
+    ${escapeHtml(payload.answer)}
   </div>
 
   <div class="chat-grounding-bar" style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px; font-size:0.8rem;">
     <span>Score d'ancrage : <strong>${(payload.groundingScore * 100).toFixed(0)}%</strong></span>
-    <span style="color:${badgeColor}; font-weight:600;">Risque: ${payload.hallucinationRisk.toUpperCase()}</span>
+    <span style="color:${badgeColor}; font-weight:600;">Risque: ${escapeHtml(payload.hallucinationRisk.toUpperCase())}</span>
   </div>
 
   ${

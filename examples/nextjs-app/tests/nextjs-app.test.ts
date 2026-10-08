@@ -94,11 +94,37 @@ describe("Next.js 14+ App Router Reference Application", () => {
       expect(res.status).toBe(200);
       const data = await res.json();
 
-      expect(data.answer).toContain("n'abîme en aucun cas l'émail dentaire");
+      // The answer is taken from the certified knowledge object, never invented.
+      expect(data.answer).toContain("le détartrage n'abîme pas les dents");
       expect(data.groundingScore).toBeGreaterThanOrEqual(0.7);
       expect(data.hallucinationRisk).toBe("low");
       expect(data.sourcesCited.length).toBeGreaterThan(0);
       expect(data.sourcesCited[0].title).toContain("World Health Organization");
+    });
+
+    it("POST /api/chat does not fall back to an unrelated canned answer", async () => {
+      const req = new Request("https://rtimidental.tn/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: "" }),
+      });
+      const res = await ChatPost(req);
+      expect(res.status).toBe(404);
+    });
+
+    it("escapes answers and source links in the chat widget", () => {
+      const html = formatChatWidgetResponse({
+        answer: "<img src=x onerror=alert(1)>",
+        matchedObjectId: "x",
+        groundingScore: 0.5,
+        hallucinationRisk: "medium",
+        groundedEntities: [],
+        sourcesCited: [{ title: "<b>t</b>", trustLevel: "unknown", url: "javascript:alert(1)" }],
+        promptContextPreview: "...",
+      });
+      expect(html).not.toContain("<img");
+      expect(html).not.toContain("javascript:");
+      expect(html).not.toContain("<b>t</b>");
     });
 
     it("formats chat widget response bubble with HTML and trust badges", () => {

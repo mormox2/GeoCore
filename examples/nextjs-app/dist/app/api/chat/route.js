@@ -12,6 +12,16 @@ async function ensureVectorized() {
         isVectorized = true;
     }
 }
+/** Strips Markdown headings and emphasis so certified body text can be shown as an answer. */
+function toPlainText(markdown) {
+    return markdown
+        .split("\n")
+        .filter((line) => !/^\s*#/.test(line))
+        .join(" ")
+        .replace(/[*_`]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+}
 /**
  * Next.js 14+ POST handler for AI / RAG conversational queries with Hybrid Semantic Search.
  */
@@ -33,7 +43,7 @@ export async function POST(req) {
             }
         }
         if (!targetObjectId) {
-            targetObjectId = "ko_detartrage_abime_dents"; // Default fallback
+            return new Response(JSON.stringify({ error: "No relevant authoritative knowledge context found." }), { status: 404, headers: { "Content-Type": "application/json" } });
         }
         // 2. Fetch authoritative AI Context Package
         const contextRes = getAiContext(appDataset, { objectId: targetObjectId, visibility: "public" });
@@ -43,10 +53,9 @@ export async function POST(req) {
         const aiPackage = contextRes.data;
         // 3. Build formatted LLM Prompt Context with citation guardrails
         const promptContext = buildPromptContext(aiPackage);
-        // 4. Generate grounded domain response
-        const answer = targetObjectId === "ko_detartrage_abime_dents"
-            ? "Non, le détartrage n'abîme en aucun cas l'émail dentaire. Selon les recommandations de l'Organisation Mondiale de la Santé (WHO) et le Dr Mossaab Rtimi, les instruments à ultrasons éliminent sélectivement le tartre sans rayer la surface des dents."
-            : `D'après nos données cliniques sur "${aiPackage.object.title}", ${aiPackage.object.summary}`;
+        // 4. Answer extractively from the certified knowledge object. A production app would
+        //    send promptContext to an LLM here; the grounding check below applies either way.
+        const answer = toPlainText(aiPackage.object.body);
         // 5. Verify Grounding & Guardrails
         const grounding = verifyAnswerGrounding(answer, aiPackage);
         const payload = {
@@ -59,7 +68,7 @@ export async function POST(req) {
             groundedEntities: grounding.matchedEntities,
             sourcesCited: aiPackage.sources.map((s) => ({
                 title: s.title,
-                trustLevel: s.trustLevel || "authoritative",
+                trustLevel: s.trustLevel ?? "unknown",
                 url: s.url,
             })),
             promptContextPreview: promptContext.slice(0, 300) + "...",
@@ -70,8 +79,8 @@ export async function POST(req) {
         });
     }
     catch (err) {
-        const errorMsg = err instanceof Error ? err.message : "Internal Server Error";
-        return new Response(JSON.stringify({ error: errorMsg }), {
+        console.error("[chat] request failed:", err);
+        return new Response(JSON.stringify({ error: "Internal Server Error" }), {
             status: 500,
             headers: { "Content-Type": "application/json" },
         });
