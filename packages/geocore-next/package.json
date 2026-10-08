@@ -1,6 +1,6 @@
 {
   "name": "@mormo_mossaab/geocore-next",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "GeoCore Next.js 14+ App Router adapters, metadata generators, route handlers, and UI components",
   "type": "module",
   "main": "dist/index.js",
@@ -23,7 +23,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@mormo_mossaab/geocore": "^1.0.1"
+    "@mormo_mossaab/geocore": "^1.1.0"
   },
   "devDependencies": {
     "typescript": "^5.4.5",
