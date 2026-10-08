@@ -1,5 +1,7 @@
 // ─── GeoCore Visual Studio Application Engine ─────────────────────────────────
 
+import { hybridSearch, verifyGrounding, validateKnowledgeMarkdown } from "./engine.js";
+
 const DATASETS = {
   rtimidental: {
     name: "RTimi Dental",
@@ -59,6 +61,7 @@ let currentFilter = "all";
 document.addEventListener("DOMContentLoaded", () => {
   setupTabs();
   setupDatasetSwitch();
+  updateMetrics();
   setupCanvas();
   setupLiveEditor();
   setupLiveChat();
@@ -105,7 +108,10 @@ function setupDatasetSwitch() {
   const exportBtn = document.getElementById("btnExport");
   if (exportBtn) {
     exportBtn.addEventListener("click", () => {
-      alert(`Export statique généré pour le dataset "${DATASETS[currentDatasetKey].name}" (8 assets écrits dans dist/static).`);
+      alert(
+        `Le Studio est une prévisualisation : l'export statique du dataset "${DATASETS[currentDatasetKey].name}" ` +
+          `se génère en ligne de commande avec « geocore export --config geocore.config.json ».`
+      );
     });
   }
 }
@@ -115,6 +121,25 @@ function updateMetrics() {
   document.getElementById("metricKoCount").textContent = dataset.objects.length;
   document.getElementById("metricEntityCount").textContent = dataset.entities.length;
   document.getElementById("metricCitationCount").textContent = dataset.citations.length;
+  const mediaCount = document.getElementById("metricMediaCount");
+  if (mediaCount) mediaCount.textContent = (dataset.media ?? []).length;
+
+  // Health metrics computed from the loaded dataset (no fixed values).
+  const linked = new Set(dataset.relationships.flatMap((r) => [r.from, r.to]));
+  const orphans = dataset.objects.filter((o) => !linked.has(o.id));
+  const published = dataset.objects.filter((o) => o.status === "published");
+  const cited = dataset.objects.filter((o) =>
+    dataset.relationships.some((r) => r.from === o.id && r.label === "cites")
+  );
+  setText("healthOrphans", orphans.length);
+  setText("healthOrphansSub", orphans.length === 0 ? "Tous reliés au graphe" : orphans.map((o) => o.id).join(", "));
+  setText("healthPublished", `${published.length}/${dataset.objects.length}`);
+  setText("healthCited", `${cited.length}/${dataset.objects.length}`);
+}
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = String(value);
 }
 
 // ─── Canvas Visualizer ───────────────────────────────────────────────────────
@@ -284,31 +309,23 @@ function setupLiveEditor() {
 
 function runLiveValidation() {
   const out = document.getElementById("validationOutput");
-  if (!out) return;
+  const editor = document.getElementById("markdownEditor");
+  if (!out || !editor) return;
 
-  const stages = [
-    { name: "1. dataset", status: "passed", msg: "Dataset manifest valide" },
-    { name: "2. knowledge-objects", status: "passed", msg: "Frontmatter Zod valide" },
-    { name: "3. relationships", status: "passed", msg: "3 relations intègres" },
-    { name: "4. metadata", status: "passed", msg: "Métadonnées résolues" },
-    { name: "5. routes", status: "passed", msg: "Aucun conflit de routes" },
-    { name: "6. search", status: "passed", msg: "Documents plein texte indexés" },
-    { name: "7. schema", status: "passed", msg: "Schema.org Article & DefinedTerm" },
-    { name: "8. llms", status: "passed", msg: "llms.txt généré avec succès" },
-    { name: "9. sitemap", status: "passed", msg: "Sitemap XML conforme" },
-    { name: "10. static-export", status: "passed", msg: "Bundle de publication prêt" },
-  ];
+  const stages = validateKnowledgeMarkdown(editor.value, DATASETS[currentDatasetKey]);
+  const icon = { passed: "✅ OK", warning: "⚠️ Avertissement", error: "❌ Erreur" };
 
-  out.innerHTML = stages
-    .map(
-      (s) => `
+  out.innerHTML =
+    stages
+      .map(
+        (s, i) => `
     <div class="diag-item ${s.status}">
-      <span><strong>${s.name}</strong> — ${s.msg}</span>
-      <span>${s.status === "passed" ? "✅ Pass" : "⚠️ Warning"}</span>
-    </div>
-  `
-    )
-    .join("");
+      <span><strong>${i + 1}. ${escapeHtml(s.name)}</strong> — ${escapeHtml(s.msg)}</span>
+      <span>${icon[s.status]}</span>
+    </div>`
+      )
+      .join("") +
+    `<p style="font-size:0.75rem; color:var(--text-dim);">Contrôles locaux uniquement. Le pipeline complet en 10 étapes s'exécute avec « geocore validate ».</p>`;
 }
 
 // ─── Live Vector Chat & RRF Inspector ────────────────────────────────────────
@@ -335,29 +352,30 @@ function setupLiveChat() {
     input.value = "";
     messagesBox.scrollTop = messagesBox.scrollHeight;
 
-    // Simulate Hybrid Semantic Search & RRF Calculation
-    setTimeout(() => {
-      const { answer, rrfResults, groundingScore, sources } = simulateHybridSearchAndRAG(userText);
+    const { results, answer, top, grounding, sources } = answerFromDataset(userText);
 
-      // Append Bot Message
-      const botMsg = document.createElement("div");
-      botMsg.className = "chat-message bot";
-      botMsg.innerHTML = `
+    const botMsg = document.createElement("div");
+    botMsg.className = "chat-message bot";
+    botMsg.innerHTML = answer
+      ? `
         <div class="chat-avatar">AI</div>
         <div class="chat-bubble">
-          <p>${answer}</p>
+          <p style="font-size:0.75rem; color:var(--text-muted);">📄 ${escapeHtml(top.title)}</p>
+          <p>${escapeHtml(answer)}</p>
           <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
-            <span class="score-badge low-risk">🛡️ Ancrage ${groundingScore}%</span>
-            ${sources.map((s) => `<span style="font-size:0.7rem; background:rgba(255,255,255,0.06); padding:2px 8px; border-radius:10px; color:var(--text-muted);">📚 ${s}</span>`).join("")}
+            <span class="score-badge ${grounding.hallucinationRisk}-risk">🛡️ Ancrage ${Math.round(grounding.score * 100)}%</span>
+            ${sources.map((s) => `<span style="font-size:0.7rem; background:rgba(255,255,255,0.06); padding:2px 8px; border-radius:10px; color:var(--text-muted);">📚 ${escapeHtml(s)}</span>`).join("")}
           </div>
         </div>
+      `
+      : `
+        <div class="chat-avatar">AI</div>
+        <div class="chat-bubble"><p>Aucune réponse vérifiée dans le dataset « ${escapeHtml(DATASETS[currentDatasetKey].name)} » pour cette question.</p></div>
       `;
-      messagesBox.appendChild(botMsg);
-      messagesBox.scrollTop = messagesBox.scrollHeight;
+    messagesBox.appendChild(botMsg);
+    messagesBox.scrollTop = messagesBox.scrollHeight;
 
-      // Update Vector Inspector Sidebar
-      updateVectorInspector(userText, rrfResults);
-    }, 250);
+    updateVectorInspector(userText, results);
   }
 
   sendBtn.addEventListener("click", () => handleSend(input.value));
@@ -373,74 +391,34 @@ function setupLiveChat() {
   });
 }
 
-function simulateHybridSearchAndRAG(query) {
-  const dataset = DATASETS[currentDatasetKey];
-  const normalized = query.toLowerCase();
-
-  // Score each object using dense vector simulation + BM25 keyword matching
-  const rrfResults = dataset.objects.map((obj, index) => {
-    let bm25Match = false;
-    let vectorSim = 0.45;
-
-    if (normalized.includes("détartrage") || normalized.includes("émail") || normalized.includes("dent")) {
-      if (obj.id.includes("detartrage")) {
-        bm25Match = true;
-        vectorSim = 0.94;
-      }
-    } else if (normalized.includes("gingivite") || normalized.includes("gencive")) {
-      if (obj.id.includes("gingivite")) {
-        bm25Match = true;
-        vectorSim = 0.92;
-      }
-    } else if (normalized.includes("implant")) {
-      if (obj.id.includes("implant")) {
-        bm25Match = true;
-        vectorSim = 0.89;
-      }
-    } else if (normalized.includes("créance") || normalized.includes("solde") || normalized.includes("client")) {
-      if (obj.id.includes("creances")) {
-        bm25Match = true;
-        vectorSim = 0.91;
-      }
-    } else if (normalized.includes("stock") || normalized.includes("volaille") || normalized.includes("œuf")) {
-      if (obj.id.includes("stock")) {
-        bm25Match = true;
-        vectorSim = 0.88;
-      }
-    }
-
-    // Reciprocal Rank Fusion calculation: RRF = 1.0/(60 + lexRank) + 1.0/(60 + vecRank)
-    const lexRank = bm25Match ? 1 : 4;
-    const vecRank = index + 1;
-    const rrfScore = Math.round((1.0 / (60 + lexRank) + 1.0 / (60 + vecRank)) * 10000) / 10000;
-
-    return {
-      objectId: obj.id,
-      title: obj.title,
-      summary: obj.summary,
-      vectorSimilarity: vectorSim,
-      lexicalRank: bm25Match ? 1 : null,
-      rrfScore,
-      matchType: bm25Match ? "both" : "semantic-only",
-    };
-  });
-
-  rrfResults.sort((a, b) => b.rrfScore - a.rrfScore);
-  const topHit = rrfResults[0];
-
-  let answer = `D'après nos données cliniques sur "${topHit.title}", ${topHit.summary}`;
-  if (topHit.objectId === "ko_detartrage_abime_dents") {
-    answer = "Non, le détartrage n'abîme en aucun cas l'émail dentaire. Selon les recommandations officielles de l'OMS et les études cliniques du Dr Mossaab Rtimi, les instruments ultrasoniques éliminent sélectivement le tartre sans affecter la structure de la dent.";
-  }
-
-  const sources = dataset.citations.map((c) => c.source || c.label);
-
+/** Evidence certified for an object: its own text plus linked entities and citations. */
+function evidenceFor(dataset, obj) {
+  const linkedIds = new Set(dataset.relationships.filter((r) => r.from === obj.id).map((r) => r.to));
+  const entities = dataset.entities.filter((e) => linkedIds.has(e.id));
+  const citations = dataset.citations.filter((c) => linkedIds.has(c.id));
   return {
-    answer,
-    rrfResults,
-    groundingScore: 92,
-    sources,
+    texts: [obj.title, obj.summary, ...entities.map((e) => e.label), ...citations.flatMap((c) => [c.label, c.source])],
+    entities: entities.map((e) => ({ id: e.id, label: e.label })),
+    sources: citations.map((c) => c.source || c.label),
   };
+}
+
+/**
+ * Hybrid search over the embedded dataset, then an extractive answer: the summary of the
+ * best object sharing terms with the question, verified with the grounding check.
+ */
+function answerFromDataset(query) {
+  const dataset = DATASETS[currentDatasetKey];
+  const results = hybridSearch(query, dataset.objects, { limit: 3 });
+  const top = results.find((r) => r.matchedQueryTerms > 0);
+  if (!top) return { results, answer: null };
+
+  const obj = dataset.objects.find((o) => o.id === top.objectId);
+  const evidence = evidenceFor(dataset, obj);
+  const grounding = verifyGrounding(obj.summary, evidence);
+  if (!grounding.isGrounded) return { results, answer: null };
+
+  return { results, answer: obj.summary, top, grounding, sources: evidence.sources };
 }
 
 function updateVectorInspector(query, results) {
@@ -458,6 +436,7 @@ function updateVectorInspector(query, results) {
     </h4>
 
     <div style="display:flex; flex-direction:column; gap:8px;">
+      ${results.length === 0 ? `<p style="color:var(--text-dim); font-size:0.8rem;">Aucun objet ne correspond.</p>` : ""}
       ${results
         .map(
           (hit, i) => `
@@ -468,7 +447,7 @@ function updateVectorInspector(query, results) {
           </div>
           <div style="display:flex; gap:8px; font-size:0.75rem; color:var(--text-dim);">
             <span>📐 Cosinus: ${(hit.vectorSimilarity * 100).toFixed(0)}%</span>
-            <span>📝 BM25: ${hit.lexicalRank ? "Rang #1" : "Non-trouvé"}</span>
+            <span>📝 Lexical: ${hit.lexicalRank ? `Rang #${hit.lexicalRank}` : "Non trouvé"}</span>
             <span>⚡ Canal: ${hit.matchType}</span>
           </div>
         </div>`
@@ -493,27 +472,45 @@ function setupRagPlayground() {
 
 function calculateGrounding() {
   const resultDiv = document.getElementById("groundingResult");
-  if (!resultDiv) return;
+  const queryInput = document.getElementById("ragQueryInput");
+  const answerInput = document.getElementById("ragAnswerInput");
+  if (!resultDiv || !queryInput || !answerInput) return;
+
+  const dataset = DATASETS[currentDatasetKey];
+  const top = hybridSearch(queryInput.value, dataset.objects, { limit: 1 }).find((r) => r.matchedQueryTerms > 0);
+  if (!top) {
+    resultDiv.innerHTML = `<p style="color:var(--text-muted);">Aucun objet du dataset « ${escapeHtml(dataset.name)} » ne correspond à la question : impossible de vérifier l'ancrage.</p>`;
+    return;
+  }
+
+  const obj = dataset.objects.find((o) => o.id === top.objectId);
+  const evidence = evidenceFor(dataset, obj);
+  const result = verifyGrounding(answerInput.value, evidence);
+  const riskLabel = { low: "Faible", medium: "Moyen", high: "Élevé" }[result.hallucinationRisk];
+  const scoreColor = { low: "var(--accent-emerald)", medium: "#f59e0b", high: "#f43f5e" }[result.hallucinationRisk];
 
   resultDiv.innerHTML = `
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
       <div style="background:#0b0f19; border:1px solid var(--border-glass); border-radius:var(--radius-sm); padding:12px;">
         <span style="font-size:0.75rem; color:var(--text-muted); display:block;">Score d'Ancrage</span>
-        <strong style="font-size:1.4rem; color:var(--accent-emerald);">85%</strong>
+        <strong style="font-size:1.4rem; color:${scoreColor};">${Math.round(result.score * 100)}%</strong>
       </div>
       <div style="background:#0b0f19; border:1px solid var(--border-glass); border-radius:var(--radius-sm); padding:12px;">
         <span style="font-size:0.75rem; color:var(--text-muted); display:block;">Risque d'Hallucination</span>
-        <span class="score-badge low-risk" style="margin-top:4px;">Faible (Garde-Fou Validé)</span>
+        <span class="score-badge ${result.hallucinationRisk}-risk" style="margin-top:4px;">${riskLabel}</span>
       </div>
     </div>
 
     <div style="background:#0b0f19; border:1px solid var(--border-glass); border-radius:var(--radius-sm); padding:12px; font-size:0.8rem; display:flex; flex-direction:column; gap:6px;">
-      <strong style="color:var(--accent-cyan);">Preuves & Entités Validées dans la réponse :</strong>
+      <strong style="color:var(--accent-cyan);">Preuve de référence : ${escapeHtml(obj.title)}</strong>
       <ul style="padding-left:18px; color:var(--text-muted); display:flex; flex-direction:column; gap:4px;">
-        <li>✅ Entité de domaine reconnue : <code>entity_scaling</code> (Détartrage)</li>
-        <li>✅ Entité de domaine reconnue : <code>entity_tartar</code> (Tartre)</li>
-        <li>✅ Source officielle citée : <em>Organisation Mondiale de la Santé (WHO)</em></li>
-        <li>✅ Zéro allégation médicale non étayée détectée</li>
+        ${result.matchedEntities.map((id) => `<li>✅ Entité reconnue : <code>${escapeHtml(id)}</code></li>`).join("")}
+        ${evidence.sources.map((s) => `<li>📚 Source liée : <em>${escapeHtml(s)}</em></li>`).join("")}
+        ${
+          result.unsupportedClaims.length === 0
+            ? `<li>✅ Toutes les affirmations sont présentes dans la preuve</li>`
+            : result.unsupportedClaims.map((c) => `<li>⚠️ Affirmation non étayée : « ${escapeHtml(c)} »</li>`).join("")
+        }
       </ul>
     </div>
   `;
