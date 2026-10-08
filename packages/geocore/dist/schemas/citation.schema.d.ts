@@ -34,8 +34,8 @@ export declare const knowledgeSourceSchema: z.ZodObject<{
     summary?: string | undefined;
     version?: string | undefined;
     trustLevel?: "low" | "medium" | "high" | "unknown" | "authoritative" | undefined;
+    visibility?: "public" | "internal" | "private" | undefined;
     url?: string | undefined;
-    visibility?: "public" | "private" | "internal" | undefined;
     authors?: string[] | undefined;
     publisher?: string | undefined;
     doi?: string | undefined;
@@ -54,8 +54,8 @@ export declare const knowledgeSourceSchema: z.ZodObject<{
     summary?: string | undefined;
     version?: string | undefined;
     trustLevel?: "low" | "medium" | "high" | "unknown" | "authoritative" | undefined;
+    visibility?: "public" | "internal" | "private" | undefined;
     url?: string | undefined;
-    visibility?: "public" | "private" | "internal" | undefined;
     authors?: string[] | undefined;
     publisher?: string | undefined;
     doi?: string | undefined;

@@ -98,6 +98,7 @@ export declare const searchIndexSchema: z.ZodObject<{
         entities: string[];
         collections: string[];
         citations: string[];
+        visibility: "public" | "internal" | "private" | "hidden";
         metadata: {
             author?: string | undefined;
             freshness?: string | undefined;
@@ -113,7 +114,6 @@ export declare const searchIndexSchema: z.ZodObject<{
         sourceId: string;
         generatedAt: string;
         sourceType: string;
-        visibility: "public" | "private" | "internal" | "hidden";
         taxonomy: string[];
         canonicalUrl?: string | undefined;
         slug?: string | undefined;
@@ -132,6 +132,7 @@ export declare const searchIndexSchema: z.ZodObject<{
         entities: string[];
         collections: string[];
         citations: string[];
+        visibility: "public" | "internal" | "private" | "hidden";
         metadata: {
             author?: string | undefined;
             freshness?: string | undefined;
@@ -147,7 +148,6 @@ export declare const searchIndexSchema: z.ZodObject<{
         sourceId: string;
         generatedAt: string;
         sourceType: string;
-        visibility: "public" | "private" | "internal" | "hidden";
         taxonomy: string[];
         canonicalUrl?: string | undefined;
         slug?: string | undefined;
@@ -210,6 +210,7 @@ export declare const searchIndexSchema: z.ZodObject<{
         entities: string[];
         collections: string[];
         citations: string[];
+        visibility: "public" | "internal" | "private" | "hidden";
         metadata: {
             author?: string | undefined;
             freshness?: string | undefined;
@@ -225,7 +226,6 @@ export declare const searchIndexSchema: z.ZodObject<{
         sourceId: string;
         generatedAt: string;
         sourceType: string;
-        visibility: "public" | "private" | "internal" | "hidden";
         taxonomy: string[];
         canonicalUrl?: string | undefined;
         slug?: string | undefined;
@@ -260,6 +260,7 @@ export declare const searchIndexSchema: z.ZodObject<{
         entities: string[];
         collections: string[];
         citations: string[];
+        visibility: "public" | "internal" | "private" | "hidden";
         metadata: {
             author?: string | undefined;
             freshness?: string | undefined;
@@ -275,7 +276,6 @@ export declare const searchIndexSchema: z.ZodObject<{
         sourceId: string;
         generatedAt: string;
         sourceType: string;
-        visibility: "public" | "private" | "internal" | "hidden";
         taxonomy: string[];
         canonicalUrl?: string | undefined;
         slug?: string | undefined;

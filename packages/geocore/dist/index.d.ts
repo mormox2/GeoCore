@@ -81,6 +81,7 @@ export * from "./types/llms-output.js";
 export * from "./types/llms-diagnostic.js";
 export * from "./schemas/llms-diagnostic.schema.js";
 export * from "./schemas/llms-output.schema.js";
+export * from "./metadata/object-visibility.js";
 export * from "./llms/llms-utils.js";
 export * from "./llms/llms-filter.js";
 export * from "./llms/llms-formatters.js";

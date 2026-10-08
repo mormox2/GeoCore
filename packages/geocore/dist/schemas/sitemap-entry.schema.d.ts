@@ -62,11 +62,11 @@ export declare const sitemapEntrySchema: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     status: string;
     id: string;
+    visibility: "public" | "internal" | "private" | "hidden";
     url: string;
     sourceId: string;
     generatedAt: string;
     sourceType: string;
-    visibility: "public" | "private" | "internal" | "hidden";
     alternates: {
         language: string;
         url: string;
@@ -83,11 +83,11 @@ export declare const sitemapEntrySchema: z.ZodObject<{
 }, {
     status: string;
     id: string;
+    visibility: "public" | "internal" | "private" | "hidden";
     url: string;
     sourceId: string;
     generatedAt: string;
     sourceType: string;
-    visibility: "public" | "private" | "internal" | "hidden";
     alternates: {
         language: string;
         url: string;

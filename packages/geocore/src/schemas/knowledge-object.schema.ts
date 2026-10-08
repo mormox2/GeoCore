@@ -15,6 +15,7 @@ export const knowledgeObjectSchema = z.object({
   author: z.string({ required_error: "GC_AUTHOR_MISSING" }).min(1, "GC_AUTHOR_MISSING"),
 
   // Optional Properties
+  visibility: z.enum(["public", "internal", "private", "hidden"]).optional(),
   metadata: geoCoreMetadataSchema.partial().optional(),
   aliases: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),

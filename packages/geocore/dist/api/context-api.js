@@ -2,6 +2,7 @@ import { createApiResponse, createNotFoundResponse, createForbiddenResponse } fr
 import { resolveMetadata } from "../metadata/resolve-metadata.js";
 import { filterActiveCitations } from "../citation/citation-filter.js";
 import { buildSourceMap, isPublicSource } from "../citation/citation-utils.js";
+import { isNeverExposedObject, isPublicKnowledgeObject } from "../metadata/object-visibility.js";
 /**
  * Builds an AI Context Package for a specific Knowledge Object.
  * This is the primary endpoint for AI/RAG consumption.
@@ -9,11 +10,11 @@ import { buildSourceMap, isPublicSource } from "../citation/citation-utils.js";
 export function getAiContext(dataset, request) {
     const visibility = request.visibility ?? "public";
     const object = dataset.objects.find((o) => o.id === request.objectId);
-    if (!object) {
+    if (!object || isNeverExposedObject(object)) {
         return createNotFoundResponse(request.objectId, visibility);
     }
-    // Enforce visibility for public contexts: must be published
-    if (visibility === "public" && object.status !== "published") {
+    // Enforce visibility for public contexts: must be published and public
+    if (visibility === "public" && !isPublicKnowledgeObject(object)) {
         return createForbiddenResponse(`Knowledge Object '${request.objectId}' is not published and not publicly available for AI context.`);
     }
     const isPublic = visibility === "public";
@@ -26,11 +27,13 @@ export function getAiContext(dataset, request) {
         : source.visibility !== "private";
     // A node is hidden only when it is known to the dataset and not visible at this level.
     const isNodeVisible = (id) => {
+        const obj = objectMap.get(id);
+        if (obj && isNeverExposedObject(obj))
+            return false;
         if (!isPublic)
             return true;
-        const obj = objectMap.get(id);
         if (obj)
-            return obj.status === "published";
+            return isPublicKnowledgeObject(obj);
         const entity = entityMap.get(id);
         if (entity)
             return entity.status === "published";

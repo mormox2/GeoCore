@@ -1,3 +1,4 @@
+import { isPublicKnowledgeObject } from "../metadata/object-visibility.js";
 /**
  * Creates a deterministic sitemap output ID.
  */
@@ -18,14 +19,7 @@ export function createSitemapEntryId(sourceId, language) {
  * Checks if a KnowledgeObject is public and published.
  */
 export function isSitemapPublicObject(object) {
-    if (object.status !== "published") {
-        return false;
-    }
-    const visibility = object.visibility || object.metadata?.visibility;
-    if (visibility !== undefined && visibility !== "public") {
-        return false;
-    }
-    return true;
+    return isPublicKnowledgeObject(object);
 }
 /**
  * Resolves the canonical URL for a KnowledgeObject.

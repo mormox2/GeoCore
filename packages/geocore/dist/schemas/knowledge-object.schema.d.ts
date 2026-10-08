@@ -11,6 +11,7 @@ export declare const knowledgeObjectSchema: z.ZodObject<{
     createdAt: z.ZodString;
     updatedAt: z.ZodString;
     author: z.ZodString;
+    visibility: z.ZodOptional<z.ZodEnum<["public", "internal", "private", "hidden"]>>;
     metadata: z.ZodOptional<z.ZodObject<{
         id: z.ZodOptional<z.ZodString>;
         slug: z.ZodOptional<z.ZodString>;
@@ -230,6 +231,7 @@ export declare const knowledgeObjectSchema: z.ZodObject<{
     body: string;
     media?: string[] | undefined;
     citations?: string[] | undefined;
+    visibility?: "public" | "internal" | "private" | "hidden" | undefined;
     metadata?: {
         language?: string | undefined;
         author?: string | undefined;
@@ -303,6 +305,7 @@ export declare const knowledgeObjectSchema: z.ZodObject<{
     body: string;
     media?: string[] | undefined;
     citations?: string[] | undefined;
+    visibility?: "public" | "internal" | "private" | "hidden" | undefined;
     metadata?: {
         language?: string | undefined;
         author?: string | undefined;

@@ -45,7 +45,7 @@ export declare const mediaAssetFullSchema: z.ZodObject<{
     id: string;
     createdAt: string;
     updatedAt: string;
-    visibility: "public" | "private" | "internal" | "hidden";
+    visibility: "public" | "internal" | "private" | "hidden";
     language?: string | undefined;
     author?: string | undefined;
     description?: string | undefined;
@@ -79,7 +79,7 @@ export declare const mediaAssetFullSchema: z.ZodObject<{
     id: string;
     createdAt: string;
     updatedAt: string;
-    visibility: "public" | "private" | "internal" | "hidden";
+    visibility: "public" | "internal" | "private" | "hidden";
     language?: string | undefined;
     author?: string | undefined;
     description?: string | undefined;

@@ -1,3 +1,4 @@
+import { isNeverExposedObject, isPublicKnowledgeObject } from "../metadata/object-visibility.js";
 import { markdownRenderer } from "../renderers/markdown-renderer.js";
 import { jsonRenderer } from "../renderers/json-renderer.js";
 import { generateSearchIndex } from "../search/search-index-generator.js";
@@ -60,14 +61,10 @@ export function filterStaticExportObjects(input) {
     return input.objects.filter((object) => {
         if (!object)
             return false;
-        const vis = object.metadata?.visibility;
-        const PRIVATE_HIDDEN = new Set(["private", "hidden"]);
-        if (vis && PRIVATE_HIDDEN.has(vis))
+        if (isNeverExposedObject(object))
             return false;
         if (mode === "public") {
-            if (object.status !== "published")
-                return false;
-            if (vis && vis !== "public")
+            if (!isPublicKnowledgeObject(object))
                 return false;
         }
         else {

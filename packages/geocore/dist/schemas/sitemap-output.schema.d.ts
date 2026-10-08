@@ -72,11 +72,11 @@ export declare const sitemapOutputSchema: z.ZodObject<{
     }, "strip", z.ZodTypeAny, {
         status: string;
         id: string;
+        visibility: "public" | "internal" | "private" | "hidden";
         url: string;
         sourceId: string;
         generatedAt: string;
         sourceType: string;
-        visibility: "public" | "private" | "internal" | "hidden";
         alternates: {
             language: string;
             url: string;
@@ -93,11 +93,11 @@ export declare const sitemapOutputSchema: z.ZodObject<{
     }, {
         status: string;
         id: string;
+        visibility: "public" | "internal" | "private" | "hidden";
         url: string;
         sourceId: string;
         generatedAt: string;
         sourceType: string;
-        visibility: "public" | "private" | "internal" | "hidden";
         alternates: {
             language: string;
             url: string;
@@ -147,11 +147,11 @@ export declare const sitemapOutputSchema: z.ZodObject<{
     entries: {
         status: string;
         id: string;
+        visibility: "public" | "internal" | "private" | "hidden";
         url: string;
         sourceId: string;
         generatedAt: string;
         sourceType: string;
-        visibility: "public" | "private" | "internal" | "hidden";
         alternates: {
             language: string;
             url: string;
@@ -186,11 +186,11 @@ export declare const sitemapOutputSchema: z.ZodObject<{
     entries: {
         status: string;
         id: string;
+        visibility: "public" | "internal" | "private" | "hidden";
         url: string;
         sourceId: string;
         generatedAt: string;
         sourceType: string;
-        visibility: "public" | "private" | "internal" | "hidden";
         alternates: {
             language: string;
             url: string;

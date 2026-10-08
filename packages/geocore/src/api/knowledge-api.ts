@@ -7,6 +7,7 @@ import {
   createNotFoundResponse,
   createForbiddenResponse,
 } from "./api-response.js";
+import { isNeverExposedObject, isPublicKnowledgeObject } from "../metadata/object-visibility.js";
 
 /**
  * Returns a single Knowledge Object by ID, respecting visibility rules.
@@ -23,9 +24,13 @@ export function getKnowledgeObject(
     return createNotFoundResponse(request.id, visibility);
   }
 
-  // Enforce visibility: public API must only expose published objects
+  if (isNeverExposedObject(object)) {
+    return createNotFoundResponse(request.id, visibility);
+  }
+
+  // Enforce visibility: public API must only expose published, public objects
   if (visibility === "public") {
-    if (object.status !== "published") {
+    if (!isPublicKnowledgeObject(object)) {
       return createForbiddenResponse(
         `Object '${request.id}' is not published and not publicly available.`
       );
@@ -44,11 +49,11 @@ export function listKnowledgeObjects(
 ): ApiListResponse<KnowledgeObject> {
   const visibility = request.visibility ?? "public";
 
-  let objects = dataset.objects;
+  let objects = dataset.objects.filter((o) => !isNeverExposedObject(o));
 
   // Filter by visibility/status
   if (visibility === "public") {
-    objects = objects.filter((o) => o.status === "published");
+    objects = objects.filter(isPublicKnowledgeObject);
   }
 
   // Filter by language

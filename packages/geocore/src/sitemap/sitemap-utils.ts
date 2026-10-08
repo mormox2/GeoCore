@@ -1,3 +1,4 @@
+import { isPublicKnowledgeObject } from "../metadata/object-visibility.js";
 import { KnowledgeObject } from "../types/knowledge-object.js";
 import { ResolvedMetadata } from "../types/metadata.js";
 import { MediaAsset } from "../types/media.js";
@@ -26,14 +27,7 @@ export function createSitemapEntryId(sourceId: string, language?: string): strin
  * Checks if a KnowledgeObject is public and published.
  */
 export function isSitemapPublicObject(object: KnowledgeObject): boolean {
-  if (object.status !== "published") {
-    return false;
-  }
-  const visibility = (object as any).visibility || (object.metadata as any)?.visibility;
-  if (visibility !== undefined && visibility !== "public") {
-    return false;
-  }
-  return true;
+  return isPublicKnowledgeObject(object);
 }
 
 /**

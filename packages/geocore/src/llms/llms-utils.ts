@@ -1,3 +1,4 @@
+import { isPublicKnowledgeObject } from "../metadata/object-visibility.js";
 import { LlmsOutputType } from "../types/llms-output.js";
 import { KnowledgeObject } from "../types/knowledge-object.js";
 import { ResolvedMetadata } from "../types/metadata.js";
@@ -17,14 +18,7 @@ export function createLlmsOutputId(type: LlmsOutputType, siteName: string, langu
  * Checks if the KnowledgeObject is public and published.
  */
 export function isLlmsPublicObject(object: KnowledgeObject): boolean {
-  if (object.status !== "published") {
-    return false;
-  }
-  const visibility = (object as any).visibility || (object.metadata as any)?.visibility;
-  if (visibility !== undefined && visibility !== "public") {
-    return false;
-  }
-  return true;
+  return isPublicKnowledgeObject(object);
 }
 
 /**

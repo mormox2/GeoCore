@@ -1,6 +1,7 @@
+import { isPublicKnowledgeObject } from "@mormo_mossaab/geocore";
 import { chunkKnowledgeObject } from "@mormo_mossaab/geocore-ai";
 /**
- * Splits all published objects in a KnowledgeDataset into semantic chunks,
+ * Splits all public, published objects in a KnowledgeDataset into semantic chunks,
  * embeds them using the provided EmbeddingProvider, and indexes them into the VectorStore.
  */
 export async function vectorizeDataset(dataset, store, provider, options = {}) {
@@ -13,7 +14,7 @@ export async function vectorizeDataset(dataset, store, provider, options = {}) {
     let vectorsIndexed = 0;
     const allDocuments = [];
     for (const obj of dataset.objects || []) {
-        if (obj.status !== "published")
+        if (!isPublicKnowledgeObject(obj))
             continue;
         const chunks = chunkKnowledgeObject(obj, undefined, {
             maxChunkSize: chunkSize,

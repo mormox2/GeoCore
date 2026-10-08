@@ -1,3 +1,4 @@
+import { isPublicKnowledgeObject } from "../metadata/object-visibility.js";
 /**
  * Creates a deterministic LLMs output ID.
  */
@@ -11,14 +12,7 @@ export function createLlmsOutputId(type, siteName, language) {
  * Checks if the KnowledgeObject is public and published.
  */
 export function isLlmsPublicObject(object) {
-    if (object.status !== "published") {
-        return false;
-    }
-    const visibility = object.visibility || object.metadata?.visibility;
-    if (visibility !== undefined && visibility !== "public") {
-        return false;
-    }
-    return true;
+    return isPublicKnowledgeObject(object);
 }
 /**
  * Deduplicates string arrays while preserving order.

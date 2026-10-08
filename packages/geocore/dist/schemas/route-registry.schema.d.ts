@@ -81,10 +81,10 @@ export declare const routeRegistrySchema: z.ZodObject<{
         type: "documentation" | "knowledge-object" | "media" | "collection" | "glossary-entry" | "api" | "llms" | "sitemap" | "static";
         status: "draft" | "review" | "published" | "archived";
         id: string;
+        visibility: "public" | "internal" | "private" | "hidden";
         sourceId: string;
         generatedAt: string;
         sourceType: string;
-        visibility: "public" | "private" | "internal" | "hidden";
         alternates: {
             language: string;
             path: string;
@@ -105,10 +105,10 @@ export declare const routeRegistrySchema: z.ZodObject<{
         type: "documentation" | "knowledge-object" | "media" | "collection" | "glossary-entry" | "api" | "llms" | "sitemap" | "static";
         status: "draft" | "review" | "published" | "archived";
         id: string;
+        visibility: "public" | "internal" | "private" | "hidden";
         sourceId: string;
         generatedAt: string;
         sourceType: string;
-        visibility: "public" | "private" | "internal" | "hidden";
         alternates: {
             language: string;
             path: string;
@@ -176,10 +176,10 @@ export declare const routeRegistrySchema: z.ZodObject<{
         type: "documentation" | "knowledge-object" | "media" | "collection" | "glossary-entry" | "api" | "llms" | "sitemap" | "static";
         status: "draft" | "review" | "published" | "archived";
         id: string;
+        visibility: "public" | "internal" | "private" | "hidden";
         sourceId: string;
         generatedAt: string;
         sourceType: string;
-        visibility: "public" | "private" | "internal" | "hidden";
         alternates: {
             language: string;
             path: string;
@@ -216,10 +216,10 @@ export declare const routeRegistrySchema: z.ZodObject<{
         type: "documentation" | "knowledge-object" | "media" | "collection" | "glossary-entry" | "api" | "llms" | "sitemap" | "static";
         status: "draft" | "review" | "published" | "archived";
         id: string;
+        visibility: "public" | "internal" | "private" | "hidden";
         sourceId: string;
         generatedAt: string;
         sourceType: string;
-        visibility: "public" | "private" | "internal" | "hidden";
         alternates: {
             language: string;
             path: string;

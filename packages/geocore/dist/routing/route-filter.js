@@ -1,4 +1,4 @@
-const PRIVATE_HIDDEN = new Set(["private", "hidden"]);
+import { isNeverExposedObject, isPublicKnowledgeObject } from "../metadata/object-visibility.js";
 /**
  * Filter the input objects to those that should produce routes.
  *
@@ -13,17 +13,12 @@ export function filterRouteObjects(input) {
     return input.objects.filter((object) => {
         if (!object)
             return false;
-        // Visibility override lives on object.metadata?.visibility in future sprints;
-        // for now objects only carry status. Private/hidden objects (signaled by an
-        // optional metadata flag) are always excluded.
-        const explicitVisibility = readObjectVisibility(object);
-        if (explicitVisibility && PRIVATE_HIDDEN.has(explicitVisibility)) {
+        // Private/hidden objects are never routed, whatever the mode.
+        if (isNeverExposedObject(object)) {
             return false;
         }
         if (mode === "public") {
-            if (object.status !== "published")
-                return false;
-            if (explicitVisibility && explicitVisibility !== "public")
+            if (!isPublicKnowledgeObject(object))
                 return false;
         }
         else {
@@ -36,19 +31,9 @@ export function filterRouteObjects(input) {
             ]);
             if (!allowed.has(object.status))
                 return false;
-            if (explicitVisibility && PRIVATE_HIDDEN.has(explicitVisibility))
-                return false;
         }
         if (language && object.language !== language)
             return false;
         return true;
     });
-}
-/**
- * Read an optional visibility hint from object.metadata. Sprint 10 does not
- * model visibility on the object itself, so this is forward-compatible only.
- */
-function readObjectVisibility(object) {
-    const meta = object.metadata;
-    return meta?.visibility;
 }

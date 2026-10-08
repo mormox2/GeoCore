@@ -40,6 +40,7 @@ export declare const staticExportAssetSchema: z.ZodObject<{
     path: string;
     type: "markdown" | "json" | "json-ld" | "xml" | "text" | "llms" | "sitemap" | "search-index" | "llms-full" | "manifest";
     id: string;
+    visibility: "public" | "internal";
     diagnostics: {
         code: string;
         message: string;
@@ -48,7 +49,6 @@ export declare const staticExportAssetSchema: z.ZodObject<{
     }[];
     content: string | Record<string, unknown>;
     generatedAt: string;
-    visibility: "public" | "internal";
     mimeType: string;
     encoding: "utf-8";
     sourceIds: string[];
@@ -56,6 +56,7 @@ export declare const staticExportAssetSchema: z.ZodObject<{
     path: string;
     type: "markdown" | "json" | "json-ld" | "xml" | "text" | "llms" | "sitemap" | "search-index" | "llms-full" | "manifest";
     id: string;
+    visibility: "public" | "internal";
     diagnostics: {
         code: string;
         message: string;
@@ -64,7 +65,6 @@ export declare const staticExportAssetSchema: z.ZodObject<{
     }[];
     content: string | Record<string, unknown>;
     generatedAt: string;
-    visibility: "public" | "internal";
     mimeType: string;
     encoding: "utf-8";
     sourceIds: string[];

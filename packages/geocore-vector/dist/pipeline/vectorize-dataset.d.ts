@@ -13,7 +13,7 @@ export type VectorizeDatasetReport = {
     durationMs: number;
 };
 /**
- * Splits all published objects in a KnowledgeDataset into semantic chunks,
+ * Splits all public, published objects in a KnowledgeDataset into semantic chunks,
  * embeds them using the provided EmbeddingProvider, and indexes them into the VectorStore.
  */
 export declare function vectorizeDataset(dataset: KnowledgeDataset, store: VectorStore, provider: EmbeddingProvider, options?: VectorizeDatasetOptions): Promise<VectorizeDatasetReport>;

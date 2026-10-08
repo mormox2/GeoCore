@@ -1,3 +1,4 @@
+import { isNeverExposedObject, isPublicKnowledgeObject } from "../metadata/object-visibility.js";
 import type { KnowledgeObject } from "../types/knowledge-object.js";
 import type { ResolvedMetadata } from "../types/metadata.js";
 import type { KnowledgeRelationship } from "../types/relationship.js";
@@ -101,13 +102,10 @@ export function filterStaticExportObjects(input: {
   return input.objects.filter((object) => {
     if (!object) return false;
 
-    const vis = (object.metadata as { visibility?: string } | undefined)?.visibility;
-    const PRIVATE_HIDDEN = new Set(["private", "hidden"]);
-    if (vis && PRIVATE_HIDDEN.has(vis)) return false;
+    if (isNeverExposedObject(object)) return false;
 
     if (mode === "public") {
-      if (object.status !== "published") return false;
-      if (vis && vis !== "public") return false;
+      if (!isPublicKnowledgeObject(object)) return false;
     } else {
       const allowed: ReadonlySet<KnowledgeStatus> = new Set<KnowledgeStatus>([
         "draft", "review", "published", "archived",
