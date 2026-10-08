@@ -2,6 +2,7 @@ import * as http from "node:http";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
+import { CliError } from "../utils/cli-error.js";
 
 const MIME_TYPES: Record<string, string> = {
   ".html": "text/html; charset=utf-8",
@@ -71,6 +72,20 @@ export async function serveStaticFile(rootDir: string, requestUrl: string, res: 
   stream.pipe(res);
 }
 
+/**
+ * Locates the Studio app: the monorepo sources when running from the repository root
+ * (live edits), otherwise the copy bundled in this package at build time.
+ */
+export function resolveStudioDir(cwd: string = process.cwd()): string | null {
+  const packageDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+  const candidates = [
+    path.resolve(cwd, "apps/geocore-studio"),
+    path.join(packageDir, "studio"),
+    path.resolve(packageDir, "../../apps/geocore-studio"),
+  ];
+  return candidates.find((dir) => fs.existsSync(path.join(dir, "index.html"))) ?? null;
+}
+
 export type StudioCommandOptions = {
   port?: number;
   host?: string;
@@ -81,10 +96,13 @@ export async function studioCommand(options: StudioCommandOptions = {}): Promise
   const port = options.port ?? 4200;
   const host = options.host ?? "127.0.0.1";
 
-  // Resolve studio directory relative to package or workspace
-  const studioDir = path.resolve(process.cwd(), "apps/geocore-studio");
-  const fallbackDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../apps/geocore-studio");
-  const targetDir = fs.existsSync(studioDir) ? studioDir : fallbackDir;
+  const targetDir = resolveStudioDir();
+  if (!targetDir) {
+    throw new CliError(
+      "COMMAND_ERROR",
+      "GeoCore Studio files were not found. Reinstall @mormo_mossaab/geocore-cli or run from the GeoCore repository root."
+    );
+  }
 
   const server = http.createServer((req, res) => {
     void serveStaticFile(targetDir, req.url || "/", res);

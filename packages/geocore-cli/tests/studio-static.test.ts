@@ -81,3 +81,30 @@ describe("CLI binary keeps long-running servers alive", () => {
     }
   }, 20000);
 });
+
+describe("Studio packaging", () => {
+  it("prefers the repository sources, then the copy bundled in the package", async () => {
+    const { resolveStudioDir } = await import("../src/commands/studio.command.js");
+    const repoRoot = path.resolve(__dirname, "../../..");
+    expect(resolveStudioDir(repoRoot)).toBe(path.join(repoRoot, "apps/geocore-studio"));
+
+    // Outside the repository (e.g. a user project), the bundled copy must be found.
+    const elsewhere = fs.mkdtempSync(path.join(os.tmpdir(), "geocore-user-"));
+    const resolved = resolveStudioDir(elsewhere);
+    expect(resolved).toBe(path.resolve(__dirname, "../studio"));
+    expect(fs.existsSync(path.join(resolved!, "engine.js"))).toBe(true);
+  });
+
+  it("ships the studio in the npm tarball", async () => {
+    const { execFileSync } = await import("node:child_process");
+    const out = execFileSync("npm", ["pack", "--dry-run", "--json"], {
+      cwd: path.resolve(__dirname, ".."),
+      encoding: "utf-8",
+    });
+    const files = (JSON.parse(out)[0].files as Array<{ path: string }>).map((f) => f.path);
+    for (const file of ["studio/index.html", "studio/app.js", "studio/engine.js", "studio/styles.css"]) {
+      expect(files).toContain(file);
+    }
+    expect(files.some((f) => f.startsWith("studio/tests"))).toBe(false);
+  }, 60000);
+});

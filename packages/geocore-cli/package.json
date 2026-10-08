@@ -9,7 +9,8 @@
     "geocore": "./dist/bin.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "studio"
   ],
   "license": "MIT",
   "author": "Mormox",
@@ -22,7 +23,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node scripts/copy-studio.mjs",
     "test": "vitest run",
     "geocore": "node dist/bin.js"
   },

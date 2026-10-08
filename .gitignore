@@ -9,3 +9,6 @@ Thumbs.db
 
 .vercel
 **/temp-*/
+
+# Studio copy bundled into the CLI package at build time
+packages/geocore-cli/studio/
