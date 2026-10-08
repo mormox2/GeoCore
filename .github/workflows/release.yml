@@ -28,10 +28,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
-        run: npm install --no-audit --prefer-offline
+        run: npm ci --no-audit
 
       - name: Build All Workspaces
         run: npm run build
