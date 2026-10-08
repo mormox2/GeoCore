@@ -116,7 +116,7 @@ The evaluator verifies:
 
 ## 5. Get Started in 30 Seconds
 
-GeoCore is 100% open source under the MIT License, structured as a clean 7-package monorepo tested with 747 automated tests.
+GeoCore is 100% open source under the MIT License, structured as a clean 7-package monorepo tested with 848 automated tests.
 
 You can try the visual studio and RAG engine locally:
 
