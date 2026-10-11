@@ -4,7 +4,11 @@ dist/
 # Build output is never committed (CI, release and Vercel build it); the example
 # exports below are published on purpose as reference output.
 !examples/rtimidental/dist/
+examples/rtimidental/dist/*
+!examples/rtimidental/dist/geocore/
 !examples/dawajinpro/dist/
+examples/dawajinpro/dist/*
+!examples/dawajinpro/dist/geocore/
 .vite/
 **/.vite/
 .DS_Store

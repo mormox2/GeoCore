@@ -145,9 +145,8 @@ Un audit approfondi a été mené, chaque constat étant reproduit par un script
 - **Rendu & Studio** : échappement HTML et filtrage des URL `javascript:` ; correction d'une traversée de chemin dans le serveur du Studio ; `geocore serve` et `geocore studio` restent actifs ; Studio inclus dans le paquet npm.
 - **Widget & démonstrations** : le widget interroge l'endpoint `/api/answer` (réponses extraites et vérifiées) au lieu d'afficher une réponse simulée ; le Studio calcule ses scores au lieu d'afficher des valeurs fixes.
 - **Données** : l'adaptateur SQL conserve tous les champs (migration automatique) ; les dates manquantes sont signalées pour garder des `lastmod` exacts.
-- **Outillage** : Node.js 22, `npm ci`, build dans l'ordre des dépendances, `dist/` n'est plus versionné, Vitest 5 (plus aucune vulnérabilité critique), dépendances `zod` inutiles retirées.
+- **Outillage** : Node.js 22, `npm ci`, build dans l'ordre des dépendances, `dist/` n'est plus versionné, Vitest 5, `@changesets/cli` 3 avec `changesets/action` v2, actions GitHub v7 (Node 24), dépendances `zod` inutiles retirées. `npm audit` : 0 vulnérabilité.
 
 **Points restants** :
-- Les vulnérabilités signalées par `npm audit` ne concernent plus que l'outillage de release `@changesets/cli` 2.x ; leur correction passe par `@changesets/cli` 3, à valider avec `changesets/action`.
 - `SqlKnowledgeRepository` utilise une syntaxe propre à SQLite (`INSERT OR REPLACE`).
 - Une part du code utilise encore le type `any` (principalement les adaptateurs SQL et les chargeurs).
