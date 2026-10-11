@@ -1,6 +1,6 @@
 {
   "name": "@mormo_mossaab/geocore-vector",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "GeoCore semantic vector embeddings, in-memory vector store, and hybrid search engine with RRF",
   "type": "module",
   "main": "dist/index.js",
@@ -23,8 +23,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@mormo_mossaab/geocore": "^1.0.1",
-    "@mormo_mossaab/geocore-ai": "^1.0.1"
+    "@mormo_mossaab/geocore": "^1.1.0",
+    "@mormo_mossaab/geocore-ai": "^1.1.0"
   },
   "devDependencies": {
     "typescript": "^5.4.5",

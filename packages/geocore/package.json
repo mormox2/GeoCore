@@ -1,6 +1,6 @@
 {
   "name": "@mormo_mossaab/geocore",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "GeoCore core domain logic, schemas, 10-stage validation, graph, renderers, citations, and in-process APIs",
   "type": "module",
   "main": "dist/index.js",
