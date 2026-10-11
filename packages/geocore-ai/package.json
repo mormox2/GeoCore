@@ -1,6 +1,6 @@
 {
   "name": "@mormo_mossaab/geocore-ai",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "GeoCore AI / RAG prompt context builder, semantic markdown chunking, and citation grounding verification",
   "type": "module",
   "main": "dist/index.js",
@@ -23,7 +23,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@mormo_mossaab/geocore": "^1.0.1"
+    "@mormo_mossaab/geocore": "^1.1.0"
   },
   "devDependencies": {
     "typescript": "^5.4.5",
