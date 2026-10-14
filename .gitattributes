@@ -1,0 +1,13 @@
+# Keep LF everywhere, including Windows checkouts: the CSP in vercel.json allows the
+# inline scripts of the site and the Studio by hash, and a CRLF checkout changes the hash.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.tgz binary

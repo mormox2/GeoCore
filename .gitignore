@@ -20,3 +20,6 @@ Thumbs.db
 
 # Studio copy bundled into the CLI package at build time
 packages/geocore-cli/studio/
+
+# Personal Claude Code settings (the shared ones are in .claude/settings.json)
+.claude/settings.local.json
