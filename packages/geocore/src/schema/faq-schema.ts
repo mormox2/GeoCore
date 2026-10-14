@@ -1,6 +1,7 @@
 import { GenerateJsonLdInput } from "./json-ld-generator.js";
 import { JsonLdObject } from "../types/json-ld.js";
 import { omitUndefined, safeStringifySchemaContent } from "./schema-utils.js";
+import { readField } from "../internal/read-field.js";
 
 /**
  * Creates a Schema.org FAQPage JSON-LD object.
@@ -8,9 +9,9 @@ import { omitUndefined, safeStringifySchemaContent } from "./schema-utils.js";
 export function createFaqSchema(input: GenerateJsonLdInput): JsonLdObject {
   const { object } = input;
 
-  const mainEntity: any[] = [];
+  const mainEntity: Record<string, unknown>[] = [];
 
-  const explicitFaq = (object as any).faqItems || (object as any).questions;
+  const explicitFaq = readField(object, "faqItems") || readField(object, "questions");
   if (Array.isArray(explicitFaq)) {
     for (const item of explicitFaq) {
       if (item && typeof item === "object") {

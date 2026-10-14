@@ -2,7 +2,7 @@ import * as path from "path";
 import { loadConfig } from "../config/load-config.js";
 import { discoverKnowledgeFiles } from "../fs/discover-files.js";
 import { readKnowledgeFiles } from "../fs/read-knowledge-files.js";
-import { loadKnowledgeDataset, runValidationPipeline } from "@mormo_mossaab/geocore";
+import { loadKnowledgeDataset, runValidationPipeline, type ValidationPipelineReport } from "@mormo_mossaab/geocore";
 import { formatValidationReport } from "../output/format-validation-report.js";
 import { CliError } from "../utils/cli-error.js";
 
@@ -13,7 +13,7 @@ export async function validateCommand(flags: {
   language?: string;
   failFast?: boolean;
   json?: boolean;
-}): Promise<any> {
+}): Promise<ValidationPipelineReport> {
   const config = loadConfig(flags.config, {
     knowledgeDir: flags.knowledgeDir,
     mode: flags.mode,

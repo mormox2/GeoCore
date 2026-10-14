@@ -1,4 +1,5 @@
 import { searchDocumentSchema } from "../schemas/search-document.schema.js";
+import { readField } from "../internal/read-field.js";
   import { ValidationResult, ValidationIssue, ValidationSeverity } from "../validation/validation-result.js";
   import * as codes from "../validation/validation-codes.js";
   import { SearchDocument } from "../types/search-document.js";
@@ -140,7 +141,7 @@ import { searchDocumentSchema } from "../schemas/search-document.schema.js";
     // 10. Check arrays
     const arrayFields = ["entities", "collections", "citations", "media", "taxonomy", "keywords", "aliases"];
     for (const f of arrayFields) {
-      if (!Array.isArray((doc as any)[f])) {
+      if (!Array.isArray(readField(doc, f))) {
         issues.push({
           id: `${codes.GC_SEARCH_DOCUMENT_ARRAY_INVALID}_${f}`,
           severity: "error",

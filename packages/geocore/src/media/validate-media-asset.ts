@@ -2,6 +2,7 @@ import { mediaAssetFullSchema } from "../schemas/media.schema.js";
 import { ValidationResult, ValidationIssue } from "../validation/validation-result.js";
 import * as codes from "../validation/validation-codes.js";
 import type { MediaAsset } from "../types/media.js";
+import { readString } from "../internal/read-field.js";
 
 /**
  * Validates a MediaAsset using the Zod schema and business rules.
@@ -38,7 +39,7 @@ export function validateMediaAsset(asset: unknown): ValidationResult {
         code: err.message.startsWith("GC_") ? err.message : codes.GC_MEDIA_ID_MISSING,
         message: err.message,
         field,
-        objectId: (asset as any).id,
+        objectId: readString(asset, "id"),
       });
     }
     return { valid: false, publishable: false, checkedAt, issues };

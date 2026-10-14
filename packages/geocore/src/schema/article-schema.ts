@@ -29,7 +29,7 @@ export function createArticleSchema(input: GenerateJsonLdInput): JsonLdObject {
   const url = metadata?.canonicalUrl || metadata?.seo?.canonicalUrl || undefined;
 
   // Citations mapping
-  const citationList: any[] = [];
+  const citationList: string[] = [];
   if (input.citations) {
     for (const cite of input.citations) {
       const source = input.sources?.find((s) => s.id === cite.sourceId);

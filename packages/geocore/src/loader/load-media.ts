@@ -77,11 +77,12 @@ export function loadMediaAsset(input: RawKnowledgeInput): {
   }
 
   const now = createIsoTimestamp();
-  const media: MediaAsset = {
+  // Required fields were checked above; this is the raw-input boundary.
+  const media = {
     createdAt: now,
     updatedAt: now,
-    ...(content as any),
-  };
+    ...(content as Partial<MediaAsset>),
+  } as MediaAsset;
 
   return { media, diagnostics };
 }

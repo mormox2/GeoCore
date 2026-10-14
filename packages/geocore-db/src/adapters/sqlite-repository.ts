@@ -1,4 +1,5 @@
 import type {
+  KnowledgeStatus,
   KnowledgeObject,
   KnowledgeEntity,
   KnowledgeCitation,
@@ -118,19 +119,66 @@ function isDuplicateColumnError(err: unknown): boolean {
   return /duplicate column|already exists/i.test(message);
 }
 
-function rowToObject(row: any): KnowledgeObject {
+/** A value that can be bound to a SQL parameter. */
+export type SqlParam = string | number | null;
+
+type ObjectRow = {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string | null;
+  body: string;
+  language: string;
+  status: string;
+  version: string;
+  author: string | null;
+  metadata_json: string | null;
+  tags_json: string | null;
+  data_json: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+type EntityRow = {
+  id: string;
+  type: string;
+  canonical_name: string;
+  definition: string;
+  language: string;
+  status: string;
+  data_json: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+type RelationshipRow = {
+  id: string;
+  source_id: string;
+  target_id: string;
+  type: string;
+  strength: string;
+  data_json: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+/** Tables whose rows carry the complete record as JSON (citations, sources, media). */
+type DataJsonRow = { data_json: string | null };
+
+function rowToObject(row: ObjectRow): KnowledgeObject {
   if (row.data_json) return JSON.parse(row.data_json) as KnowledgeObject;
   // Rows written before data_json existed only carry the indexed columns.
   return {
     id: row.id,
     slug: row.slug,
     title: row.title,
-    summary: row.summary,
+    summary: row.summary ?? "",
     body: row.body,
     language: row.language,
-    status: row.status,
+    // Enum columns are trusted: they were written from typed records.
+    status: row.status as KnowledgeStatus,
     version: row.version,
-    author: row.author,
+    author: row.author ?? "",
     metadata: row.metadata_json ? JSON.parse(row.metadata_json) : undefined,
     tags: row.tags_json ? JSON.parse(row.tags_json) : undefined,
     createdAt: row.created_at,
@@ -138,14 +186,14 @@ function rowToObject(row: any): KnowledgeObject {
   };
 }
 
-function rowToRelationship(row: any): KnowledgeRelationship {
+function rowToRelationship(row: RelationshipRow): KnowledgeRelationship {
   if (row.data_json) return JSON.parse(row.data_json) as KnowledgeRelationship;
   return {
     id: row.id,
     sourceId: row.source_id,
     targetId: row.target_id,
-    type: row.type,
-    strength: row.strength,
+    type: row.type as KnowledgeRelationship["type"],
+    strength: row.strength as KnowledgeRelationship["strength"],
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
@@ -176,8 +224,8 @@ export type SqlRepositoryOptions = {
 
 export interface SqlDatabaseDriver {
   exec(sql: string): Promise<void>;
-  query<T = any>(sql: string, params?: any[]): Promise<T[]>;
-  run(sql: string, params?: any[]): Promise<{ changes: number }>;
+  query<T = Record<string, unknown>>(sql: string, params?: SqlParam[]): Promise<T[]>;
+  run(sql: string, params?: SqlParam[]): Promise<{ changes: number }>;
 }
 
 /**
@@ -199,11 +247,11 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
     return sql.replace(/\?/g, () => `$${++index}`);
   }
 
-  private query<T>(sql: string, params?: any[]): Promise<T[]> {
+  private query<T>(sql: string, params?: SqlParam[]): Promise<T[]> {
     return this.driver.query<T>(this.toDriverSql(sql), params);
   }
 
-  private run(sql: string, params?: any[]): Promise<{ changes: number }> {
+  private run(sql: string, params?: SqlParam[]): Promise<{ changes: number }> {
     return this.driver.run(this.toDriverSql(sql), params);
   }
 
@@ -220,7 +268,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
 
   // Objects
   async getObject(id: string): Promise<KnowledgeObject | null> {
-    const rows = await this.query<any>(
+    const rows = await this.query<ObjectRow>(
       "SELECT * FROM geocore_objects WHERE id = ? LIMIT 1",
       [id]
     );
@@ -230,7 +278,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
 
   async listObjects(filter?: ObjectQueryFilter): Promise<KnowledgeObject[]> {
     let sql = "SELECT * FROM geocore_objects WHERE 1=1";
-    const params: any[] = [];
+    const params: SqlParam[] = [];
 
     if (filter?.status) {
       sql += " AND status = ?";
@@ -250,7 +298,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
       }
     }
 
-    const rows = await this.query<any>(sql, params);
+    const rows = await this.query<ObjectRow>(sql, params);
     // OFFSET without LIMIT is not portable across SQL dialects, so apply it here.
     const pageRows = !filter?.limit && filter?.offset ? rows.slice(filter.offset) : rows;
     return pageRows.map(rowToObject);
@@ -286,7 +334,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
 
   // Entities
   async getEntity(id: string): Promise<KnowledgeEntity | null> {
-    const rows = await this.query<any>(
+    const rows = await this.query<EntityRow>(
       "SELECT * FROM geocore_entities WHERE id = ? LIMIT 1",
       [id]
     );
@@ -308,7 +356,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
 
   async listEntities(filter?: EntityQueryFilter): Promise<KnowledgeEntity[]> {
     let sql = "SELECT * FROM geocore_entities WHERE 1=1";
-    const params: any[] = [];
+    const params: SqlParam[] = [];
     if (filter?.type) {
       sql += " AND type = ?";
       params.push(filter.type);
@@ -321,7 +369,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
       sql += " AND status = ?";
       params.push(filter.status);
     }
-    const rows = await this.query<any>(sql, params);
+    const rows = await this.query<EntityRow>(sql, params);
     return rows.map((r) => ({
       id: r.id,
       type: r.type,
@@ -359,7 +407,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
 
   // Citations & Sources
   async getCitation(id: string): Promise<KnowledgeCitation | null> {
-    const rows = await this.query<any>("SELECT * FROM geocore_citations WHERE id = ? LIMIT 1", [id]);
+    const rows = await this.query<DataJsonRow>("SELECT * FROM geocore_citations WHERE id = ? LIMIT 1", [id]);
     if (!rows || rows.length === 0) return null;
     const r = rows[0];
     return r.data_json ? JSON.parse(r.data_json) : null;
@@ -367,7 +415,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
 
   async listCitations(filter?: CitationQueryFilter): Promise<KnowledgeCitation[]> {
     let sql = "SELECT * FROM geocore_citations WHERE 1=1";
-    const params: any[] = [];
+    const params: SqlParam[] = [];
     if (filter?.targetId) {
       sql += " AND target_id = ?";
       params.push(filter.targetId);
@@ -376,7 +424,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
       sql += " AND source_id = ?";
       params.push(filter.sourceId);
     }
-    const rows = await this.query<any>(sql, params);
+    const rows = await this.query<DataJsonRow>(sql, params);
     return rows.map((r) => (r.data_json ? JSON.parse(r.data_json) : null)).filter(Boolean);
   }
 
@@ -405,13 +453,13 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
   }
 
   async getSource(id: string): Promise<KnowledgeSource | null> {
-    const rows = await this.query<any>("SELECT * FROM geocore_sources WHERE id = ? LIMIT 1", [id]);
+    const rows = await this.query<DataJsonRow>("SELECT * FROM geocore_sources WHERE id = ? LIMIT 1", [id]);
     if (!rows || rows.length === 0) return null;
     return rows[0].data_json ? JSON.parse(rows[0].data_json) : null;
   }
 
   async listSources(): Promise<KnowledgeSource[]> {
-    const rows = await this.query<any>("SELECT * FROM geocore_sources");
+    const rows = await this.query<DataJsonRow>("SELECT * FROM geocore_sources");
     return rows.map((r) => (r.data_json ? JSON.parse(r.data_json) : null)).filter(Boolean);
   }
 
@@ -439,14 +487,14 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
 
   // Media
   async getMedia(id: string): Promise<MediaAsset | null> {
-    const rows = await this.query<any>("SELECT * FROM geocore_media WHERE id = ? LIMIT 1", [id]);
+    const rows = await this.query<DataJsonRow>("SELECT * FROM geocore_media WHERE id = ? LIMIT 1", [id]);
     if (!rows || rows.length === 0) return null;
     return rows[0].data_json ? JSON.parse(rows[0].data_json) : null;
   }
 
   async listMedia(filter?: MediaAssetQueryFilter): Promise<MediaAsset[]> {
     let sql = "SELECT * FROM geocore_media WHERE 1=1";
-    const params: any[] = [];
+    const params: SqlParam[] = [];
     if (filter?.type) {
       sql += " AND type = ?";
       params.push(filter.type);
@@ -455,7 +503,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
       sql += " AND visibility = ?";
       params.push(filter.visibility);
     }
-    const rows = await this.query<any>(sql, params);
+    const rows = await this.query<DataJsonRow>(sql, params);
     return rows.map((r) => (r.data_json ? JSON.parse(r.data_json) : null)).filter(Boolean);
   }
 
@@ -484,12 +532,12 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
   // Relationships
   async getRelationships(nodeId?: string): Promise<KnowledgeRelationship[]> {
     let sql = "SELECT * FROM geocore_relationships";
-    const params: any[] = [];
+    const params: SqlParam[] = [];
     if (nodeId) {
       sql += " WHERE source_id = ? OR target_id = ?";
       params.push(nodeId, nodeId);
     }
-    const rows = await this.query<any>(sql, params);
+    const rows = await this.query<RelationshipRow>(sql, params);
     return rows.map(rowToRelationship);
 
   }

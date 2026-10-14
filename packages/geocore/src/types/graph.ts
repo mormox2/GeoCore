@@ -12,7 +12,7 @@ export type GraphNodeType =
   | "glossary-entry"
   | "external-reference";
 
-export type GraphNode<T = any> = {
+export type GraphNode<T = unknown> = {
   id: string;
   type: GraphNodeType;
   label?: string;

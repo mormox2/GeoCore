@@ -33,3 +33,8 @@ export class CliError extends Error {
     }
   }
 }
+
+/** Message of an unknown thrown value (an Error or anything else). */
+export function errorMessage(err: unknown): string {
+  return err instanceof Error ? err.message : String(err);
+}

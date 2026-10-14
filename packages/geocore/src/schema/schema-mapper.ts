@@ -1,5 +1,6 @@
 import { KnowledgeObject } from "../types/knowledge-object.js";
 import { ResolvedMetadata } from "../types/metadata.js";
+import { readField, readString } from "../internal/read-field.js";
 
 export type SchemaMappingInput = {
   object: KnowledgeObject;
@@ -20,16 +21,16 @@ export function mapKnowledgeObjectToSchemaType(input: SchemaMappingInput): strin
   }
 
   // 2. If explicit metadata schema type exists, use it.
-  const explicitType = (metadata as any)?.schemaType || (object.metadata as any)?.schemaType;
+  const explicitType = readString(metadata, "schemaType") || readString(object.metadata, "schemaType");
   if (explicitType) {
     return explicitType;
   }
 
   // 3. If object is FAQ-like, use FAQPage
-  const contentType = (object.metadata as any)?.contentType || (metadata as any)?.contentType;
+  const contentType = readString(object.metadata, "contentType") || readString(metadata, "contentType");
   const isFaq =
     contentType === "faq" ||
-    (object as any).type === "faq" ||
+    readField(object, "type") === "faq" ||
     metadata?.topics?.includes("faq");
   if (isFaq) {
     return "FAQPage";
@@ -38,7 +39,7 @@ export function mapKnowledgeObjectToSchemaType(input: SchemaMappingInput): strin
   // 4. If object is glossary-like, use DefinedTerm
   const isGlossary =
     contentType === "glossary" ||
-    (object as any).type === "glossary-entry";
+    readField(object, "type") === "glossary-entry";
   if (isGlossary) {
     return "DefinedTerm";
   }
@@ -46,7 +47,7 @@ export function mapKnowledgeObjectToSchemaType(input: SchemaMappingInput): strin
   // 5. If object is collection-like, use CollectionPage
   const isCollection =
     contentType === "collection" ||
-    (object as any).type === "collection";
+    readField(object, "type") === "collection";
   if (isCollection) {
     return "CollectionPage";
   }

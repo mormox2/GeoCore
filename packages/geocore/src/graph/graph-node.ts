@@ -1,6 +1,6 @@
 import { GraphNode, GraphNodeType } from "../types/graph.js";
 
-export function createGraphNode<T = any>(
+export function createGraphNode<T = unknown>(
   id: string,
   type: GraphNodeType,
   label?: string,

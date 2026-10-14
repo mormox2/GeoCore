@@ -3,7 +3,7 @@ import type { KnowledgeObject } from "../types/knowledge-object.js";
 import type { LoaderDiagnostic } from "../types/loader-diagnostic.js";
 import { parseSimpleFrontmatter } from "./frontmatter-parser.js";
 import { loadKnowledgeObject } from "./load-knowledge-object.js";
-import { createLoaderDiagnostic } from "./loader-utils.js";
+import { createLoaderDiagnostic, isRecord } from "./loader-utils.js";
 import {
   GC_LOADER_INPUT_CONTENT_MISSING,
   GC_LOADER_INPUT_CONTENT_INVALID,
@@ -56,7 +56,7 @@ export function loadMarkdownKnowledge(input: RawKnowledgeInput): {
   }
 
   // Construct the object content by combining frontmatter data and parsed body.
-  const objectContent: Record<string, any> = { ...data, body };
+  const objectContent: Record<string, unknown> = { ...data, body };
 
   // Place metadata fields into the nested metadata object
   const metadataKeys = new Set([
@@ -69,8 +69,10 @@ export function loadMarkdownKnowledge(input: RawKnowledgeInput): {
     "trustLevel",
     "freshness",
   ]);
-  const metadataObj: Record<string, any> = {
-    ...(data.metadata as Record<string, any> || {}),
+  // Only a mapping can be merged; a scalar `metadata:` value is ignored rather than
+  // being spread character by character.
+  const metadataObj: Record<string, unknown> = {
+    ...(isRecord(data.metadata) ? data.metadata : {}),
   };
 
   for (const key of Object.keys(data)) {

@@ -78,11 +78,12 @@ export function loadRelationship(input: RawKnowledgeInput): {
   }
 
   const now = createIsoTimestamp();
-  const relationship: KnowledgeRelationship = {
+  // Required fields were checked above; this is the raw-input boundary.
+  const relationship = {
     createdAt: now,
     updatedAt: now,
-    ...(content as any),
-  };
+    ...(content as Partial<KnowledgeRelationship>),
+  } as KnowledgeRelationship;
 
   // Run schema validation
   const zodResult = knowledgeRelationshipSchema.safeParse(relationship);

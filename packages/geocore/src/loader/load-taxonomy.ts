@@ -77,11 +77,12 @@ export function loadTaxonomyTerm(input: RawKnowledgeInput): {
   }
 
   const now = createIsoTimestamp();
-  const taxonomyTerm: TaxonomyTerm = {
+  // Required fields were checked above; this is the raw-input boundary.
+  const taxonomyTerm = {
     createdAt: now,
     updatedAt: now,
-    ...(content as any),
-  };
+    ...(content as Partial<TaxonomyTerm>),
+  } as TaxonomyTerm;
 
   return { taxonomyTerm, diagnostics };
 }

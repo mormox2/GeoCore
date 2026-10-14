@@ -16,6 +16,7 @@ import { loadSource, loadCitation } from "./load-citation.js";
 import { loadMediaAsset } from "./load-media.js";
 import { loadRelationship } from "./load-relationship.js";
 import * as codes from "../validation/validation-codes.js";
+import { readField } from "../internal/read-field.js";
 
 /**
  * Normalizes raw knowledge inputs into a unified KnowledgeDataset in memory.
@@ -117,7 +118,7 @@ export function loadKnowledgeDataset(input: LoadKnowledgeInput): KnowledgeDatase
           createLoaderDiagnostic({
             severity: "error",
             code: codes.GC_LOADER_INPUT_TYPE_INVALID,
-            message: `Raw input has invalid type '${(raw as any).type}'.`,
+            message: `Raw input has invalid type '${String(readField(raw, "type"))}'.`,
             sourcePath: raw.sourcePath,
             inputId: raw.id,
           })

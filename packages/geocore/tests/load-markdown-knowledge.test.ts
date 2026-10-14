@@ -96,4 +96,27 @@ author: author_md
       diagnostics.some((d) => d.code === "GC_LOADER_OBJECT_MISSING_BODY" || d.code === "GC_BODY_MISSING")
     ).toBe(true);
   });
+
+  it("reports a scalar metadata value instead of spreading it character by character", () => {
+    const { object, diagnostics } = loadMarkdownKnowledge({
+      type: "markdown" as const,
+      content: `---
+id: ko_scalar_meta
+slug: scalar-meta
+title: T
+summary: S
+language: fr
+status: published
+version: 1.0.0
+author: a
+createdAt: 2026-01-01T00:00:00Z
+updatedAt: 2026-01-01T00:00:00Z
+metadata: abc
+---
+Body.`,
+    });
+    // Previously this produced metadata { 0: "a", 1: "b", 2: "c" } silently.
+    expect(object).toBeUndefined();
+    expect(diagnostics.map((d) => [d.severity, d.code, d.field])).toContainEqual(["error", "GC_METADATA_INVALID", "metadata"]);
+  });
 });
