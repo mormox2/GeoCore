@@ -123,7 +123,7 @@ Turn your knowledge graph into an AI-crawlable, SEO-dominant digital presence wi
 
 ```typescript
 // app/api/geocore/[...route]/route.ts
-import { handleLlmsTxt, handleSitemapXml, handleSearchApi, handleContextApi } from "@mormo_mossaab/geocore-next";
+import { handleLlmsTxt, handleSitemapXml, handleSearchApi, handleContextApi, handleAnswerApi } from "@mormo_mossaab/geocore-next";
 import { myDataset } from "@/lib/dataset";
 
 export async function GET(req: Request, { params }: { params: { route?: string[] } }) {
@@ -132,11 +132,12 @@ export async function GET(req: Request, { params }: { params: { route?: string[]
   if (first === "sitemap.xml") return handleSitemapXml(myDataset, { siteUrl: "https://yourdomain.com" });
   if (first === "search") return handleSearchApi(myDataset, new URL(req.url).searchParams.get("q") ?? "");
   if (first === "context" && second) return handleContextApi(myDataset, second);
+  if (first === "answer") return handleAnswerApi(myDataset, req); // <geocore-widget data-api-url="/api/geocore">
   return new Response("Not found", { status: 404 });
 }
 ```
 
-See [`examples/nextjs-app`](./examples/nextjs-app) for the complete route, including the grounded `answer` endpoint used by the widget.
+See [`examples/nextjs-app`](./examples/nextjs-app) for a complete app. `handleAnswerApi` serves the same grounded-answer contract as `geocore serve`'s `/api/answer`, so the widget works with either.
 
 ### 4. 🎨 Interactive Visual Studio
 A lightweight, built-in development studio featuring:

@@ -6,33 +6,25 @@ import {
   type GroundingVerificationResult,
 } from "@mormo_mossaab/geocore-ai";
 import {
-  searchHybrid,
-  vectorizeDataset,
+  findGroundedAnswer,
   MemoryVectorStore,
   DeterministicEmbeddingProvider,
+  type GroundedAnswer,
 } from "@mormo_mossaab/geocore-vector";
 import { appDataset } from "./dataset.js";
 
-// Cached vector index shared by the chat and widget routes of this app.
-const vectorStore = new MemoryVectorStore();
-const embeddingProvider = new DeterministicEmbeddingProvider(64);
-let vectorizing: Promise<unknown> | null = null;
+// Shared vector index for the chat route and the widget's answer route.
+export const vectorStore = new MemoryVectorStore();
+export const embeddingProvider = new DeterministicEmbeddingProvider(64);
 
-async function ensureVectorized(): Promise<void> {
-  vectorizing ??= vectorizeDataset(appDataset, vectorStore, embeddingProvider);
-  await vectorizing;
-}
-
-export type GroundedAnswer = {
+export type ObjectAnswer = {
   answer: string;
   context: AiContextPackage;
   grounding: GroundingVerificationResult;
-  matchType?: "both" | "lexical-only" | "semantic-only";
-  combinedScore?: number;
 };
 
-/** Answers from one known object, or null when nothing in it relates to the question. */
-export function answerFromObject(question: string, objectId: string): GroundedAnswer | null {
+/** Answers from one known object, or null when nothing grounded can be extracted from it. */
+export function answerFromObject(question: string, objectId: string): ObjectAnswer | null {
   const contextRes = getAiContext(appDataset, { objectId, visibility: "public" });
   if (contextRes.status !== "ok" || !contextRes.data) return null;
 
@@ -44,33 +36,7 @@ export function answerFromObject(question: string, objectId: string): GroundedAn
   return grounding.isGrounded ? { answer: extracted.answer, context, grounding } : null;
 }
 
-/**
- * Finds the best published object for a question with hybrid search and answers with
- * sentences extracted from it. Returns null rather than guessing when nothing relevant
- * and grounded is found.
- */
-export async function answerQuestion(question: string, language?: string): Promise<GroundedAnswer | null> {
-  if (!question.trim()) return null;
-  await ensureVectorized();
-
-  const hits = await searchHybrid(question, appDataset, vectorStore, embeddingProvider, { language, limit: 3 });
-  for (const hit of hits.results) {
-    const contextRes = getAiContext(appDataset, { objectId: hit.objectId, visibility: "public" });
-    if (contextRes.status !== "ok" || !contextRes.data) continue;
-
-    const extracted = buildExtractiveAnswer(question, contextRes.data);
-    if (extracted.matchedQueryTerms === 0 || !extracted.answer) continue;
-
-    const grounding = verifyAnswerGrounding(extracted.answer, contextRes.data);
-    if (!grounding.isGrounded) continue;
-
-    return {
-      answer: extracted.answer,
-      context: contextRes.data,
-      grounding,
-      matchType: hit.matchType,
-      combinedScore: hit.combinedScore,
-    };
-  }
-  return null;
+/** Finds and answers from the best published object (hybrid search + grounding check). */
+export function answerQuestion(question: string, language?: string): Promise<GroundedAnswer | null> {
+  return findGroundedAnswer(appDataset, question, { store: vectorStore, provider: embeddingProvider, language });
 }
