@@ -273,6 +273,14 @@ describe("vercel.json security headers", () => {
     }
   });
 
+  it("keeps the pages free of inline event handlers, which script-src blocks", () => {
+    for (const page of ["apps/geocore-site/index.html", "apps/geocore-studio/index.html"]) {
+      const html = readFileSync(join(repoRoot, page), "utf8");
+      const handlers = [...html.matchAll(/<[a-z][^<>]*?\son[a-z]+\s*=[^<>]*>/gi)].map((m) => m[0]);
+      expect(handlers, `${page} inline event handlers`).toEqual([]);
+    }
+  });
+
   it("does not allow unsafe inline or eval scripts", () => {
     const scriptSrc = csp.split(";").find((d) => d.trim().startsWith("script-src")) ?? "";
     expect(scriptSrc).not.toContain("unsafe-inline");
