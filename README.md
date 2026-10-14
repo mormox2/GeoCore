@@ -169,7 +169,7 @@ GeoCore is organized as an enterprise-grade, clean monorepo with 7 decoupled pac
 | [`@mormo_mossaab/geocore-ai`](./packages/geocore-ai) | `1.0.1` | RAG context builder, semantic chunking, extractive answers & claim-level grounding checks. | Grounding Engine |
 | [`@mormo_mossaab/geocore-server`](./packages/geocore-server) | `1.0.1` | Standalone REST server with OpenAPI 3.1, grounded `/api/answer` & API key authentication. | Node HTTP, OpenAPI |
 | [`@mormo_mossaab/geocore-next`](./packages/geocore-next) | `1.0.1` | Next.js 14+/15+ App Router helpers, metadata & JSON-LD injectors. | Next.js |
-| [`@mormo_mossaab/geocore-db`](./packages/geocore-db) | `1.0.1` | Persistence repository layer with In-Memory & SQLite adapters. | SQLite, Memory DB |
+| [`@mormo_mossaab/geocore-db`](./packages/geocore-db) | `1.0.1` | Persistence repository layer with In-Memory and SQL adapters (SQLite, PostgreSQL via `placeholders: "postgres"`). | SQLite, PostgreSQL, Memory DB |
 
 ---
 

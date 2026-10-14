@@ -148,5 +148,4 @@ Un audit approfondi a été mené, chaque constat étant reproduit par un script
 - **Outillage** : Node.js 22, `npm ci`, build dans l'ordre des dépendances, `dist/` n'est plus versionné, Vitest 5, `@changesets/cli` 3 avec `changesets/action` v2, actions GitHub v7 (Node 24), dépendances `zod` inutiles retirées. `npm audit` : 0 vulnérabilité.
 
 **Points restants** :
-- `SqlKnowledgeRepository` utilise une syntaxe propre à SQLite (`INSERT OR REPLACE`).
 - Une part du code utilise encore le type `any` (principalement les adaptateurs SQL et les chargeurs).
