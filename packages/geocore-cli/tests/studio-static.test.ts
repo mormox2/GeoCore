@@ -97,10 +97,15 @@ describe("Studio packaging", () => {
 
   it("ships the studio in the npm tarball", async () => {
     const { execFileSync } = await import("node:child_process");
-    const out = execFileSync("npm", ["pack", "--dry-run", "--json"], {
-      cwd: path.resolve(__dirname, ".."),
-      encoding: "utf-8",
-    });
+    // On Windows `npm` is `npm.cmd`, which execFileSync cannot start without a shell:
+    // run npm's own CLI script (exposed by `npm test`) with the current Node instead.
+    const npmCli = process.env.npm_execpath;
+    const useCli = npmCli !== undefined && /\.c?js$/.test(npmCli);
+    const out = execFileSync(
+      useCli ? process.execPath : "npm",
+      [...(useCli ? [npmCli] : []), "pack", "--dry-run", "--json"],
+      { cwd: path.resolve(__dirname, ".."), encoding: "utf-8", shell: !useCli && process.platform === "win32" }
+    );
     const files = (JSON.parse(out)[0].files as Array<{ path: string }>).map((f) => f.path);
     for (const file of ["studio/index.html", "studio/app.js", "studio/engine.js", "studio/styles.css"]) {
       expect(files).toContain(file);
