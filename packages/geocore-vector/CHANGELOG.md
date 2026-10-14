@@ -1,5 +1,14 @@
 # @mormo_mossaab/geocore-vector
 
+## 1.1.1
+
+### Patch Changes
+
+- a12a2f7: Declare the supported Node.js versions (`engines.node: ">=20"`), now tested in CI on Node 20 and Node 22.
+- Updated dependencies [a12a2f7]
+  - @mormo_mossaab/geocore@1.1.2
+  - @mormo_mossaab/geocore-ai@1.1.1
+
 ## 1.1.0
 
 ### Minor Changes
