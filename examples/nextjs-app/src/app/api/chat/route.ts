@@ -10,7 +10,6 @@ export type ChatResponsePayload = {
   answer: string;
   matchedObjectId: string;
   matchType?: "both" | "lexical-only" | "semantic-only";
-  combinedScore?: number;
   groundingScore: number;
   hallucinationRisk: "low" | "medium" | "high";
   groundedEntities: string[];
@@ -32,7 +31,9 @@ export async function POST(req: Request): Promise<Response> {
 
     // 1. Answer from the requested object, or find the best one via hybrid search (RRF).
     //    Answers are extracted from certified content and must pass the grounding check.
-    const result = body.objectId ? answerFromObject(query, body.objectId) : await answerQuestion(query);
+    const searched = body.objectId ? null : await answerQuestion(query);
+    const objectId = body.objectId ?? searched?.objectId;
+    const result = objectId ? answerFromObject(query, objectId) : null;
 
     if (!result) {
       return new Response(
@@ -41,7 +42,8 @@ export async function POST(req: Request): Promise<Response> {
       );
     }
 
-    const { answer, context: aiPackage, grounding, matchType, combinedScore } = result;
+    const { answer, context: aiPackage, grounding } = result;
+    const matchType = searched?.matchType;
     const targetObjectId = aiPackage.object.id;
 
     // 2. Formatted LLM prompt context, ready to hand to a model in a production app.
@@ -51,7 +53,6 @@ export async function POST(req: Request): Promise<Response> {
       answer,
       matchedObjectId: targetObjectId,
       matchType,
-      combinedScore,
       groundingScore: grounding.score,
       hallucinationRisk: grounding.hallucinationRisk,
       groundedEntities: grounding.matchedEntities,

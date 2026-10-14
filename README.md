@@ -52,11 +52,11 @@ It takes your structured Markdown/YAML files and transforms them into an interco
 ### Try in 30 Seconds with CLI
 
 ```bash
-# 1. Initialize a new GeoCore Knowledge Base in the current directory
-mkdir my-knowledge-base && cd my-knowledge-base
-npx @mormo_mossaab/geocore-cli init
+# 1. Initialize a new GeoCore Knowledge Base
+npx @mormo_mossaab/geocore-cli init my-knowledge-base
 
 # 2. Launch the interactive Visual Studio (2D Graph + Editor + RAG Tester)
+cd my-knowledge-base
 npx @mormo_mossaab/geocore-cli studio
 ```
 
@@ -123,7 +123,7 @@ Turn your knowledge graph into an AI-crawlable, SEO-dominant digital presence wi
 
 ```typescript
 // app/api/geocore/[...route]/route.ts
-import { handleLlmsTxt, handleSitemapXml, handleSearchApi, handleContextApi } from "@mormo_mossaab/geocore-next";
+import { handleLlmsTxt, handleSitemapXml, handleSearchApi, handleContextApi, handleAnswerApi } from "@mormo_mossaab/geocore-next";
 import { myDataset } from "@/lib/dataset";
 
 export async function GET(req: Request, { params }: { params: { route?: string[] } }) {
@@ -132,11 +132,12 @@ export async function GET(req: Request, { params }: { params: { route?: string[]
   if (first === "sitemap.xml") return handleSitemapXml(myDataset, { siteUrl: "https://yourdomain.com" });
   if (first === "search") return handleSearchApi(myDataset, new URL(req.url).searchParams.get("q") ?? "");
   if (first === "context" && second) return handleContextApi(myDataset, second);
+  if (first === "answer") return handleAnswerApi(myDataset, req); // <geocore-widget data-api-url="/api/geocore">
   return new Response("Not found", { status: 404 });
 }
 ```
 
-See [`examples/nextjs-app`](./examples/nextjs-app) for the complete route, including the grounded `answer` endpoint used by the widget.
+See [`examples/nextjs-app`](./examples/nextjs-app) for a complete app. `handleAnswerApi` serves the same grounded-answer contract as `geocore serve`'s `/api/answer`, so the widget works with either.
 
 ### 4. 🎨 Interactive Visual Studio
 A lightweight, built-in development studio featuring:
@@ -169,7 +170,7 @@ GeoCore is organized as an enterprise-grade, clean monorepo with 7 decoupled pac
 | [`@mormo_mossaab/geocore-ai`](./packages/geocore-ai) | `1.0.1` | RAG context builder, semantic chunking, extractive answers & claim-level grounding checks. | Grounding Engine |
 | [`@mormo_mossaab/geocore-server`](./packages/geocore-server) | `1.0.1` | Standalone REST server with OpenAPI 3.1, grounded `/api/answer` & API key authentication. | Node HTTP, OpenAPI |
 | [`@mormo_mossaab/geocore-next`](./packages/geocore-next) | `1.0.1` | Next.js 14+/15+ App Router helpers, metadata & JSON-LD injectors. | Next.js |
-| [`@mormo_mossaab/geocore-db`](./packages/geocore-db) | `1.0.1` | Persistence repository layer with In-Memory & SQLite adapters. | SQLite, Memory DB |
+| [`@mormo_mossaab/geocore-db`](./packages/geocore-db) | `1.0.1` | Persistence repository layer with In-Memory and SQL adapters (SQLite, PostgreSQL via `placeholders: "postgres"`). | SQLite, PostgreSQL, Memory DB |
 
 ---
 

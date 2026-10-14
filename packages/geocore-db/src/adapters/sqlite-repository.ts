@@ -151,6 +151,29 @@ function rowToRelationship(row: any): KnowledgeRelationship {
   };
 }
 
+/**
+ * Builds a portable upsert (SQLite >= 3.24 and PostgreSQL >= 9.5):
+ * insert the row, or update every column except `id` when the id already exists.
+ */
+function buildUpsert(table: string, columns: string[]): string {
+  const updates = columns
+    .filter((c) => c !== "id")
+    .map((c) => `${c} = excluded.${c}`)
+    .join(", ");
+  return (
+    `INSERT INTO ${table} (${columns.join(", ")}) VALUES (${columns.map(() => "?").join(", ")}) ` +
+    `ON CONFLICT (id) DO UPDATE SET ${updates}`
+  );
+}
+
+export type SqlRepositoryOptions = {
+  /**
+   * Bind parameter style expected by the driver: "sqlite" keeps `?` (SQLite, MySQL),
+   * "postgres" rewrites them to `$1, $2, …` (pg, PGlite). Defaults to "sqlite".
+   */
+  placeholders?: "sqlite" | "postgres";
+};
+
 export interface SqlDatabaseDriver {
   exec(sql: string): Promise<void>;
   query<T = any>(sql: string, params?: any[]): Promise<T[]>;
@@ -162,9 +185,26 @@ export interface SqlDatabaseDriver {
  */
 export class SqlKnowledgeRepository implements KnowledgeRepository {
   private driver: SqlDatabaseDriver;
+  private placeholders: "sqlite" | "postgres";
 
-  constructor(driver: SqlDatabaseDriver) {
+  constructor(driver: SqlDatabaseDriver, options: SqlRepositoryOptions = {}) {
     this.driver = driver;
+    this.placeholders = options.placeholders ?? "sqlite";
+  }
+
+  /** Our statements never contain a literal `?`, so every `?` is a bind parameter. */
+  private toDriverSql(sql: string): string {
+    if (this.placeholders === "sqlite") return sql;
+    let index = 0;
+    return sql.replace(/\?/g, () => `$${++index}`);
+  }
+
+  private query<T>(sql: string, params?: any[]): Promise<T[]> {
+    return this.driver.query<T>(this.toDriverSql(sql), params);
+  }
+
+  private run(sql: string, params?: any[]): Promise<{ changes: number }> {
+    return this.driver.run(this.toDriverSql(sql), params);
   }
 
   async init(): Promise<void> {
@@ -180,7 +220,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
 
   // Objects
   async getObject(id: string): Promise<KnowledgeObject | null> {
-    const rows = await this.driver.query<any>(
+    const rows = await this.query<any>(
       "SELECT * FROM geocore_objects WHERE id = ? LIMIT 1",
       [id]
     );
@@ -210,7 +250,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
       }
     }
 
-    const rows = await this.driver.query<any>(sql, params);
+    const rows = await this.query<any>(sql, params);
     // OFFSET without LIMIT is not portable across SQL dialects, so apply it here.
     const pageRows = !filter?.limit && filter?.offset ? rows.slice(filter.offset) : rows;
     return pageRows.map(rowToObject);
@@ -218,10 +258,8 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
   }
 
   async saveObject(object: KnowledgeObject): Promise<void> {
-    await this.driver.run(
-      `INSERT OR REPLACE INTO geocore_objects 
-       (id, slug, title, summary, body, language, status, version, author, metadata_json, tags_json, data_json, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    await this.run(
+      buildUpsert("geocore_objects", ["id", "slug", "title", "summary", "body", "language", "status", "version", "author", "metadata_json", "tags_json", "data_json", "created_at", "updated_at"]),
       [
         object.id,
         object.slug,
@@ -242,13 +280,13 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
   }
 
   async deleteObject(id: string): Promise<boolean> {
-    const res = await this.driver.run("DELETE FROM geocore_objects WHERE id = ?", [id]);
+    const res = await this.run("DELETE FROM geocore_objects WHERE id = ?", [id]);
     return res.changes > 0;
   }
 
   // Entities
   async getEntity(id: string): Promise<KnowledgeEntity | null> {
-    const rows = await this.driver.query<any>(
+    const rows = await this.query<any>(
       "SELECT * FROM geocore_entities WHERE id = ? LIMIT 1",
       [id]
     );
@@ -283,7 +321,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
       sql += " AND status = ?";
       params.push(filter.status);
     }
-    const rows = await this.driver.query<any>(sql, params);
+    const rows = await this.query<any>(sql, params);
     return rows.map((r) => ({
       id: r.id,
       type: r.type,
@@ -298,9 +336,8 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
   }
 
   async saveEntity(entity: KnowledgeEntity): Promise<void> {
-    await this.driver.run(
-      `INSERT OR REPLACE INTO geocore_entities (id, type, canonical_name, definition, language, status, data_json, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    await this.run(
+      buildUpsert("geocore_entities", ["id", "type", "canonical_name", "definition", "language", "status", "data_json", "created_at", "updated_at"]),
       [
         entity.id,
         entity.type,
@@ -316,13 +353,13 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
   }
 
   async deleteEntity(id: string): Promise<boolean> {
-    const res = await this.driver.run("DELETE FROM geocore_entities WHERE id = ?", [id]);
+    const res = await this.run("DELETE FROM geocore_entities WHERE id = ?", [id]);
     return res.changes > 0;
   }
 
   // Citations & Sources
   async getCitation(id: string): Promise<KnowledgeCitation | null> {
-    const rows = await this.driver.query<any>("SELECT * FROM geocore_citations WHERE id = ? LIMIT 1", [id]);
+    const rows = await this.query<any>("SELECT * FROM geocore_citations WHERE id = ? LIMIT 1", [id]);
     if (!rows || rows.length === 0) return null;
     const r = rows[0];
     return r.data_json ? JSON.parse(r.data_json) : null;
@@ -339,14 +376,13 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
       sql += " AND source_id = ?";
       params.push(filter.sourceId);
     }
-    const rows = await this.driver.query<any>(sql, params);
+    const rows = await this.query<any>(sql, params);
     return rows.map((r) => (r.data_json ? JSON.parse(r.data_json) : null)).filter(Boolean);
   }
 
   async saveCitation(citation: KnowledgeCitation): Promise<void> {
-    await this.driver.run(
-      `INSERT OR REPLACE INTO geocore_citations (id, source_id, target_id, purpose, status, confidence, quote, paraphrase, data_json, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    await this.run(
+      buildUpsert("geocore_citations", ["id", "source_id", "target_id", "purpose", "status", "confidence", "quote", "paraphrase", "data_json", "created_at", "updated_at"]),
       [
         citation.id,
         citation.sourceId,
@@ -364,25 +400,24 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
   }
 
   async deleteCitation(id: string): Promise<boolean> {
-    const res = await this.driver.run("DELETE FROM geocore_citations WHERE id = ?", [id]);
+    const res = await this.run("DELETE FROM geocore_citations WHERE id = ?", [id]);
     return res.changes > 0;
   }
 
   async getSource(id: string): Promise<KnowledgeSource | null> {
-    const rows = await this.driver.query<any>("SELECT * FROM geocore_sources WHERE id = ? LIMIT 1", [id]);
+    const rows = await this.query<any>("SELECT * FROM geocore_sources WHERE id = ? LIMIT 1", [id]);
     if (!rows || rows.length === 0) return null;
     return rows[0].data_json ? JSON.parse(rows[0].data_json) : null;
   }
 
   async listSources(): Promise<KnowledgeSource[]> {
-    const rows = await this.driver.query<any>("SELECT * FROM geocore_sources");
+    const rows = await this.query<any>("SELECT * FROM geocore_sources");
     return rows.map((r) => (r.data_json ? JSON.parse(r.data_json) : null)).filter(Boolean);
   }
 
   async saveSource(source: KnowledgeSource): Promise<void> {
-    await this.driver.run(
-      `INSERT OR REPLACE INTO geocore_sources (id, type, title, status, trust_level, url, data_json, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    await this.run(
+      buildUpsert("geocore_sources", ["id", "type", "title", "status", "trust_level", "url", "data_json", "created_at", "updated_at"]),
       [
         source.id,
         source.type,
@@ -398,13 +433,13 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
   }
 
   async deleteSource(id: string): Promise<boolean> {
-    const res = await this.driver.run("DELETE FROM geocore_sources WHERE id = ?", [id]);
+    const res = await this.run("DELETE FROM geocore_sources WHERE id = ?", [id]);
     return res.changes > 0;
   }
 
   // Media
   async getMedia(id: string): Promise<MediaAsset | null> {
-    const rows = await this.driver.query<any>("SELECT * FROM geocore_media WHERE id = ? LIMIT 1", [id]);
+    const rows = await this.query<any>("SELECT * FROM geocore_media WHERE id = ? LIMIT 1", [id]);
     if (!rows || rows.length === 0) return null;
     return rows[0].data_json ? JSON.parse(rows[0].data_json) : null;
   }
@@ -420,14 +455,13 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
       sql += " AND visibility = ?";
       params.push(filter.visibility);
     }
-    const rows = await this.driver.query<any>(sql, params);
+    const rows = await this.query<any>(sql, params);
     return rows.map((r) => (r.data_json ? JSON.parse(r.data_json) : null)).filter(Boolean);
   }
 
   async saveMedia(media: MediaAsset): Promise<void> {
-    await this.driver.run(
-      `INSERT OR REPLACE INTO geocore_media (id, type, title, status, visibility, source, data_json, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    await this.run(
+      buildUpsert("geocore_media", ["id", "type", "title", "status", "visibility", "source", "data_json", "created_at", "updated_at"]),
       [
         media.id,
         media.type,
@@ -443,7 +477,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
   }
 
   async deleteMedia(id: string): Promise<boolean> {
-    const res = await this.driver.run("DELETE FROM geocore_media WHERE id = ?", [id]);
+    const res = await this.run("DELETE FROM geocore_media WHERE id = ?", [id]);
     return res.changes > 0;
   }
 
@@ -455,15 +489,14 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
       sql += " WHERE source_id = ? OR target_id = ?";
       params.push(nodeId, nodeId);
     }
-    const rows = await this.driver.query<any>(sql, params);
+    const rows = await this.query<any>(sql, params);
     return rows.map(rowToRelationship);
 
   }
 
   async saveRelationship(relationship: KnowledgeRelationship): Promise<void> {
-    await this.driver.run(
-      `INSERT OR REPLACE INTO geocore_relationships (id, source_id, target_id, type, strength, data_json, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    await this.run(
+      buildUpsert("geocore_relationships", ["id", "source_id", "target_id", "type", "strength", "data_json", "created_at", "updated_at"]),
       [
         relationship.id,
         relationship.sourceId,
@@ -478,7 +511,7 @@ export class SqlKnowledgeRepository implements KnowledgeRepository {
   }
 
   async deleteRelationship(id: string): Promise<boolean> {
-    const res = await this.driver.run("DELETE FROM geocore_relationships WHERE id = ?", [id]);
+    const res = await this.run("DELETE FROM geocore_relationships WHERE id = ?", [id]);
     return res.changes > 0;
   }
 
