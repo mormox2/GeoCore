@@ -28,7 +28,7 @@ Options:
   --language <lang>                     Language code filter (e.g. fr, en, ar)
   --mode <public|internal>              Validation & export visibility mode
   --port <number>                       Port for serve (default: 3000) or studio (default: 4200)
-  --host <string>                       Host for serve or studio (default: 0.0.0.0 or 127.0.0.1)
+  --host <string>                       Host for serve or studio (default: 127.0.0.1)
   --dim <number>                        Embedding dimension for vectorize (default: 64)
   --api-key <key>                       API key for authentication or OpenAI embeddings
   --json                                Output results in structured JSON format

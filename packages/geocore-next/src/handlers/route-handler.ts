@@ -5,6 +5,7 @@ import {
   generateSitemap,
   searchKnowledge,
   getAiContext,
+  createNotFoundResponse,
 } from "@mormo_mossaab/geocore";
 
 export type NextRouteHandlerOptions = {
@@ -124,14 +125,18 @@ export function handleContextApi(
     visibility: "public",
   });
 
-  const statusCode =
-    result.status === "ok"
-      ? 200
-      : result.status === "not-found"
-      ? 404
-      : result.status === "forbidden"
-      ? 403
-      : 500;
+  // Objects that exist but are not public answer 404, like missing ones, so the ids of
+  // drafts and internal objects cannot be probed.
+  if (result.status === "not-found" || result.status === "forbidden") {
+    return Response.json(createNotFoundResponse(objectId, "public"), {
+      status: 404,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+    });
+  }
+
+  const statusCode = result.status === "ok" ? 200 : 500;
 
   return Response.json(result, {
     status: statusCode,

@@ -50,8 +50,7 @@ export function generateOpenApiSpec(info: OpenApiInfo = {}): object {
           ],
           responses: {
             "200": { description: "Knowledge Object details" },
-            "404": { description: "Object not found" },
-            "403": { description: "Object is private/internal" },
+            "404": { description: "Object not found, or not public (drafts and internal objects are not disclosed)" },
           },
         },
       },
@@ -143,8 +142,7 @@ export function generateOpenApiSpec(info: OpenApiInfo = {}): object {
           ],
           responses: {
             "200": { description: "Complete AI Context Package" },
-            "404": { description: "Object not found" },
-            "403": { description: "Object is not published/public" },
+            "404": { description: "Object not found, or not public (drafts and internal objects are not disclosed)" },
           },
         },
       },

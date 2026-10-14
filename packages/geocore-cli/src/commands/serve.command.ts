@@ -41,7 +41,8 @@ export async function serveCommand(options: ServeCommandOptions = {}): Promise<v
   });
 
   const port = options.port ?? 3000;
-  const host = options.host ?? "0.0.0.0";
+  // Loopback by default: exposing the API on the network is an explicit --host 0.0.0.0.
+  const host = options.host ?? "127.0.0.1";
   const siteUrl = options.siteUrl ?? config.siteUrl;
 
   const authOptions = options.apiKey

@@ -56,6 +56,16 @@ describe("Next.js Route Handlers", () => {
     expect(json.status).toBe("ok");
     expect(json.data.object.id).toBe("ko_detartrage_abime_dents");
   });
+
+  it("handleContextApi answers 404 for drafts as for missing objects", async () => {
+    const hidden = handleContextApi(apiDatasetFixture, "ko_draft_internal_note");
+    const missing = handleContextApi(apiDatasetFixture, "ko_does_not_exist");
+    expect(hidden.status).toBe(404);
+    expect(missing.status).toBe(404);
+    const body = await hidden.json();
+    expect(body.status).toBe("not-found");
+    expect(JSON.stringify(body)).not.toContain("confidentielle");
+  });
 });
 
 describe("Next.js Components Helpers", () => {
