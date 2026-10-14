@@ -35,7 +35,18 @@ function visit(name, trail) {
 
 for (const pkg of workspaces) visit(pkg.name, []);
 
+// On Windows `npm` is `npm.cmd`, which execFileSync cannot start without a shell. Under
+// `npm run build` npm exposes its own CLI script, so run that with the current Node instead.
+function runNpm(args) {
+  const npmCli = process.env.npm_execpath;
+  if (npmCli && /\.c?js$/.test(npmCli)) {
+    execFileSync(process.execPath, [npmCli, ...args], { cwd: root, stdio: "inherit" });
+  } else {
+    execFileSync("npm", args, { cwd: root, stdio: "inherit", shell: process.platform === "win32" });
+  }
+}
+
 for (const pkg of order.filter((p) => p.scripts?.build)) {
   console.log(`\n▶ build ${pkg.name}`);
-  execFileSync("npm", ["run", "build", "--workspace", pkg.name], { cwd: root, stdio: "inherit" });
+  runNpm(["run", "build", "--workspace", pkg.name]);
 }
