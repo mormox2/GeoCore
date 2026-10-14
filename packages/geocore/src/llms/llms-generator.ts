@@ -6,6 +6,7 @@ import { createLlmsOutputId, extractLlmsEntities, isLlmsPublicObject, dedupeLlms
 import { formatLlmsLink, formatLlmsList } from "./llms-formatters.js";
 import { validateLlmsOutput } from "./validate-llms-output.js";
 import * as codes from "../validation/validation-codes.js";
+import { readString } from "../internal/read-field.js";
 
 /**
  * Generates compact llms.txt context index.
@@ -67,7 +68,7 @@ export function generateLlmsTxt(input: GenerateLlmsInput): LlmsOutput {
 
   for (const obj of publicObjects) {
     const meta = input.metadata?.[obj.id];
-    const url = meta?.canonicalUrl || meta?.seo?.canonicalUrl || (obj as any).canonicalUrl;
+    const url = meta?.canonicalUrl || meta?.seo?.canonicalUrl || readString(obj, "canonicalUrl");
     if (!url) {
       diagnostics.push({
         id: `${codes.GC_LLMS_CANONICAL_URL_MISSING}_${obj.id}`,

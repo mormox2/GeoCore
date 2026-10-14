@@ -6,6 +6,7 @@ import { createLlmsOutputId, extractLlmsEntities, extractLlmsCitations, isLlmsPu
 import { formatLlmsMetadataBlock, stringifyLlmsContent, formatLlmsList } from "./llms-formatters.js";
 import { validateLlmsOutput } from "./validate-llms-output.js";
 import * as codes from "../validation/validation-codes.js";
+import { readString } from "../internal/read-field.js";
 
 /**
  * Generates expanded llms-full.txt content metadata and context.
@@ -70,7 +71,7 @@ export function generateLlmsFullTxt(input: GenerateLlmsInput): LlmsOutput {
     lines.push("");
 
     const author = meta?.author || obj.author || undefined;
-    const url = meta?.canonicalUrl || meta?.seo?.canonicalUrl || (obj as any).canonicalUrl || undefined;
+    const url = meta?.canonicalUrl || meta?.seo?.canonicalUrl || readString(obj, "canonicalUrl") || undefined;
     if (!url) {
       diagnostics.push({
         id: `${codes.GC_LLMS_CANONICAL_URL_MISSING}_${obj.id}`,

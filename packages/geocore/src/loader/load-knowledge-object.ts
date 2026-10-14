@@ -1,5 +1,6 @@
 import type { RawKnowledgeInput } from "../types/knowledge-loader.js";
 import type { KnowledgeObject } from "../types/knowledge-object.js";
+import type { KnowledgeStatus } from "../types/metadata.js";
 import type { LoaderDiagnostic } from "../types/loader-diagnostic.js";
 import {
   isRecord,
@@ -174,13 +175,14 @@ export function loadKnowledgeObject(input: RawKnowledgeInput): {
   }
 
   // Construct the object with defaults
-  const obj: KnowledgeObject = {
-    ...(content as any),
-    status: normalizedStatus as any,
+  // Required fields were checked above; this is the raw-input boundary.
+  const obj = {
+    ...(content as Partial<KnowledgeObject>),
+    status: normalizedStatus as KnowledgeStatus,
     version: (content.version as string) || "1.0.0",
     createdAt: (content.createdAt as string) || now,
     updatedAt: (content.updatedAt as string) || now,
-  };
+  } as KnowledgeObject;
 
   // Run full validation to catch schema constraints
   const valResult = validateKnowledgeObject(obj);

@@ -2,6 +2,7 @@ import { knowledgeCitationSchema } from "../schemas/citation.schema.js";
 import { ValidationResult, ValidationIssue } from "../validation/validation-result.js";
 import * as codes from "../validation/validation-codes.js";
 import type { KnowledgeCitation, KnowledgeSource } from "../types/citation.js";
+import { readString } from "../internal/read-field.js";
 
 /**
  * Validates a KnowledgeCitation using the Zod schema and business rules.
@@ -42,7 +43,7 @@ export function validateCitation(
         code: err.message.startsWith("GC_") ? err.message : codes.GC_CITATION_ID_MISSING,
         message: err.message,
         field,
-        objectId: (citation as any).id,
+        objectId: readString(citation, "id"),
       });
     }
     return { valid: false, publishable: false, checkedAt, issues };

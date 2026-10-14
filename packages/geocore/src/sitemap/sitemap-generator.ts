@@ -14,6 +14,7 @@ import {
 import { generateSitemapXml } from "./sitemap-xml.js";
 import { validateSitemapOutput } from "./validate-sitemap-output.js";
 import * as codes from "../validation/validation-codes.js";
+import { readString } from "../internal/read-field.js";
 
 /**
  * Generates a complete SitemapOutput from a GenerateSitemapInput.
@@ -80,7 +81,7 @@ export function generateSitemap(input: GenerateSitemapInput): SitemapOutput {
       sourceType: "knowledge-object",
       url,
       language: obj.language ?? input.language,
-      lastModified: meta?.updatedAt ?? (obj as any).updatedAt ?? undefined,
+      lastModified: meta?.updatedAt ?? obj.updatedAt ?? undefined,
       changeFrequency: input.defaultChangeFrequency,
       priority: input.defaultPriority,
       visibility: "public",
@@ -134,7 +135,7 @@ export function generateSitemap(input: GenerateSitemapInput): SitemapOutput {
   const validation = validateSitemapOutput(output);
   if (!validation.valid || validation.issues.length > 0) {
     for (const issue of validation.issues) {
-      const exists = diagnostics.some((d) => d.code === issue.code && d.sourceId === (issue as any).sourceId);
+      const exists = diagnostics.some((d) => d.code === issue.code && d.sourceId === readString(issue, "sourceId"));
       if (!exists) {
         diagnostics.push({
           id: issue.id,

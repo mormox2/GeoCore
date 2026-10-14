@@ -24,6 +24,9 @@ jobs:
       - name: Install Dependencies
         run: npm ci --no-audit
 
+      - name: Check for explicit any types
+        run: npm run check:any
+
       - name: Build All Packages
         run: npm run build
 

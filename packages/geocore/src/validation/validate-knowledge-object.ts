@@ -1,8 +1,9 @@
 import { knowledgeObjectSchema } from "../schemas/knowledge-object.schema.js";
 import { ValidationResult, ValidationIssue, ValidationSeverity } from "./validation-result.js";
 import * as codes from "./validation-codes.js";
+import { readString } from "../internal/read-field.js";
 
-export function validateKnowledgeObject(obj: any): ValidationResult {
+export function validateKnowledgeObject(obj: unknown): ValidationResult {
   const checkedAt = new Date().toISOString();
   
   if (!obj || typeof obj !== "object") {
@@ -95,7 +96,7 @@ export function validateKnowledgeObject(obj: any): ValidationResult {
       severity,
       code,
       message,
-      objectId: obj.id,
+      objectId: readString(obj, "id"),
       field: field || undefined,
       recommendation: recommendation || undefined,
     };

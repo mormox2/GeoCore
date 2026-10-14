@@ -2,6 +2,7 @@ import { knowledgeSourceSchema } from "../schemas/citation.schema.js";
 import { ValidationResult, ValidationIssue } from "../validation/validation-result.js";
 import * as codes from "../validation/validation-codes.js";
 import type { KnowledgeSource } from "../types/citation.js";
+import { readString } from "../internal/read-field.js";
 
 /**
  * Validates a KnowledgeSource using the Zod schema and business rules.
@@ -38,7 +39,7 @@ export function validateSource(source: unknown): ValidationResult {
         code: err.message.startsWith("GC_") ? err.message : codes.GC_CITATION_SOURCE_ID_MISSING,
         message: err.message,
         field,
-        objectId: (source as any).id,
+        objectId: readString(source, "id"),
       });
     }
     return { valid: false, publishable: false, checkedAt, issues };

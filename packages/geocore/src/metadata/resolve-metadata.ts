@@ -6,6 +6,7 @@ import { KnowledgeCitation } from "../types/citation.js";
 import { GeoCoreMetadata, ResolvedMetadata } from "../types/metadata.js";
 import { DEFAULT_METADATA } from "./metadata-defaults.js";
 import { mergeMetadataArrays, dedupeMetadataArray } from "./metadata-utils.js";
+import { readField } from "../internal/read-field.js";
 
 export type ResolveMetadataInput = {
   object: KnowledgeObject;
@@ -73,25 +74,27 @@ export function resolveMetadata(input: ResolveMetadataInput): ResolvedMetadata {
       return object.metadata[field];
     }
     // 2. KO core fields
-    if ((object as any)[field] !== undefined) {
-      return (object as any)[field];
+    const coreValue = readField(object, field);
+    if (coreValue !== undefined) {
+      return coreValue as GeoCoreMetadata[K];
     }
     if (field === "language" || field === "owner" || field === "author" || field === "reviewer") {
-      const col = matchingCollections.find((c) => (c as any)[field] !== undefined);
-      if (col !== undefined) return (col as any)[field];
+      const col = matchingCollections.find((c) => readField(c, field) !== undefined);
+      if (col !== undefined) return readField(col, field) as GeoCoreMetadata[K];
     }
     // 4. Entity metadata
     if (field === "language") {
       const entVal = matchingEntities.find((e) => e.language !== undefined)?.language;
-      if (entVal !== undefined) return entVal as any;
+      if (entVal !== undefined) return entVal as GeoCoreMetadata[K];
     }
     // 5. Global defaults
     if (defaults && defaults[field] !== undefined) {
       return defaults[field];
     }
     // 6. System fallbacks
-    if ((DEFAULT_METADATA as any)[field] !== undefined) {
-      return (DEFAULT_METADATA as any)[field];
+    const fallback = readField(DEFAULT_METADATA, field);
+    if (fallback !== undefined) {
+      return fallback as GeoCoreMetadata[K];
     }
     return undefined;
   }
@@ -176,9 +179,9 @@ export function resolveMetadata(input: ResolveMetadataInput): ResolvedMetadata {
     resolvedAt,
     resolvedFrom: {
       object: true,
-      defaults: !!defaults || [
-        "language", "status", "version", "freshness", "trustLevel"
-      ].some(k => resolveScalar(k as any) === (DEFAULT_METADATA as any)[k] || (defaults && (defaults as any)[k] !== undefined)),
+      defaults: !!defaults || (
+        ["language", "status", "version", "freshness", "trustLevel"] as const
+      ).some((k) => resolveScalar(k) === readField(DEFAULT_METADATA, k)),
       graph: !!graph && (graphEntityIds.length > 0 || graphCitationIds.length > 0),
       collections: matchingCollections.length > 0,
       entities: matchingEntities.length > 0 || resolvedEntities.length > 0,

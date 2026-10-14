@@ -1,6 +1,6 @@
 import { parseArgs } from "./utils/parse-args.js";
 import { EXIT_CODES } from "./utils/exit-codes.js";
-import { CliError } from "./utils/cli-error.js";
+import { CliError, errorMessage } from "./utils/cli-error.js";
 import { initCommand } from "./commands/init.command.js";
 import { validateCommand } from "./commands/validate.command.js";
 import { exportCommand } from "./commands/export.command.js";
@@ -119,12 +119,12 @@ export async function runCli(argv: string[]): Promise<number> {
     }
 
     return EXIT_CODES.SUCCESS;
-  } catch (err: any) {
+  } catch (err) {
     if (err instanceof CliError) {
       console.error(`Error: ${err.message}`);
       return err.exitCode;
     } else {
-      console.error(`Unexpected Error: ${err.message || String(err)}`);
+      console.error(`Unexpected Error: ${errorMessage(err)}`);
       return EXIT_CODES.COMMAND_ERROR;
     }
   }

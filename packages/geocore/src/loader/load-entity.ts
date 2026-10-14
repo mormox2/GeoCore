@@ -87,15 +87,16 @@ export function loadEntity(input: RawKnowledgeInput): {
   }
 
   const now = createIsoTimestamp();
-  const entity: KnowledgeEntity = {
+  // Required fields were checked above; this is the raw-input boundary.
+  const entity = {
     definition: "",
     language: "en",
     status: "draft",
     createdAt: now,
     updatedAt: now,
-    ...(content as any),
+    ...(content as Partial<KnowledgeEntity>),
     canonicalName,
-  };
+  } as KnowledgeEntity;
 
   return { entity, diagnostics };
 }

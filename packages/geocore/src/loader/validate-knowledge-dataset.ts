@@ -2,6 +2,7 @@ import type { KnowledgeDataset } from "../types/knowledge-dataset.js";
 import type { ValidationResult, ValidationIssue } from "../validation/validation-result.js";
 import { knowledgeDatasetSchema } from "../schemas/knowledge-dataset.schema.js";
 import * as codes from "../validation/validation-codes.js";
+import { readField } from "../internal/read-field.js";
 
 /**
  * Validates a normalized KnowledgeDataset.
@@ -59,7 +60,7 @@ export function validateKnowledgeDataset(dataset: KnowledgeDataset): ValidationR
     "media",
   ];
   arrayFields.forEach((field) => {
-    if (!Array.isArray((dataset as any)[field])) {
+    if (!Array.isArray(readField(dataset, field))) {
       issues.push({
         id: `${codes.GC_DATASET_ARRAY_INVALID}_${field}`,
         severity: "critical",

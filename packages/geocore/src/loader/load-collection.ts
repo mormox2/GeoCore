@@ -90,12 +90,13 @@ export function loadCollection(input: RawKnowledgeInput): {
   }
 
   const now = createIsoTimestamp();
-  const collection: KnowledgeCollection = {
+  // Required fields were checked above; this is the raw-input boundary.
+  const collection = {
     visibility: "public",
     createdAt: now,
     updatedAt: now,
-    ...(content as any),
-  };
+    ...(content as Partial<KnowledgeCollection>),
+  } as KnowledgeCollection;
 
   return { collection, diagnostics };
 }

@@ -4,6 +4,7 @@ import { ResolvedMetadata } from "../types/metadata.js";
 import { MediaAsset } from "../types/media.js";
 import { SitemapOutputType } from "../types/sitemap.js";
 import { SitemapEntry } from "../types/sitemap-entry.js";
+import { readString } from "../internal/read-field.js";
 
 /**
  * Creates a deterministic sitemap output ID.
@@ -49,8 +50,9 @@ export function resolveSitemapUrl(
   if (metadata?.seo?.canonicalUrl) {
     return metadata.seo.canonicalUrl;
   }
-  if ((object as any).canonicalUrl) {
-    return (object as any).canonicalUrl;
+  const ownUrl = readString(object, "canonicalUrl");
+  if (ownUrl) {
+    return ownUrl;
   }
   if (siteUrl && object.slug) {
     return `${siteUrl.replace(/\/$/, "")}/${object.slug}`;

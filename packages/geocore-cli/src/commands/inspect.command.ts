@@ -2,14 +2,14 @@ import * as path from "path";
 import { loadConfig } from "../config/load-config.js";
 import { discoverKnowledgeFiles } from "../fs/discover-files.js";
 import { readKnowledgeFiles } from "../fs/read-knowledge-files.js";
-import { loadKnowledgeDataset } from "@mormo_mossaab/geocore";
+import { loadKnowledgeDataset, type KnowledgeDataset } from "@mormo_mossaab/geocore";
 import { formatInspectOutput } from "../output/format-inspect-output.js";
 
 export async function inspectCommand(flags: {
   config?: string;
   knowledgeDir?: string;
   json?: boolean;
-}): Promise<any> {
+}): Promise<KnowledgeDataset> {
   const config = loadConfig(flags.config, {
     knowledgeDir: flags.knowledgeDir,
   });

@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { StaticExportBundle } from "@mormo_mossaab/geocore";
-import { CliError } from "../utils/cli-error.js";
+import { CliError, errorMessage } from "../utils/cli-error.js";
 
 export async function writeExportBundle(input: {
   bundle: StaticExportBundle;
@@ -38,10 +38,10 @@ export async function writeExportBundle(input: {
 
     try {
       fs.writeFileSync(resolvedAssetPath, fileContent, "utf8");
-    } catch (err: any) {
+    } catch (err) {
       throw new CliError(
         "FILESYSTEM_ERROR",
-        `Failed to write asset file ${resolvedAssetPath}: ${err.message}`
+        `Failed to write asset file ${resolvedAssetPath}: ${errorMessage(err)}`
       );
     }
 

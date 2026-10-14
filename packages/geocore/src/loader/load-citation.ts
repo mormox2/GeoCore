@@ -77,11 +77,12 @@ export function loadSource(input: RawKnowledgeInput): {
   }
 
   const now = createIsoTimestamp();
-  const source: KnowledgeSource = {
+  // Required fields were checked above; this is the raw-input boundary.
+  const source = {
     createdAt: now,
     updatedAt: now,
-    ...(content as any),
-  };
+    ...(content as Partial<KnowledgeSource>),
+  } as KnowledgeSource;
 
   return { source, diagnostics };
 }
@@ -159,11 +160,12 @@ export function loadCitation(input: RawKnowledgeInput): {
   }
 
   const now = createIsoTimestamp();
-  const citation: KnowledgeCitation = {
+  // Required fields were checked above; this is the raw-input boundary.
+  const citation = {
     createdAt: now,
     updatedAt: now,
-    ...(content as any),
-  };
+    ...(content as Partial<KnowledgeCitation>),
+  } as KnowledgeCitation;
 
   return { citation, diagnostics };
 }

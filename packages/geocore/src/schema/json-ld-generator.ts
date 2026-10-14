@@ -16,6 +16,9 @@ import { createDefinedTermSchema } from "./defined-term-schema.js";
 import { createCollectionSchema } from "./collection-schema.js";
 import { createSchemaOutputId } from "./schema-utils.js";
 import { validateJsonLd } from "./validate-json-ld.js";
+import { JsonLdObject } from "../types/json-ld.js";
+import { GlossaryEntry } from "../types/glossary.js";
+import { readField } from "../internal/read-field.js";
 import * as codes from "../validation/validation-codes.js";
 
 export type GenerateJsonLdInput = {
@@ -51,7 +54,7 @@ export function generateJsonLd(input: GenerateJsonLdInput): SchemaOutput {
   });
 
   // 2. Generate JSON-LD object depending on schema type
-  let jsonLd: any = {
+  let jsonLd: JsonLdObject = {
     "@context": "https://schema.org",
     "@type": schemaType,
   };
@@ -59,21 +62,23 @@ export function generateJsonLd(input: GenerateJsonLdInput): SchemaOutput {
   if (schemaType === "FAQPage") {
     jsonLd = createFaqSchema(input);
   } else if (schemaType === "DefinedTerm") {
-    const glossaryEntry = (object as any).term
-      ? (object as any)
+    // The schema input may already be a glossary entry (it then carries `term`).
+    const glossaryEntry: GlossaryEntry = typeof readField(object, "term") === "string"
+      ? (object as unknown as GlossaryEntry)
       : {
           id: object.id,
           term: object.title,
           slug: object.slug,
           definition: object.body,
           language: object.language,
+          audience: metadata?.audiences?.[0] ?? "general",
           status: object.status,
           createdAt: object.createdAt,
           updatedAt: object.updatedAt,
         };
     jsonLd = createDefinedTermSchema({ glossary: glossaryEntry, metadata });
   } else if (schemaType === "CollectionPage") {
-    const collection = (input as any).collection || {
+    const collection = (readField(input, "collection") as KnowledgeCollection | undefined) || {
       id: object.id,
       slug: object.slug,
       title: object.title,

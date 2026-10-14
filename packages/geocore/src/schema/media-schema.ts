@@ -21,8 +21,8 @@ export function createMediaSchema(media: MediaAsset): JsonLdObject {
   };
 
   if (schemaType === "VideoObject") {
-    (base as any).thumbnailUrl = isPublic && media.thumbnailId ? `/media/${media.thumbnailId}` : undefined;
-    (base as any).duration = media.duration ? `PT${media.duration}S` : undefined;
+    (base as Record<string, unknown>).thumbnailUrl = isPublic && media.thumbnailId ? `/media/${media.thumbnailId}` : undefined;
+    (base as Record<string, unknown>).duration = media.duration ? `PT${media.duration}S` : undefined;
   }
 
   return omitUndefined(base) as JsonLdObject;

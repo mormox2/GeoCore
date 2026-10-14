@@ -199,7 +199,7 @@ export function runValidationPipeline(
           mode: configMode,
         });
       }
-    } catch (err: any) {
+    } catch (err) {
       let code = codes.GC_METADATA_INVALID;
       if (stageId === "dataset") code = codes.GC_PIPELINE_DATASET_INVALID;
       else if (stageId === "knowledge-objects") code = codes.GC_PIPELINE_KNOWLEDGE_OBJECTS_INVALID;
@@ -219,7 +219,7 @@ export function runValidationPipeline(
             id: `crash_${stageId}`,
             severity: "critical",
             code,
-            message: `Stage '${stageId}' failed with error: ${err.message || String(err)}`,
+            message: `Stage '${stageId}' failed with error: ${err instanceof Error ? err.message : String(err)}`,
           },
         ],
       });

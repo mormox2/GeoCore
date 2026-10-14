@@ -5,7 +5,7 @@ import { MediaAsset } from "../types/media.js";
  * Does not mutate the input.
  */
 export function omitUndefined<T extends Record<string, unknown>>(value: T): Partial<T> {
-  const result: any = {};
+  const result: Record<string, unknown> = {};
   for (const [key, val] of Object.entries(value)) {
     if (val === undefined) {
       continue;
@@ -23,7 +23,7 @@ export function omitUndefined<T extends Record<string, unknown>>(value: T): Part
       result[key] = val;
     }
   }
-  return result;
+  return result as Partial<T>;
 }
 
 /**

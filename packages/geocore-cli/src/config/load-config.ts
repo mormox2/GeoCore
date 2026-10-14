@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { GeoCoreCliConfig } from "./geocore-config.js";
 import { DEFAULT_CONFIG } from "./default-config.js";
-import { CliError } from "../utils/cli-error.js";
+import { CliError, errorMessage } from "../utils/cli-error.js";
 
 export function loadConfig(
   configPath?: string,
@@ -24,8 +24,8 @@ export function loadConfig(
     try {
       const content = fs.readFileSync(configPath, "utf8");
       fileConfig = JSON.parse(content);
-    } catch (err: any) {
-      throw new CliError("CONFIG_ERROR", `Failed to parse configuration file: ${err.message}`);
+    } catch (err) {
+      throw new CliError("CONFIG_ERROR", `Failed to parse configuration file: ${errorMessage(err)}`);
     }
   } else {
     const defaultFile = "geocore.config.json";
@@ -33,8 +33,8 @@ export function loadConfig(
       try {
         const content = fs.readFileSync(defaultFile, "utf8");
         fileConfig = JSON.parse(content);
-      } catch (err: any) {
-        throw new CliError("CONFIG_ERROR", `Failed to parse default configuration file: ${err.message}`);
+      } catch (err) {
+        throw new CliError("CONFIG_ERROR", `Failed to parse default configuration file: ${errorMessage(err)}`);
       }
     }
   }

@@ -77,11 +77,12 @@ export function loadGlossaryEntry(input: RawKnowledgeInput): {
   }
 
   const now = createIsoTimestamp();
-  const glossaryEntry: GlossaryEntry = {
+  // Required fields were checked above; this is the raw-input boundary.
+  const glossaryEntry = {
     createdAt: now,
     updatedAt: now,
-    ...(content as any),
-  };
+    ...(content as Partial<GlossaryEntry>),
+  } as GlossaryEntry;
 
   return { glossaryEntry, diagnostics };
 }
