@@ -1,5 +1,21 @@
 # @mormo_mossaab/geocore-db
 
+## 1.1.0
+
+### Minor Changes
+
+- 8dbf0fe: `SqlKnowledgeRepository` now works on PostgreSQL as well as SQLite: saves use a portable upsert (`INSERT … ON CONFLICT (id) DO UPDATE`, SQLite ≥ 3.24 / PostgreSQL ≥ 9.5) instead of the SQLite-only `INSERT OR REPLACE`, and a new `placeholders: "postgres"` option rewrites `?` bind parameters to `$1, $2, …` for `pg`/PGlite drivers. Covered by tests on a real PostgreSQL engine (PGlite).
+
+### Patch Changes
+
+- 70c25ce: Removed every explicit `any` type (91) in favour of precise types or `unknown` with type guards; CI now fails if one is reintroduced (`npm run check:any`). Visible effects:
+  
+  - A Markdown frontmatter `metadata:` with a scalar value is now reported as `GC_METADATA_INVALID` instead of being spread character by character into `{ 0: …, 1: … }`.
+  - `SqlKnowledgeRepository` rows written before `data_json` existed now return `""` instead of `null` for a missing `summary`/`author`, matching the `KnowledgeObject` type.
+  - A JSON knowledge file whose root is not an object now fails with a clear error.
+- Updated dependencies [70c25ce]
+  - @mormo_mossaab/geocore@1.1.1
+
 ## 1.0.2
 
 ### Patch Changes

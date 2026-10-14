@@ -1,5 +1,21 @@
 # @mormo_mossaab/geocore-cli
 
+## 1.0.3
+
+### Patch Changes
+
+- 18ed258: `geocore init [dir]` now initializes the given directory (creating it if needed) instead of ignoring the argument and initializing the current directory. Unknown arguments, such as a mistyped flag, now fail with an error instead of being silently ignored.
+- 70c25ce: Removed every explicit `any` type (91) in favour of precise types or `unknown` with type guards; CI now fails if one is reintroduced (`npm run check:any`). Visible effects:
+  
+  - A Markdown frontmatter `metadata:` with a scalar value is now reported as `GC_METADATA_INVALID` instead of being spread character by character into `{ 0: …, 1: … }`.
+  - `SqlKnowledgeRepository` rows written before `data_json` existed now return `""` instead of `null` for a missing `summary`/`author`, matching the `KnowledgeObject` type.
+  - A JSON knowledge file whose root is not an object now fails with a clear error.
+- Updated dependencies [0680703]
+- Updated dependencies [70c25ce]
+  - @mormo_mossaab/geocore-vector@1.1.0
+  - @mormo_mossaab/geocore-server@1.1.1
+  - @mormo_mossaab/geocore@1.1.1
+
 ## 1.0.2
 
 ### Patch Changes

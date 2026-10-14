@@ -1,6 +1,6 @@
 {
   "name": "@mormo_mossaab/geocore-db",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "GeoCore universal persistence and repository abstraction with In-Memory and SQLite adapters",
   "type": "module",
   "main": "dist/index.js",
@@ -23,7 +23,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@mormo_mossaab/geocore": "^1.1.0"
+    "@mormo_mossaab/geocore": "^1.1.1"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.9",

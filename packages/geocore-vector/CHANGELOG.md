@@ -1,5 +1,20 @@
 # @mormo_mossaab/geocore-vector
 
+## 1.1.0
+
+### Minor Changes
+
+- 0680703: Grounded answers are now available outside the standalone server:
+  
+  - `geocore-vector` exports `findGroundedAnswer` (hybrid search → extractive answer → grounding check, `null` when nothing grounded matches), `ensureVectorized` and the `GroundedAnswer` type.
+  - `geocore-next` exports `handleAnswerApi(dataset, request)`, a route handler with the same contract as `GET /api/answer`, so `<geocore-widget>` works with a Next.js app (`data-api-url="/api/geocore"`).
+  - `geocore-server` uses the shared implementation; behaviour is unchanged.
+
+### Patch Changes
+
+- Updated dependencies [70c25ce]
+  - @mormo_mossaab/geocore@1.1.1
+
 ## 1.0.2
 
 ### Patch Changes
