@@ -1,4 +1,4 @@
-import { cpSync, mkdirSync, existsSync, rmSync } from "node:fs";
+import { cpSync, mkdirSync, existsSync, rmSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -33,6 +33,13 @@ cpSync(studioSrc, studioDest, {
   recursive: true,
   filter: (src) => !EXCLUDED.has(basename(src))
 });
+// vercel.json sets trailingSlash: false, so the Studio is served at /studio and its relative
+// asset URLs (styles.css, app.js, engine.js) would resolve against the site root.
+const studioIndex = join(studioDest, "index.html");
+writeFileSync(
+  studioIndex,
+  readFileSync(studioIndex, "utf8").replace("<head>", '<head>\n  <base href="/studio/">')
+);
 
 // 3. Copy GeoCore Web Component Widget -> dist/site/widget
 const widgetSrc = join(root, "packages", "geocore", "dist", "widget");

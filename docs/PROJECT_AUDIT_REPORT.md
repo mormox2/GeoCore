@@ -147,5 +147,7 @@ Un audit approfondi a été mené, chaque constat étant reproduit par un script
 - **Données** : l'adaptateur SQL conserve tous les champs (migration automatique) ; les dates manquantes sont signalées pour garder des `lastmod` exacts.
 - **Outillage** : Node.js 22, `npm ci`, build dans l'ordre des dépendances, `dist/` n'est plus versionné, Vitest 5, `@changesets/cli` 3 avec `changesets/action` v2, actions GitHub v7 (Node 24), dépendances `zod` inutiles retirées. `npm audit` : 0 vulnérabilité.
 
+- **Durcissement (lot C)** : les ressources non publiques répondent `404` comme les ressources absentes (plus de sondage d'identifiants) ; clé API dans l'URL dépréciée (`allowQueryApiKey: false` pour la refuser) ; `geocore serve` écoute sur `127.0.0.1` par défaut ; CSP stricte sur le site Vercel (scripts par hachage, vérifiée dans Chromium), `Referrer-Policy` et `Permissions-Policy` ajoutés, `X-XSS-Protection` retiré ; CORS ouvert sur `/renderer/*` pour que le widget intégré sur un autre site charge son module ; `engines.node >= 20` testé en CI sur Node 20 et 22 ; référence d'API dans `docs/api/README.md`.
+
 **Points restants** :
 - Aucun type `any` explicite ne subsiste dans le code source ; `npm run check:any` le vérifie en CI.

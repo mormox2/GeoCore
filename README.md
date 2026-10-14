@@ -6,8 +6,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![TypeScript Strict](https://img.shields.io/badge/TypeScript-Strict_100%25-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Tests Passing](https://img.shields.io/badge/Tests-848%20Passed-brightgreen?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev/)
-[![Node.js Version](https://img.shields.io/badge/Node.js-%3E%3D22.12-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Tests Passing](https://img.shields.io/badge/Tests-869%20Passed-brightgreen?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev/)
+[![Node.js Version](https://img.shields.io/badge/Node.js-%3E%3D20-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Search](https://img.shields.io/badge/Search-Hybrid_RRF_(BM25_%2B_Dense)-orange?style=flat-square)](https://github.com/mormox2/GeoCore)
 [![AI Engine](https://img.shields.io/badge/AI_Ready-llms.txt_%2B_Schema.org-purple?style=flat-square)](https://llmstxt.org)
 
@@ -63,7 +63,7 @@ npx @mormo_mossaab/geocore-cli studio
 ### Full Monorepo Setup (From Source)
 
 ```bash
-# Clone and install dependencies (Node.js >= 22.12)
+# Clone and install dependencies (Node.js 20.19+ or 22.12+, required by Vitest)
 git clone https://github.com/mormox2/GeoCore.git
 cd GeoCore
 npm ci
@@ -154,7 +154,11 @@ Add a grounded assistant to any site. The widget calls the `/answer` endpoint of
 ```
 
 ### 6. 🔐 Standalone API Server
-`geocore serve` exposes the dataset over REST (OpenAPI at `/api/openapi.json`). Public routes only return published, public content; `?visibility=internal` and `/api/validate` require an API key, and `POST /api/vectorize` requires an admin key (`X-Api-Key` or `Authorization: Bearer`).
+`geocore serve` exposes the dataset over REST (OpenAPI at `/api/openapi.json`). Public routes only return published, public content, and answer `404` for drafts and internal objects exactly as for missing ones; `?visibility=internal` and `/api/validate` require an API key, and `POST /api/vectorize` requires an admin key. Send keys in the `X-Api-Key` or `Authorization: Bearer` header: the `?apiKey=` query parameter is deprecated (it leaks into logs) and can be turned off with `auth: { allowQueryApiKey: false }`.
+
+The server listens on `127.0.0.1` by default; pass `--host 0.0.0.0` to expose it on the network (for example in a container behind a reverse proxy).
+
+Full endpoint list, status codes and the `/answer` contract: [`docs/api/README.md`](./docs/api/README.md).
 
 ---
 
@@ -164,13 +168,13 @@ GeoCore is organized as an enterprise-grade, clean monorepo with 7 decoupled pac
 
 | Package | Version | Role | Key Technologies |
 |---|---|---|---|
-| [`@mormo_mossaab/geocore`](./packages/geocore) | `1.0.1` | Domain core, Zod schemas, 10-stage validator, graph & static export. | `zod` |
-| [`@mormo_mossaab/geocore-cli`](./packages/geocore-cli) | `1.0.1` | CLI tool (`init`, `validate`, `export`, `inspect`, `serve`, `vectorize`, `studio`). | Node.js, bundled Studio |
-| [`@mormo_mossaab/geocore-vector`](./packages/geocore-vector) | `1.0.1` | Vector embeddings, in-memory cosine store & RRF hybrid search. | TypeScript, Cosine Math |
-| [`@mormo_mossaab/geocore-ai`](./packages/geocore-ai) | `1.0.1` | RAG context builder, semantic chunking, extractive answers & claim-level grounding checks. | Grounding Engine |
-| [`@mormo_mossaab/geocore-server`](./packages/geocore-server) | `1.0.1` | Standalone REST server with OpenAPI 3.1, grounded `/api/answer` & API key authentication. | Node HTTP, OpenAPI |
-| [`@mormo_mossaab/geocore-next`](./packages/geocore-next) | `1.0.1` | Next.js 14+/15+ App Router helpers, metadata & JSON-LD injectors. | Next.js |
-| [`@mormo_mossaab/geocore-db`](./packages/geocore-db) | `1.0.1` | Persistence repository layer with In-Memory and SQL adapters (SQLite, PostgreSQL via `placeholders: "postgres"`). | SQLite, PostgreSQL, Memory DB |
+| [`@mormo_mossaab/geocore`](./packages/geocore) | [![npm](https://img.shields.io/npm/v/@mormo_mossaab/geocore?style=flat-square&label=)](https://www.npmjs.com/package/@mormo_mossaab/geocore) | Domain core, Zod schemas, 10-stage validator, graph & static export. | `zod` |
+| [`@mormo_mossaab/geocore-cli`](./packages/geocore-cli) | [![npm](https://img.shields.io/npm/v/@mormo_mossaab/geocore-cli?style=flat-square&label=)](https://www.npmjs.com/package/@mormo_mossaab/geocore-cli) | CLI tool (`init`, `validate`, `export`, `inspect`, `serve`, `vectorize`, `studio`). | Node.js, bundled Studio |
+| [`@mormo_mossaab/geocore-vector`](./packages/geocore-vector) | [![npm](https://img.shields.io/npm/v/@mormo_mossaab/geocore-vector?style=flat-square&label=)](https://www.npmjs.com/package/@mormo_mossaab/geocore-vector) | Vector embeddings, in-memory cosine store & RRF hybrid search. | TypeScript, Cosine Math |
+| [`@mormo_mossaab/geocore-ai`](./packages/geocore-ai) | [![npm](https://img.shields.io/npm/v/@mormo_mossaab/geocore-ai?style=flat-square&label=)](https://www.npmjs.com/package/@mormo_mossaab/geocore-ai) | RAG context builder, semantic chunking, extractive answers & claim-level grounding checks. | Grounding Engine |
+| [`@mormo_mossaab/geocore-server`](./packages/geocore-server) | [![npm](https://img.shields.io/npm/v/@mormo_mossaab/geocore-server?style=flat-square&label=)](https://www.npmjs.com/package/@mormo_mossaab/geocore-server) | Standalone REST server with OpenAPI 3.1, grounded `/api/answer` & API key authentication. | Node HTTP, OpenAPI |
+| [`@mormo_mossaab/geocore-next`](./packages/geocore-next) | [![npm](https://img.shields.io/npm/v/@mormo_mossaab/geocore-next?style=flat-square&label=)](https://www.npmjs.com/package/@mormo_mossaab/geocore-next) | Next.js 14+/15+ App Router helpers, metadata & JSON-LD injectors. | Next.js |
+| [`@mormo_mossaab/geocore-db`](./packages/geocore-db) | [![npm](https://img.shields.io/npm/v/@mormo_mossaab/geocore-db?style=flat-square&label=)](https://www.npmjs.com/package/@mormo_mossaab/geocore-db) | Persistence repository layer with In-Memory and SQL adapters (SQLite, PostgreSQL via `placeholders: "postgres"`). | SQLite, PostgreSQL, Memory DB |
 
 ---
 
@@ -194,16 +198,16 @@ Every Knowledge Object is checked against 10 strict validation gates before rele
 ## 🧪 Benchmark & Test Suite Status
 
 ```txt
-✓ @mormo_mossaab/geocore          (91 test files, 672 tests)
+✓ @mormo_mossaab/geocore          (91 test files, 673 tests)
 ✓ @mormo_mossaab/geocore-ai       (1 test file, 13 tests)
-✓ @mormo_mossaab/geocore-cli      (9 test files, 25 tests)
-✓ @mormo_mossaab/geocore-db       (2 test files, 9 tests)
-✓ @mormo_mossaab/geocore-next     (2 test files, 15 tests)
-✓ @mormo_mossaab/geocore-server   (1 test file, 25 tests)
+✓ @mormo_mossaab/geocore-cli      (11 test files, 31 tests)
+✓ @mormo_mossaab/geocore-db       (3 test files, 12 tests)
+✓ @mormo_mossaab/geocore-next     (3 test files, 22 tests)
+✓ @mormo_mossaab/geocore-server   (1 test file, 26 tests)
 ✓ @mormo_mossaab/geocore-vector   (1 test file, 12 tests)
-✓ examples + site + studio        (5 test files, 77 tests)
+✓ examples + site + studio        (5 test files, 80 tests)
 ─────────────────────────────────────────────────────────────
-Total: 112 test files, 848 tests (October 2026)
+Total: 116 test files, 869 tests (October 2026)
 ```
 
 ---

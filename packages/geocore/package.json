@@ -9,6 +9,9 @@
     "dist"
   ],
   "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "author": "Mormox",
   "repository": {
     "type": "git",

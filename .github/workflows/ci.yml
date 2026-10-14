@@ -37,3 +37,26 @@ jobs:
         run: |
           npm run validate:rtimidental
           npm run validate:dawajinpro
+
+  node20:
+    name: Build & Test on Node 20 (minimum supported)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci --no-audit
+
+      - name: Build All Packages
+        run: npm run build
+
+      - name: Run Full Test Suite
+        run: npm test

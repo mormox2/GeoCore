@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
@@ -248,5 +249,39 @@ describe("GeoCore Site — Landing Page Tests", () => {
       expect(css).toContain(".privacy-modal-card");
       expect(css).toContain(".privacy-badge");
     });
+  });
+});
+
+describe("vercel.json security headers", () => {
+  const repoRoot = join(root, "..", "..");
+  const config = JSON.parse(readFileSync(join(repoRoot, "vercel.json"), "utf8")) as {
+    headers: Array<{ source: string; headers: Array<{ key: string; value: string }> }>;
+  };
+  const globalHeaders = new Map(
+    config.headers.find((rule) => rule.source === "/(.*)")!.headers.map((h) => [h.key, h.value])
+  );
+  const csp = globalHeaders.get("Content-Security-Policy") ?? "";
+
+  it("allows every inline script of the site and the Studio by hash", () => {
+    for (const page of ["apps/geocore-site/index.html", "apps/geocore-studio/index.html"]) {
+      const html = readFileSync(join(repoRoot, page), "utf8");
+      for (const match of html.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/g)) {
+        if (/ld\+json/.test(match[1])) continue; // data blocks are not executed
+        const hash = `'sha256-${createHash("sha256").update(match[2]).digest("base64")}'`;
+        expect(csp, `${page} inline script`).toContain(hash);
+      }
+    }
+  });
+
+  it("does not allow unsafe inline or eval scripts", () => {
+    const scriptSrc = csp.split(";").find((d) => d.trim().startsWith("script-src")) ?? "";
+    expect(scriptSrc).not.toContain("unsafe-inline");
+    expect(scriptSrc).not.toContain("unsafe-eval");
+    expect(csp).toContain("frame-ancestors 'none'");
+  });
+
+  it("drops the obsolete X-XSS-Protection header", () => {
+    expect(globalHeaders.has("X-XSS-Protection")).toBe(false);
+    expect(globalHeaders.get("Referrer-Policy")).toBe("strict-origin-when-cross-origin");
   });
 });

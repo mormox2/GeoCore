@@ -5,7 +5,15 @@ export type AuthOptions = {
   apiKeys?: string[];
   adminKeys?: string[];
   requireAuthForInternal?: boolean;
+  /**
+   * Accept the key from the `?apiKey=` query parameter. Deprecated: URLs end up in
+   * access logs, proxies and browser history. Defaults to true for backward
+   * compatibility (with a one-time warning); set to false to accept headers only.
+   */
+  allowQueryApiKey?: boolean;
 };
+
+let queryKeyWarningShown = false;
 
 export type AuthContext = {
   authenticated: boolean;
@@ -20,7 +28,7 @@ export function authenticateRequest(
   req: IncomingMessage,
   options: AuthOptions = {}
 ): AuthContext {
-  const { apiKeys = [], adminKeys = [], requireAuthForInternal = true } = options;
+  const { apiKeys = [], adminKeys = [], requireAuthForInternal = true, allowQueryApiKey = true } = options;
 
   if (apiKeys.length === 0 && adminKeys.length === 0 && !requireAuthForInternal) {
     return { authenticated: true, isAdmin: true };
@@ -37,13 +45,19 @@ export function authenticateRequest(
     }
   }
 
-  // 3. Check query param
-  if (!key && req.url) {
+  // 3. Check query param (deprecated, see allowQueryApiKey)
+  if (!key && allowQueryApiKey && req.url) {
     try {
       const url = new URL(req.url, "http://localhost");
       key = url.searchParams.get("apiKey") || undefined;
     } catch {
       // ignore malformed URL
+    }
+    if (key && !queryKeyWarningShown) {
+      queryKeyWarningShown = true;
+      console.warn(
+        "[geocore-server] Passing the API key as ?apiKey= is deprecated: use the X-Api-Key or Authorization: Bearer header."
+      );
     }
   }
 

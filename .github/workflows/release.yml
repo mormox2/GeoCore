@@ -45,6 +45,8 @@ jobs:
         uses: changesets/action@v2
         with:
           publish-script: npm run release
+          # Also refreshes package-lock.json so the version PR keeps it in sync.
+          version-script: npm run version-packages
           pr-title: "chore(release): version and publish packages"
           commit-message: "chore(release): version and publish packages"
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -57,6 +59,7 @@ jobs:
         if: env.HAS_NPM_TOKEN != 'true'
         uses: changesets/action@v2
         with:
+          version-script: npm run version-packages
           pr-title: "chore(release): version packages"
           commit-message: "chore(release): version packages"
           github-token: ${{ secrets.GITHUB_TOKEN }}

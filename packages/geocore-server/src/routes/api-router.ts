@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { KnowledgeDataset } from "@mormo_mossaab/geocore";
+import type { ApiVisibility, KnowledgeDataset } from "@mormo_mossaab/geocore";
 import {
   getKnowledgeObject,
   listKnowledgeObjects,
@@ -17,6 +17,7 @@ import {
   generateLlmsFullTxt,
   generateSitemap,
   runValidationPipeline,
+  createNotFoundResponse,
 } from "@mormo_mossaab/geocore";
 import { buildPromptContext } from "@mormo_mossaab/geocore-ai";
 import {
@@ -62,6 +63,15 @@ function parseNonNegativeInt(value: string | null): number | undefined | null {
   if (!/^\d+$/.test(value)) return null;
   const n = Number(value);
   return Number.isSafeInteger(n) ? n : null;
+}
+
+/**
+ * Sends an API result. Resources that exist but are not public answer 404, like
+ * missing ones, so the ids of drafts and internal objects cannot be probed.
+ */
+function sendApiResult(res: ServerResponse, result: { status: string }, id: string, visibility: ApiVisibility): void {
+  if (result.status === "ok") return sendJson(res, 200, result);
+  return sendJson(res, 404, result.status === "not-found" ? result : createNotFoundResponse(id, visibility));
 }
 
 function sendBadParam(res: ServerResponse, name: string): void {
@@ -260,8 +270,7 @@ export async function routeRequest(
   if (objectMatch) {
     const id = objectMatch[1];
     const result = getKnowledgeObject(dataset, { id, visibility: effectiveVisibility });
-    const status = result.status === "ok" ? 200 : result.status === "not-found" ? 404 : 403;
-    return sendJson(res, status, result);
+    return sendApiResult(res, result, id, effectiveVisibility);
   }
 
   // 10. Entities: /api/entities and /api/entities/:id
@@ -285,8 +294,7 @@ export async function routeRequest(
   if (entityMatch) {
     const id = entityMatch[1];
     const result = getEntity(dataset, { id, visibility: effectiveVisibility });
-    const status = result.status === "ok" ? 200 : result.status === "not-found" ? 404 : 403;
-    return sendJson(res, status, result);
+    return sendApiResult(res, result, id, effectiveVisibility);
   }
 
   // 11. AI Context: /api/context/:id
@@ -294,8 +302,7 @@ export async function routeRequest(
   if (contextMatch) {
     const objectId = contextMatch[1];
     const result = getAiContext(dataset, { objectId, visibility: effectiveVisibility });
-    const status = result.status === "ok" ? 200 : result.status === "not-found" ? 404 : 403;
-    return sendJson(res, status, result);
+    return sendApiResult(res, result, objectId, effectiveVisibility);
   }
 
   // 12. Formatted LLM Prompt Context: /api/prompt-context/:id
@@ -304,7 +311,7 @@ export async function routeRequest(
     const objectId = promptMatch[1];
     const result = getAiContext(dataset, { objectId, visibility: effectiveVisibility });
     if (result.status !== "ok" || !result.data) {
-      return sendJson(res, result.status === "not-found" ? 404 : 403, result);
+      return sendApiResult(res, result, objectId, effectiveVisibility);
     }
     const formatted = buildPromptContext(result.data);
     return sendText(res, 200, formatted);
@@ -322,7 +329,7 @@ export async function routeRequest(
   if (citationMatch) {
     const id = citationMatch[1];
     const result = getCitation(dataset, { id, visibility: effectiveVisibility });
-    return sendJson(res, result.status === "ok" ? 200 : 404, result);
+    return sendApiResult(res, result, id, effectiveVisibility);
   }
 
   // 14. Sources: /api/sources and /api/sources/:id
@@ -335,7 +342,7 @@ export async function routeRequest(
   if (sourceMatch) {
     const id = sourceMatch[1];
     const result = getSource(dataset, { id, visibility: effectiveVisibility });
-    return sendJson(res, result.status === "ok" ? 200 : 404, result);
+    return sendApiResult(res, result, id, effectiveVisibility);
   }
 
   // 15. Media: /api/media and /api/media/:id
@@ -348,7 +355,7 @@ export async function routeRequest(
   if (mediaMatch) {
     const id = mediaMatch[1];
     const result = getMedia(dataset, { id, visibility: effectiveVisibility });
-    return sendJson(res, result.status === "ok" ? 200 : 404, result);
+    return sendApiResult(res, result, id, effectiveVisibility);
   }
 
   // 16. Validation report: /api/validate

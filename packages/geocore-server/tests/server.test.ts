@@ -156,9 +156,47 @@ describe("GeoCore Standalone HTTP Server", () => {
     expect(searchData.data[0].title).toContain("détartrage");
   });
 
-  it("Refuses internal draft object when no API key is provided", async () => {
-    const res = await fetch(`${baseUrl}/api/objects/ko_draft_internal_note`);
-    expect(res.status).toBe(403);
+  it("answers 404 (not 403) for non-public resources so their ids cannot be probed", async () => {
+    for (const path of ["objects", "context", "prompt-context"]) {
+      const hidden = await fetch(`${baseUrl}/api/${path}/ko_draft_internal_note?visibility=internal`);
+      const missing = await fetch(`${baseUrl}/api/${path}/ko_does_not_exist`);
+      expect(hidden.status).toBe(404);
+      expect(missing.status).toBe(404);
+      const body = await hidden.json();
+      expect(body.status).toBe("not-found");
+      expect(JSON.stringify(body)).not.toContain("confidentielle");
+    }
+  });
+
+  it("ignores ?apiKey= when allowQueryApiKey is false and warns once when it is used", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    try {
+      const viaQuery = await fetch(`${baseUrl}/api/objects/ko_draft_internal_note?visibility=internal&apiKey=test-api-key-123`);
+      expect(viaQuery.status).toBe(200);
+      await fetch(`${baseUrl}/api/objects/ko_draft_internal_note?visibility=internal&apiKey=test-api-key-123`);
+      const deprecations = warn.mock.calls.filter((c) => String(c[0]).includes("?apiKey= is deprecated"));
+      expect(deprecations.length).toBe(1);
+    } finally {
+      warn.mockRestore();
+    }
+
+    const strict = createGeoCoreServer({
+      dataset: apiDatasetFixture,
+      port: 0,
+      host: "127.0.0.1",
+      auth: { apiKeys: ["test-api-key-123"], allowQueryApiKey: false },
+    });
+    const { url } = await strict.listen();
+    try {
+      const viaQuery = await fetch(`${url}/api/objects/ko_draft_internal_note?visibility=internal&apiKey=test-api-key-123`);
+      expect(viaQuery.status).toBe(404);
+      const viaHeader = await fetch(`${url}/api/objects/ko_draft_internal_note?visibility=internal`, {
+        headers: { authorization: "Bearer test-api-key-123" },
+      });
+      expect(viaHeader.status).toBe(200);
+    } finally {
+      await strict.close();
+    }
   });
 
   it("refuses POST /api/vectorize without an admin key", async () => {
