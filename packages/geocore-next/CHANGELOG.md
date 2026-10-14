@@ -1,5 +1,19 @@
 # @mormo_mossaab/geocore-next
 
+## 1.1.1
+
+### Patch Changes
+
+- a12a2f7: Declare the supported Node.js versions (`engines.node: ">=20"`), now tested in CI on Node 20 and Node 22.
+- a12a2f7: Harden the REST API:
+  
+  - `/api/objects/:id`, `/api/entities/:id`, `/api/context/:id` and `/api/prompt-context/:id` (and `handleContextApi` in geocore-next) answer `404` instead of `403` for drafts and internal objects, so their ids cannot be probed. `/api/citations/:id`, `/api/sources/:id` and `/api/media/:id` already answered `404` and now also return a plain not-found body.
+  - The `?apiKey=` query parameter is deprecated: a one-time warning is logged when it is used, and `auth.allowQueryApiKey: false` accepts header keys only (`X-Api-Key` or `Authorization: Bearer`).
+  - `geocore serve` listens on `127.0.0.1` by default. Pass `--host 0.0.0.0` to expose it on the network.
+- Updated dependencies [a12a2f7]
+  - @mormo_mossaab/geocore@1.1.2
+  - @mormo_mossaab/geocore-vector@1.1.1
+
 ## 1.1.0
 
 ### Minor Changes

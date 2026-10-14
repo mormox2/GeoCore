@@ -1,6 +1,6 @@
 {
   "name": "@mormo_mossaab/geocore-server",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "GeoCore standalone HTTP REST API server with OpenAPI docs, auth middleware, and hybrid search endpoints",
   "type": "module",
   "main": "dist/index.js",
@@ -26,9 +26,9 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@mormo_mossaab/geocore": "^1.1.1",
-    "@mormo_mossaab/geocore-ai": "^1.1.0",
-    "@mormo_mossaab/geocore-vector": "^1.1.0"
+    "@mormo_mossaab/geocore": "^1.1.2",
+    "@mormo_mossaab/geocore-ai": "^1.1.1",
+    "@mormo_mossaab/geocore-vector": "^1.1.1"
   },
   "devDependencies": {
     "typescript": "^5.4.5",
