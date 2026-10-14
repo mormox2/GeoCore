@@ -52,11 +52,11 @@ It takes your structured Markdown/YAML files and transforms them into an interco
 ### Try in 30 Seconds with CLI
 
 ```bash
-# 1. Initialize a new GeoCore Knowledge Base in the current directory
-mkdir my-knowledge-base && cd my-knowledge-base
-npx @mormo_mossaab/geocore-cli init
+# 1. Initialize a new GeoCore Knowledge Base
+npx @mormo_mossaab/geocore-cli init my-knowledge-base
 
 # 2. Launch the interactive Visual Studio (2D Graph + Editor + RAG Tester)
+cd my-knowledge-base
 npx @mormo_mossaab/geocore-cli studio
 ```
 

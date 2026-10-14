@@ -12,7 +12,7 @@ import { studioCommand } from "./commands/studio.command.js";
 const HELP_TEXT = `GeoCore CLI — AI-Native Knowledge Operating System
 
 Usage:
-  geocore init                          Initialize a new knowledge repository
+  geocore init [dir]                    Initialize a new knowledge repository (in dir, or the current directory)
   geocore validate                      Run 10-stage validation pipeline
   geocore export                        Generate static markdown, schema, sitemap & llms.txt
   geocore inspect                       Inspect graph connectivity, orphans & metrics
@@ -54,8 +54,16 @@ export async function runCli(argv: string[]): Promise<number> {
       return EXIT_CODES.SUCCESS;
     }
 
+    // Only `init` takes a positional argument; anything else unrecognised is an error
+    // rather than being silently ignored (e.g. a mistyped flag).
+    const positional = parsed.command === "init" ? parsed.unknownArgs.filter((a) => !a.startsWith("-")) : [];
+    const unexpected = parsed.unknownArgs.filter((a) => !positional.slice(0, 1).includes(a));
+    if (unexpected.length > 0) {
+      throw new CliError("COMMAND_ERROR", `Unknown command or flag: ${unexpected[0]}`);
+    }
+
     if (parsed.command === "init") {
-      await initCommand({ force: parsed.flags.force });
+      await initCommand({ dir: positional[0], force: parsed.flags.force });
     } else if (parsed.command === "validate") {
       await validateCommand({
         config: parsed.flags.config,
