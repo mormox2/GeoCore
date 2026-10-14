@@ -7,6 +7,7 @@ import {
   handleContextApi,
 } from "../src/handlers/route-handler.js";
 import { formatJsonLdScript, renderJsonLdTag } from "../src/components/json-ld.js";
+import { generateJsonLd, rtimidentalFixture } from "@mormo_mossaab/geocore";
 import { createCitationBadgeData, renderCitationBadgeHtml } from "../src/components/citation-badge.js";
 import { renderMediaFigureHtml } from "../src/components/media-view.js";
 import {
@@ -111,5 +112,15 @@ describe("Next.js Components Helpers", () => {
     });
     expect(html).not.toContain("<script>");
     expect(html).not.toContain('" onerror="');
+  });
+
+  it("renderJsonLdTag embeds only the JSON-LD document of a generateJsonLd output", () => {
+    const output = generateJsonLd({ object: rtimidentalFixture, siteUrl: "https://rtimidental.tn" });
+    const tag = renderJsonLdTag(output);
+    const json = JSON.parse(tag.replace(/^<script[^>]*>/, "").replace(/<\/script>$/, ""));
+    expect(json["@context"]).toBe("https://schema.org");
+    expect(json["@type"]).toBe(output.schemaType);
+    expect(json).not.toHaveProperty("diagnostics");
+    expect(json).not.toHaveProperty("sourceId");
   });
 });
