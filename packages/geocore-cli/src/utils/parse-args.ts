@@ -55,7 +55,8 @@ export function parseArgs(args: string[]): ParsedArgs {
       const dimVal = parseInt(args[++i], 10);
       if (!isNaN(dimVal)) parsed.flags.dim = dimVal;
     } else if (arg === "--api-key") {
-      parsed.flags.apiKey = args[++i];
+      // A missing value becomes "" so `serve` can reject it instead of running without a key.
+      parsed.flags.apiKey = args[++i] ?? "";
     } else if (arg === "--mode") {
       const modeVal = args[++i];
       if (modeVal === "public" || modeVal === "internal") {

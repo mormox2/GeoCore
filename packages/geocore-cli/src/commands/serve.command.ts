@@ -17,6 +17,16 @@ export type ServeCommandOptions = {
 };
 
 export async function serveCommand(options: ServeCommandOptions = {}): Promise<void> {
+  // A blank key would silently start the server without authentication, typically because a
+  // shell variable expanded to nothing (in PowerShell "$NAME" is not the environment variable).
+  if (options.apiKey !== undefined && options.apiKey.trim() === "") {
+    throw new CliError(
+      "COMMAND_ERROR",
+      "--api-key is empty. Pass a non-empty key, or leave out --api-key to serve without one " +
+        "(in PowerShell, read an environment variable as $env:NAME)."
+    );
+  }
+
   const config = loadConfig(options.config, {
     knowledgeDir: options.knowledgeDir,
   });
