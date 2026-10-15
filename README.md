@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![TypeScript Strict](https://img.shields.io/badge/TypeScript-Strict_100%25-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Tests Passing](https://img.shields.io/badge/Tests-869%20Passed-brightgreen?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev/)
+[![Tests Passing](https://img.shields.io/badge/Tests-870%20Passed-brightgreen?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev/)
 [![Node.js Version](https://img.shields.io/badge/Node.js-%3E%3D20-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Search](https://img.shields.io/badge/Search-Hybrid_RRF_(BM25_%2B_Dense)-orange?style=flat-square)](https://github.com/mormox2/GeoCore)
 [![AI Engine](https://img.shields.io/badge/AI_Ready-llms.txt_%2B_Schema.org-purple?style=flat-square)](https://llmstxt.org)
@@ -205,9 +205,9 @@ Every Knowledge Object is checked against 10 strict validation gates before rele
 ✓ @mormo_mossaab/geocore-next     (3 test files, 22 tests)
 ✓ @mormo_mossaab/geocore-server   (1 test file, 26 tests)
 ✓ @mormo_mossaab/geocore-vector   (1 test file, 12 tests)
-✓ examples + site + studio        (5 test files, 80 tests)
+✓ examples + site + studio        (5 test files, 81 tests)
 ─────────────────────────────────────────────────────────────
-Total: 116 test files, 869 tests (October 2026)
+Total: 116 test files, 870 tests (October 2026)
 ```
 
 ---

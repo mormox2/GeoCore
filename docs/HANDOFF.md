@@ -5,7 +5,7 @@ for the next session (local Claude Code on the owner's PC).
 
 ## Where things stand
 
-- `main` is green (CI on Node 22 and Node 20), 869 tests, `npm audit`: 0 vulnerabilities.
+- `main` is green (CI on Node 22 and Node 20), 870 tests, `npm audit`: 0 vulnerabilities.
 - Merged: PRs #3–#10. No open PR.
 - Published on npm:
 
