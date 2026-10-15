@@ -101,7 +101,7 @@ function initCopyButton() {
   document.querySelectorAll(".copy-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const codeEl = btn.closest(".terminal-body")?.querySelector("code");
-      const commandText = codeEl ? codeEl.innerText.trim() : "";
+      const commandText = btn.dataset.copy || (codeEl ? codeEl.innerText.trim() : "");
 
       if (commandText && navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(commandText).catch(() => {});
