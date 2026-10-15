@@ -1,6 +1,6 @@
 {
   "name": "@mormo_mossaab/geocore-cli",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "GeoCore CLI tools to validate, export, inspect, serve, vectorize, and explore knowledge repositories",
   "type": "module",
   "main": "dist/index.js",
